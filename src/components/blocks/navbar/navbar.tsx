@@ -57,7 +57,7 @@ export default function Navbar() {
     <div
       data-no-drag
       className={cn(
-        "pointer-events-none fixed inset-x-0 bottom-0 z-40 mx-auto mb-9 flex h-full max-h-14 origin-bottom md:top-0 md:mb-0",
+        "pointer-events-none fixed inset-x-0 bottom-0 z-40 mx-auto mb-9 flex h-full max-h-14 origin-bottom justify-center px-3 md:top-0 md:mb-0 md:px-0",
       )}
     >
       <div
@@ -65,7 +65,10 @@ export default function Navbar() {
           "bg-background dark:bg-background fixed inset-x-0 bottom-0 h-16 w-full to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] md:top-0",
         )}
       ></div>
-      <Dock className="bg-background pointer-events-auto relative z-50 mx-auto flex h-full min-h-full transform-gpu items-center px-1 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]">
+      <Dock
+        iconSize={isDesktop ? 40 : 34}
+        className="bg-background pointer-events-auto relative z-50 mx-auto flex h-full min-h-full transform-gpu items-center px-1 max-md:!gap-0.5 max-md:!p-1.5 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]"
+      >
         {items.map((item) => {
           const Icon = NAV_ICONS[item.icon] || Icons.home;
 
@@ -77,7 +80,7 @@ export default function Navbar() {
                     href={item.href}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "icon" }),
-                      "size-12",
+                      "size-9 md:size-12",
                     )}
                     aria-label={item.label}
                   >
@@ -94,27 +97,35 @@ export default function Navbar() {
             </DockIcon>
           );
         })}
-        <Separator orientation="vertical" className="h-full" />
-        <DockIcon>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <ModeToggle />
-            </TooltipTrigger>
-            <TooltipContent side={isDesktop ? "bottom" : "top"} sideOffset={8}>
-              <p>{t("navbar.theme")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </DockIcon>
-        <DockIcon>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <LanguageToggle />
-            </TooltipTrigger>
-            <TooltipContent side={isDesktop ? "bottom" : "top"} sideOffset={8}>
-              <p>{t("navbar.language")}</p>
-            </TooltipContent>
-          </Tooltip>
-        </DockIcon>
+        <div className="hidden md:contents">
+          <Separator orientation="vertical" className="h-full" />
+          <DockIcon>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <ModeToggle />
+              </TooltipTrigger>
+              <TooltipContent
+                side={isDesktop ? "bottom" : "top"}
+                sideOffset={8}
+              >
+                <p>{t("navbar.theme")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </DockIcon>
+          <DockIcon>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <LanguageToggle />
+              </TooltipTrigger>
+              <TooltipContent
+                side={isDesktop ? "bottom" : "top"}
+                sideOffset={8}
+              >
+                <p>{t("navbar.language")}</p>
+              </TooltipContent>
+            </Tooltip>
+          </DockIcon>
+        </div>
       </Dock>
     </div>
   );

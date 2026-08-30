@@ -87,7 +87,7 @@ export default async function AboutPage(props: {
       </BlurFade>
 
       <BlurFade delay={0.12}>
-        <section id="connect" className="glass-panel space-y-4 rounded-2xl p-8 sm:p-10">
+        <section id="connect" className="glass-panel space-y-4 overflow-hidden rounded-2xl p-8 sm:p-10 md:p-12">
           <h2 className="text-xl font-bold sm:text-2xl">
             {t("sections.contact")}
           </h2>

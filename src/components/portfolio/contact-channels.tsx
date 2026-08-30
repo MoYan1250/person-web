@@ -48,7 +48,7 @@ export function ContactChannels({
   if (channels.length === 0) return null;
 
   return (
-    <div className="grid gap-3 sm:grid-cols-2">
+    <div className="mx-auto grid w-full min-w-0 gap-3 md:grid-cols-2">
       {channels.map((social) => (
         <SocialAction
           key={social.name}
@@ -56,13 +56,13 @@ export function ContactChannels({
           url={social.url}
           copyText={social.copyText}
           className={cn(
-            "border-border glass-panel hover:border-primary/50 group flex w-full cursor-pointer items-center gap-4 rounded-xl border p-5 text-left transition-all hover:scale-[1.01]",
+            "border-border hover:border-primary/50 group m-0 flex w-full min-w-0 max-w-full cursor-pointer items-center gap-3 overflow-hidden rounded-xl border bg-background/35 p-4 text-left transition-colors sm:gap-4 sm:p-5",
           )}
         >
-          <div className="border-border bg-muted/40 text-foreground rounded-lg border p-3">
-            <social.icon className="size-6" />
+          <div className="border-border bg-muted/40 text-foreground shrink-0 rounded-lg border p-2.5 sm:p-3">
+            <social.icon className="size-5 sm:size-6" />
           </div>
-          <div className="min-w-0">
+          <div className="min-w-0 flex-1 overflow-hidden">
             <p className="text-muted-foreground text-sm">{social.name}</p>
             <p className="truncate font-semibold tracking-tight">
               {displayValue(social)}

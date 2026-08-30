@@ -4,6 +4,8 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { LanguageToggle } from "@/components/blocks/navbar/language-toggle";
+import { ModeToggle } from "@/components/blocks/navbar/mode-toggle";
 import {
   Dialog,
   DialogContent,
@@ -73,8 +75,12 @@ export function SiteSearch({ items }: { items: SearchItem[] }) {
     <>
       <div
         data-no-drag
-        className="pointer-events-none fixed top-3 right-3 z-50 md:top-[11px] md:right-4"
+        className="pointer-events-none fixed top-3 right-3 z-50 flex items-center gap-1.5 md:top-[11px] md:right-4"
       >
+        <div className="pointer-events-auto flex h-11 items-center rounded-2xl border border-border bg-background/80 shadow-sm backdrop-blur-md md:hidden">
+          <ModeToggle />
+          <LanguageToggle />
+        </div>
         <button
           type="button"
           onClick={() => setOpen(true)}
@@ -82,8 +88,8 @@ export function SiteSearch({ items }: { items: SearchItem[] }) {
           aria-label={t("button")}
         >
           <MagnifyingGlassIcon className="size-4" />
-          <span className="hidden sm:inline">{t("button")}</span>
-          <kbd className="bg-muted text-muted-foreground hidden rounded-md px-1.5 py-0.5 font-mono text-[11px] sm:inline">
+          <span className="hidden md:inline">{t("button")}</span>
+          <kbd className="bg-muted text-muted-foreground hidden rounded-md px-1.5 py-0.5 font-mono text-[11px] md:inline">
             {modKey} K
           </kbd>
         </button>

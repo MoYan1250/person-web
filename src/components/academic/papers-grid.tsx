@@ -162,7 +162,7 @@ export function PapersGrid({
       {visible.length === 0 ? (
         <p className="text-muted-foreground text-sm">{copy.empty}</p>
       ) : (
-        <ul className="grid grid-cols-4 gap-2 sm:gap-3">
+        <ul className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4">
           {visible.map((paper) => (
             <li key={paper.id}>
               <PaperTile
