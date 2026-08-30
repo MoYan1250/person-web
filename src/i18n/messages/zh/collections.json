@@ -330,10 +330,10 @@
   "friends": {
     "items": [
       {
-        "name": "朋友的名字",
-        "url": "https://example.com",
-        "description": "佔位符",
-        "avatar": ""
+        "name": "可樂剉冰 ColaShaveDice",
+        "url": "https://colashavedice.uk/",
+        "description": "網路相關的大神，一下研究 CA 證書，一下用通訊協議電我。",
+        "avatar": "/friends/colashavedice.png"
       },
       {
         "name": "另一位朋友",

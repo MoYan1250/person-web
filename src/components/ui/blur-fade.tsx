@@ -5,10 +5,11 @@ import {
   motion,
   MotionProps,
   useInView,
+  useReducedMotion,
   UseInViewOptions,
   Variants,
 } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 type MarginType = UseInViewOptions["margin"];
 
@@ -42,19 +43,30 @@ export function BlurFade({
   ...props
 }: BlurFadeProps) {
   const ref = useRef(null);
+  const reducedMotion = useReducedMotion();
+  const [disableBlur, setDisableBlur] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia("(pointer: coarse)").matches;
+  });
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
   const isInView = !inView || inViewResult;
+
+  if (reducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  const activeBlur = disableBlur ? "0px" : blur;
   const defaultVariants: Variants = {
     hidden: {
       [direction === "left" || direction === "right" ? "x" : "y"]:
         direction === "right" || direction === "down" ? -offset : offset,
       opacity: 0,
-      filter: `blur(${blur})`,
+      filter: activeBlur === "0px" ? "none" : `blur(${activeBlur})`,
     },
     visible: {
       [direction === "left" || direction === "right" ? "x" : "y"]: 0,
       opacity: 1,
-      filter: `blur(0px)`,
+      filter: "none",
     },
   };
   const combinedVariants = variant || defaultVariants;

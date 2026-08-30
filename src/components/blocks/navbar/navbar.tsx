@@ -65,10 +65,11 @@ export default function Navbar() {
           "bg-background dark:bg-background fixed inset-x-0 bottom-0 h-16 w-full to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] md:top-0",
         )}
       ></div>
-      <Dock
-        iconSize={isDesktop ? 40 : 34}
-        className="bg-background pointer-events-auto relative z-50 mx-auto flex h-full min-h-full transform-gpu items-center px-1 max-md:!gap-0.5 max-md:!p-1.5 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]"
-      >
+      <div className="pointer-events-auto relative z-50 w-full max-md:max-w-full max-md:overflow-x-auto max-md:overscroll-x-contain max-md:[-ms-overflow-style:none] max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden md:w-auto">
+        <Dock
+          iconSize={isDesktop ? 40 : 34}
+          className="bg-background relative z-50 mx-auto flex h-full min-h-full w-max shrink-0 transform-gpu items-center px-1 max-md:!gap-0.5 max-md:!p-1.5 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]"
+        >
         {items.map((item) => {
           const Icon = NAV_ICONS[item.icon] || Icons.home;
 
@@ -127,6 +128,7 @@ export default function Navbar() {
           </DockIcon>
         </div>
       </Dock>
+      </div>
     </div>
   );
 }

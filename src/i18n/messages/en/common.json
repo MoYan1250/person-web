@@ -216,6 +216,11 @@
     "navbar": {
         "items": [
             {
+                "href": "/",
+                "icon": "home",
+                "label": "Home"
+            },
+            {
                 "href": "/about",
                 "icon": "user",
                 "label": "About"

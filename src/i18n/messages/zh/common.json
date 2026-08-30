@@ -216,6 +216,11 @@
     "navbar": {
         "items": [
             {
+                "href": "/",
+                "icon": "home",
+                "label": "首頁"
+            },
+            {
                 "href": "/about",
                 "icon": "user",
                 "label": "關於"

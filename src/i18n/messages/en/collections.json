@@ -330,10 +330,10 @@
   "friends": {
     "items": [
       {
-        "name": "A friend's name",
-        "url": "https://example.com",
-        "description": "Placeholder",
-        "avatar": ""
+        "name": "可樂剉冰 ColaShaveDice",
+        "url": "https://colashavedice.uk/",
+        "description": "A networking wizard—one day studying CA certificates, the next shocking me with communication protocols.",
+        "avatar": "/friends/colashavedice.png"
       },
       {
         "name": "Another friend",
