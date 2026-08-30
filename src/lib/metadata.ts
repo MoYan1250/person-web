@@ -82,6 +82,7 @@ export async function constructMetadata({
       url: path,
       siteName: t("name.full"),
       locale: resolvedLocale,
+      images: [{ url: siteConfig.avatarUrl }],
     },
     twitter: {
       card: "summary_large_image",
@@ -89,6 +90,7 @@ export async function constructMetadata({
       description: finalDescription,
       site: canonicalUrl,
       creator: t("name.full"),
+      images: [siteConfig.avatarUrl],
     },
     robots: {
       index: !noIndex,
