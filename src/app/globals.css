@@ -1,0 +1,574 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+@import "katex/dist/katex.min.css";
+@import "lenis/dist/lenis.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans:
+    var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --font-serif:
+    var(--font-serif), "Noto Serif TC", "Source Han Serif TC", "Source Han Serif",
+    serif;
+
+  --font-display:
+    var(--font-display), Syne, ui-sans-serif, system-ui, sans-serif;
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer base {
+  :root {
+    /* Light: White, Periwinkle, Wisteria, Bright Lavender, Blue Violet */
+    --background: 0 0% 100%;
+    --foreground: 236 56% 19%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 236 56% 19%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 236 56% 19%;
+
+    --primary: 271 61% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 257 51% 86%;
+    --secondary-foreground: 236 56% 19%;
+
+    --muted: 257 51% 93%;
+    --muted-foreground: 257 28% 38%;
+
+    --accent: 282 61% 92%;
+    --accent-foreground: 271 61% 32%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 257 50% 82%;
+    --input: 257 50% 82%;
+    --ring: 271 61% 54%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark: #232323 page, black surfaces, accents #7355AE + #8C52FF */
+    --background: 0 0% 14%;
+    --foreground: 257 51% 86%;
+
+    --card: 0 0% 0%;
+    --card-foreground: 257 51% 86%;
+
+    --popover: 0 0% 0%;
+    --popover-foreground: 257 51% 86%;
+
+    --primary: 260 100% 66%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 260 35% 51%;
+    --secondary-foreground: 257 51% 93%;
+
+    --muted: 0 0% 8%;
+    --muted-foreground: 257 50% 73%;
+
+    --accent: 0 0% 0%;
+    --accent-foreground: 257 51% 86%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 260 28% 38%;
+    --input: 260 28% 38%;
+    --ring: 260 100% 66%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(
+        ellipse 120% 80% at 0% -10%,
+        hsl(var(--primary) / 0.1),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 90% 70% at 100% 0%,
+        hsl(var(--secondary) / 0.16),
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 80% 60% at 50% 110%,
+        hsl(var(--primary) / 0.07),
+        transparent 58%
+      );
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image:
+      radial-gradient(
+        ellipse 120% 80% at 0% -10%,
+        hsl(var(--primary) / 0.14),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 90% 70% at 100% 0%,
+        hsl(var(--secondary) / 0.12),
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 80% 60% at 50% 110%,
+        hsl(var(--primary) / 0.08),
+        transparent 58%
+      );
+  }
+
+  .glass-panel {
+    background: hsl(var(--card) / 0.74);
+    border-color: hsl(var(--foreground) / 0.2);
+    box-shadow:
+      0 1px 3px hsl(var(--foreground) / 0.1),
+      inset 0 1px 0 hsl(var(--foreground) / 0.07);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+    backdrop-filter: blur(18px) saturate(145%);
+  }
+
+  .dark .glass-panel {
+    background: hsl(var(--card) / 0.42);
+    border-color: hsl(var(--border) / 0.42);
+    box-shadow:
+      0 10px 40px hsl(0 0% 0% / 0.22),
+      inset 0 1px 0 hsl(var(--foreground) / 0.07);
+  }
+
+  @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+    .glass-panel {
+      background: hsl(var(--card) / 0.94);
+    }
+
+    .dark .glass-panel {
+      background: hsl(var(--card) / 0.9);
+    }
+  }
+
+  .glass-panel .prose pre,
+  .glass-panel .prose code:not(pre code) {
+    background: hsl(var(--muted) / 0.72) !important;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.28);
+    color: hsl(var(--foreground));
+  }
+
+  .prose a {
+    color: hsl(var(--primary));
+  }
+}
+
+/* code styling */
+h3 code {
+  @apply text-lg! md:text-xl!;
+}
+
+pre {
+  @apply overflow-x-auto rounded-lg px-0! py-4;
+}
+
+pre [data-line] {
+  @apply px-4;
+}
+
+code {
+  @apply text-sm leading-loose! md:text-base;
+}
+
+pre > code {
+  counter-reset: line;
+}
+
+code[data-theme*="light"],
+code[data-theme*="light"] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  code[data-theme*="dark"],
+  code[data-theme*="dark"] span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
+}
+
+code[data-line-numbers] {
+  counter-reset: line;
+}
+
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  @apply mr-4 inline-block w-4 text-right text-gray-500;
+}
+
+code {
+  counter-reset: line;
+}
+
+code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+
+  /* Other styling */
+  display: inline-block;
+  width: 1rem;
+  margin-right: 2rem;
+  text-align: right;
+  color: gray;
+}
+
+code[data-line-numbers-max-digits="2"] > [data-line]::before {
+  width: 2rem;
+}
+
+code[data-line-numbers-max-digits="3"] > [data-line]::before {
+  width: 3rem;
+}
+
+/* Notion-style scrollbar for TOC */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border));
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.5);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--border) / 0.6);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.4);
+}
+
+@keyframes home-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.home-marquee {
+  animation: home-marquee 32s linear infinite;
+}
+
+.home-marquee-wrap:hover .home-marquee {
+  animation-play-state: paused;
+}
+
+.home-hero-grid {
+  background-image:
+    radial-gradient(hsl(var(--border) / 0.7) 0.75px, transparent 0.75px),
+    linear-gradient(135deg, hsl(var(--primary) / 0.06), transparent 50%);
+  background-size: 1rem 1rem, auto;
+}
+
+.home-hero-copy::after {
+  content: "";
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 5rem;
+  height: 5rem;
+  border-right: 1px solid hsl(var(--primary) / 0.38);
+  border-top: 1px solid hsl(var(--primary) / 0.38);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.home-hero-copy {
+  container-type: inline-size;
+}
+
+@media (max-width: 639px) {
+  .home-hero-copy::after {
+    width: 3rem;
+    height: 3rem;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+html.lenis,
+html.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+html.home-drag-on {
+  overscroll-behavior: none;
+}
+
+html.home-drag-on:not(.pointer-light-on) {
+  cursor: grab;
+}
+
+html.home-dragging:not(.pointer-light-on),
+html.home-dragging:not(.pointer-light-on) * {
+  cursor: grabbing !important;
+  user-select: none !important;
+}
+
+@keyframes status-pulse-online {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 hsl(var(--primary) / 0.45);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 0 6px hsl(var(--primary) / 0);
+  }
+}
+
+.status-pulse-online {
+  animation: status-pulse-online 2s ease-out infinite;
+}
+
+.pointer-light {
+  display: none;
+  pointer-events: none;
+}
+
+html.pointer-light-on body,
+html.pointer-light-on body *:not(input):not(textarea):not(select):not([contenteditable="true"]) {
+  cursor: none !important;
+}
+
+html.pointer-light-on input,
+html.pointer-light-on textarea,
+html.pointer-light-on select,
+html.pointer-light-on [contenteditable="true"] {
+  cursor: text !important;
+}
+
+html.pointer-light-on .pointer-light {
+  display: block;
+}
+
+.pointer-light-dot,
+.pointer-light-outline,
+.pointer-light-glow {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  will-change: transform;
+  opacity: 0;
+}
+
+.pointer-light-dot,
+.pointer-light-outline {
+  transition:
+    width 0.18s ease,
+    height 0.18s ease,
+    border-color 0.18s ease,
+    opacity 0.2s ease;
+}
+
+.pointer-light-dot {
+  z-index: 10002;
+  width: 6px;
+  height: 6px;
+  background: hsl(var(--primary));
+  box-shadow:
+    0 0 8px hsl(var(--primary) / 0.9),
+    0 0 16px hsl(var(--primary) / 0.4);
+}
+
+.pointer-light-dot[data-active="true"] {
+  width: 8px;
+  height: 8px;
+}
+
+.pointer-light-outline {
+  z-index: 10001;
+  width: 26px;
+  height: 26px;
+  border: 1px solid hsl(var(--primary) / 0.55);
+}
+
+.pointer-light-outline[data-active="true"] {
+  width: 34px;
+  height: 34px;
+  border-color: hsl(var(--primary) / 0.85);
+}
+
+.pointer-light-glow {
+  z-index: 10000;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(
+    circle,
+    hsl(271 61% 54% / 0.32) 0%,
+    hsl(265 49% 42% / 0.12) 32%,
+    transparent 70%
+  );
+  mix-blend-mode: multiply;
+}
+
+.dark .pointer-light-glow {
+  background: radial-gradient(
+    circle,
+    hsl(260 100% 66% / 0.4) 0%,
+    hsl(260 35% 51% / 0.16) 34%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+}
+
+.pointer-light-glow[data-dragging="true"] {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .pointer-light {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-marquee {
+    animation: none;
+  }
+
+  .status-pulse-online {
+    animation: none;
+  }
+
+  .pointer-light {
+    display: none !important;
+  }
+
+  html.pointer-light-on body,
+  html.pointer-light-on body * {
+    cursor: auto !important;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    border-color: hsl(var(--foreground) / 0.2);
+  }
+
+  .dark .glass-panel {
+    border-color: hsl(var(--border) / 0.42);
+  }
+}

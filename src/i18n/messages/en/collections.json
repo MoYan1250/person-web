@@ -1,0 +1,454 @@
+{
+  "news": {
+    "items": []
+  },
+  "projects": {
+    "items": [
+      {
+        "title": "Personal Website",
+        "href": "/",
+        "dates": "2026.8",
+        "active": true,
+        "description": "This site: a bilingual personal index with projects, a timeline, and a diary.",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+        "authors": "",
+        "links": [],
+        "image": "/projects/personal-site.png",
+        "video": ""
+      },
+      {
+        "title": "Hinkal Double-Spend: Local Simplified Reproduction",
+        "dates": "2026.8",
+        "active": true,
+        "description": "In July 2026, Hinkal — a shielded-pool protocol on Ethereum — was hit by a double-spend. This reproduction still deploys smart contracts on-chain; only the scale was reduced and it was run locally.",
+        "technologies": ["ZK", "Smart contracts", "Solidity", "Ethereum"],
+        "authors": "",
+        "links": [],
+        "image": "/projects/hinkal.png",
+        "video": ""
+      },
+      {
+        "title": "Tactica Universalis",
+        "dates": "2026.7",
+        "active": true,
+        "description": "A Paradox-style game of CS2 history, tactics simulation, and team management. I crawled and quantified data for hundreds of players.",
+        "technologies": ["CS2"],
+        "authors": "",
+        "links": [],
+        "image": "/timeline/tactica-universalis.png",
+        "video": ""
+      },
+      {
+        "title": "Discord Honeypot Bot",
+        "dates": "2025.12",
+        "active": true,
+        "description": "A Discord honeypot I built myself: it automatically detects and bans accounts that spam messages.",
+        "technologies": ["Discord"],
+        "authors": "",
+        "links": [],
+        "image": "/projects/discord-honeypot.png",
+        "video": ""
+      }
+    ]
+  },
+  "publications": {
+    "items": []
+  },
+  "education": {
+    "items": [
+      {
+        "school": "Your School",
+        "href": "",
+        "degree": "Degree / Program",
+        "logoUrl": "",
+        "start": "20XX",
+        "end": "20XX"
+      }
+    ]
+  },
+  "work": {
+    "items": []
+  },
+  "awards": {
+    "items": []
+  },
+  "invitedTalks": {
+    "items": []
+  },
+  "teaching": {
+    "items": []
+  },
+  "timeline": {
+    "items": [
+      {
+        "date": "2026-08",
+        "title": "Started this personal site",
+        "description": "Put projects, a timeline, and writing into one place.",
+        "type": "make",
+        "image": "/timeline/2026-08-site.png",
+        "imagePresentation": "logo",
+        "tags": ["Next.js", "Personal site"],
+        "links": [{ "label": "This site", "href": "/" }]
+      },
+      {
+        "date": "2026-08",
+        "title": "Finished the AIS3 Junior project",
+        "description": "Added a ZK circuit and smart contracts, only shrinking the scale.",
+        "type": "make",
+        "image": "/timeline/2026-08-hinkal.png",
+        "tags": ["ZK", "Smart contracts"]
+      },
+      {
+        "date": "2026-08",
+        "title": "Tactica Universalis demo done",
+        "description": "The first game demo actually shipped.",
+        "type": "make",
+        "image": "/timeline/tactica-universalis.png",
+        "tags": ["Tactica Universalis"]
+      },
+      {
+        "date": "2026-08",
+        "title": "THJCC Summer",
+        "description": "After AIS3 Junior, I finally had some real security basics.",
+        "type": "record",
+        "image": "/timeline/2026-08-thjcc-summer.png",
+        "tags": ["CTF", "THJCC"]
+      },
+      {
+        "date": "2026-08",
+        "title": "AIS3 Junior project: Hinkal double-spend",
+        "description": "Simplified the Hinkal double-spend attack and turned it into a challenge.",
+        "type": "make",
+        "image": "/timeline/2026-08-ais3-project.png",
+        "tags": ["AIS3", "Hinkal"]
+      },
+      {
+        "date": "2026-08",
+        "title": "AIS3 Junior",
+        "description": "Met a lot of CS people.",
+        "type": "life",
+        "image": "/timeline/2026-08-ais3.png",
+        "tags": ["AIS3"]
+      },
+      {
+        "date": "2026-07",
+        "title": "Started the first paper",
+        "description": "Began writing it for real.",
+        "type": "make",
+        "image": "/timeline/2026-07-paper.png",
+        "tags": ["Research"]
+      },
+      {
+        "date": "2026-07",
+        "title": "First game: Tactica Universalis",
+        "description": "Started making Tactica Universalis.",
+        "type": "make",
+        "image": "/timeline/2026-07-tactica.png",
+        "tags": ["Game"]
+      },
+      {
+        "date": "2026-07",
+        "title": "Second APCS exam",
+        "description": "Practiced a few problems, then scored 4 on concepts and 3 on implementation.",
+        "type": "record",
+        "image": "/timeline/2026-07-apcs.png",
+        "tags": ["APCS"]
+      },
+      {
+        "date": "2026-04",
+        "title": "Started looking at ML",
+        "description": "Touched backpropagation a bit, but I was mainly into LLMs then.",
+        "type": "study",
+        "image": "/timeline/2026-04-ml.png",
+        "tags": ["ML", "LLM"]
+      },
+      {
+        "date": "2026-03",
+        "title": "MIT advanced cryptography course",
+        "description": "Got curious and looked at ZKP.",
+        "type": "study",
+        "image": "/timeline/2026-03-mit-crypto.png",
+        "tags": ["Cryptography", "ZKP"]
+      },
+      {
+        "date": "2026-02",
+        "title": "Read the Bitcoin whitepaper",
+        "description": "That started a stretch of reading classic papers.",
+        "type": "study",
+        "image": "/timeline/2026-02-whitepaper.png",
+        "tags": ["Bitcoin", "Papers"]
+      },
+      {
+        "date": "2026-02",
+        "title": "Peking University blockchain course",
+        "description": "Got interested in how the tech actually works.",
+        "type": "study",
+        "image": "/timeline/2026-02-blockchain.png",
+        "tags": ["Blockchain"]
+      },
+      {
+        "date": "2026-02",
+        "title": "First APCS exam",
+        "description": "Went in cold. Concepts 3, implementation 1.",
+        "type": "record",
+        "image": "/timeline/2026-02-apcs.png",
+        "tags": ["APCS"]
+      },
+      {
+        "date": "2026-02",
+        "title": "THJCC Winter (first CTF)",
+        "description": "Knew almost nothing. Finished 61/80.",
+        "type": "record",
+        "image": "/timeline/2026-02-thjcc-winter.png",
+        "tags": ["CTF", "THJCC"]
+      },
+      {
+        "date": "2026-01",
+        "title": "Started looking at CTF",
+        "description": "Picked up a bit of the surrounding material.",
+        "type": "study",
+        "image": "/timeline/2026-01-ctf.png",
+        "tags": ["CTF"]
+      },
+      {
+        "date": "2025-12",
+        "title": "Built a Discord honeypot bot",
+        "description": "Automatically detects and bans accounts that spam messages.",
+        "type": "make",
+        "image": "/timeline/2025-12-honeypot.png",
+        "imagePresentation": "logo",
+        "tags": ["Discord"]
+      },
+      {
+        "date": "2025-12",
+        "title": "NCHU reinforcement learning prep course",
+        "description": "It felt too easy later, so I moved on to other open courses.",
+        "type": "study",
+        "image": "/timeline/2025-12-rl.png",
+        "tags": ["Reinforcement learning"]
+      },
+      {
+        "date": "2025-12",
+        "title": "First programming language: C++",
+        "description": "This is where writing code started.",
+        "type": "study",
+        "image": "/timeline/2025-12-cpp.png",
+        "tags": ["C++"]
+      },
+      {
+        "date": "2025-11",
+        "title": "Started looking at CS",
+        "description": "Walked into this path for real.",
+        "type": "study",
+        "image": "/timeline/2025-11-cs.png",
+        "tags": ["CS"]
+      },
+      {
+        "date": "2025-05",
+        "title": "Paused YouTube updates",
+        "description": "The channel went quiet for a while.",
+        "type": "record",
+        "image": "/timeline/2025-05-yt-pause.png",
+        "tags": ["YouTube"]
+      },
+      {
+        "date": "2024-11",
+        "title": "Took graphic design commissions",
+        "description": "Private work, mostly channel thumbnails.",
+        "type": "make",
+        "image": "/timeline/2024-11-design.png",
+        "tags": ["Design"]
+      },
+      {
+        "date": "2024-07",
+        "title": "Joined the BrawlKuma community",
+        "description": "Met a lot of people through Brawl Stars.",
+        "type": "life",
+        "image": "/timeline/2024-07-brawlkuma.png",
+        "tags": ["Brawl Stars"]
+      },
+      {
+        "date": "2023-06",
+        "title": "Highest-view video",
+        "description": "Posted the most-watched video on the channel.",
+        "type": "record",
+        "image": "/timeline/2023-06-yt-peak.png",
+        "tags": ["YouTube"]
+      },
+      {
+        "date": "2021-12",
+        "title": "Started game-related media",
+        "description": "The channel shifted toward games.",
+        "type": "make",
+        "image": "/timeline/2021-12-game-media.png",
+        "tags": ["YouTube", "Games"]
+      },
+      {
+        "date": "2021-09",
+        "title": "Started a YouTube channel",
+        "description": "Began posting for real.",
+        "type": "make",
+        "image": "/timeline/2021-09-youtube.png",
+        "imageScale": 0.72,
+        "tags": ["YouTube"]
+      },
+      {
+        "date": "2021-08",
+        "title": "Started a Discord server",
+        "description": "Put people in one place.",
+        "type": "life",
+        "image": "/timeline/2021-08-discord.png",
+        "imagePresentation": "logo",
+        "tags": ["Discord"]
+      },
+      {
+        "date": "2021-07",
+        "title": "Started learning video editing",
+        "description": "It began with cutting footage.",
+        "type": "study",
+        "image": "/timeline/2021-07-editing.png",
+        "imageScale": 0.68,
+        "tags": ["Editing"]
+      }
+    ]
+  },
+  "skills": [
+    "Cryptography",
+    "Reinforcement learning",
+    "blockchain",
+    "Unity",
+    "Multiagent Systems"
+  ],
+  "aboutExperiences": {
+    "title": "A few contests and things I've done (I don't have much .w.)",
+    "items": [
+      "2026 THJCC summer CTF — student division Rk.14/71, overall Rk.65/679",
+      "AIS3 Junior 2026",
+      "APCS 4 + 3"
+    ]
+  },
+  "friends": {
+    "items": [
+      {
+        "name": "A friend's name",
+        "url": "https://example.com",
+        "description": "Replace this card with a real friend site and a one-line intro.",
+        "avatar": ""
+      },
+      {
+        "name": "Another friend",
+        "url": "https://example.org",
+        "description": "Add another so the grid has more than one tile.",
+        "avatar": ""
+      }
+    ]
+  },
+  "likes": {
+    "games": [
+      {
+        "title": "Brawl Stars",
+        "hours": "1500 hr",
+        "status": "Pretty much quit",
+        "note": "Played a lot. Barely touch it now."
+      },
+      {
+        "title": "Apex Legends",
+        "hours": "1200 hr",
+        "status": "Quit",
+        "note": "Still can't movement tech."
+      },
+      {
+        "title": "Warframe",
+        "hours": "1000 hr",
+        "status": "Long pause",
+        "note": "Last played about two years ago."
+      },
+      {
+        "title": "Honkai: Star Rail",
+        "hours": "1000 hr",
+        "status": "Still around",
+        "note": "The numbers inflate insanely fast — a hundredfold in two years — but the rewards are still decent, and the stories have been good."
+      },
+      {
+        "title": "Europa Universalis IV",
+        "hours": "1000 hr",
+        "status": "Still boots it up now and then",
+        "note": "Mostly mods now. Vanilla's gotten a bit stale."
+      },
+      {
+        "title": "Arknights",
+        "hours": "500 hr",
+        "status": "Casual",
+        "note": "Mostly the strategy side."
+      },
+      {
+        "title": "Counter-Strike 2",
+        "hours": "150 hr",
+        "status": "Playing a lot lately",
+        "note": "Playing it a lot lately, though I mostly watch matches."
+      }
+    ],
+    "music": [
+      {
+        "title": "Hardstyle",
+        "artist": "Tracks to add",
+        "genre": "Hardstyle",
+        "note": "A genre I listen to a lot. Drop albums or tracks here later."
+      },
+      {
+        "title": "Drum & Bass",
+        "artist": "Tracks to add",
+        "genre": "DnB",
+        "note": "A genre I listen to a lot. Drop albums or tracks here later."
+      }
+    ]
+  },
+  "academic": {
+    "research": [
+      {
+        "title": "DISCERN",
+        "status": "Draft",
+        "description": "Current research draft.",
+        "tags": ["Research"]
+      }
+    ],
+    "papers": []
+  },
+  "reviewerConferences": [],
+  "reviewerJournals": [],
+  "social": {
+    "GitHub": {
+      "name": "GitHub",
+      "url": "https://github.com/MoYan1250",
+      "icon": "github",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "instagram": {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/moyan_1250",
+      "icon": "instagram",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "discord": {
+      "name": "Discord",
+      "url": "#",
+      "copyText": "@moyan1250",
+      "icon": "discord",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "email": {
+      "name": "Email",
+      "url": "mailto:ziknsodardow@gmail.com",
+      "icon": "email",
+      "navbar": false,
+      "content": false,
+      "footer": false
+    }
+  }
+}

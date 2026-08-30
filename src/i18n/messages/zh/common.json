@@ -1,0 +1,344 @@
+{
+    "sections": {
+        "about": "關於我",
+        "selectedProjects": "作品",
+        "checkOutLatestWork": "我做過的事",
+        "research": "研究",
+        "viewFullPublications": "查看完整出版物列表，請前往",
+        "skills": "關鍵詞",
+        "education": "學歷",
+        "workExperience": "經歷",
+        "awards": "獎項與榮譽",
+        "academicServices": "學術服務",
+        "timeline": "時間軸",
+        "diary": "文章",
+        "likes": "收藏",
+        "academic": "學術",
+        "friends": "友站",
+        "explore": "逛逛",
+        "viewAll": "看全部",
+        "news": {
+            "title": "最新動態"
+        },
+        "publications": {
+            "title": "發表論文"
+        },
+        "invitedTalks": {
+            "title": "受邀報告"
+        },
+        "teaching": {
+            "title": "教學",
+            "reviewerConferencesLabel": "會議審稿人：",
+            "reviewerJournalsLabel": "期刊審稿人：",
+            "teachingLabel": "助教："
+        },
+        "contact": "聯絡",
+        "getInTouch": "保持聯絡",
+        "contactDescription": "想聊聊的話，可以找我的 Email、Discord 或 Instagram。",
+        "viaEmail": "透過郵件",
+        "askQuestions": "提問",
+        "exploreCollaboration": "聊聊合作",
+        "coffeeChat": "15 分鐘咖啡聊",
+        "schedule": "預約"
+    },
+    "index": {
+        "cards": {
+            "about": {
+                "title": "關於我",
+                "description": "我是誰，在意什麼。"
+            },
+            "projects": {
+                "title": "作品",
+                "description": "做過的專案索引。"
+            },
+            "timeline": {
+                "title": "時間軸",
+                "description": "走過的紀錄。"
+            },
+            "diary": {
+                "title": "文章",
+                "description": "日記、學習筆記與心得。"
+            },
+            "likes": {
+                "title": "收藏",
+                "description": "常碰的遊戲，還有在聽的音樂。"
+            },
+            "academic": {
+                "title": "學術",
+                "description": "研究與讀過的 paper。"
+            },
+            "friends": {
+                "title": "友站",
+                "description": "好友的聯動網站。"
+            }
+        }
+    },
+    "home": {
+        "kicker": "00 / INDEX",
+        "grid": "PERSONAL INDEX",
+        "title": "MOYAN",
+        "description": "一個普通的高中生。",
+        "stat": "Routes",
+        "profile": "Profile",
+        "focus": "Focus",
+        "since": "Since",
+        "stats": {
+            "diary": "Diary",
+            "projects": "Projects",
+            "timeline": "Timeline",
+            "skills": "Keywords"
+        },
+        "latest": {
+            "code": "06 / WRITING",
+            "title": "最新一篇",
+            "all": "全部文章",
+            "notes": "最近筆記"
+        },
+        "projects": {
+            "code": "Archive / 02",
+            "title": "作品",
+            "all": "全部作品"
+        },
+        "timeline": {
+            "code": "History / 03",
+            "title": "Timeline pulse",
+            "all": "完整時間軸"
+        },
+        "routes": {
+            "code": "Index / 04",
+            "title": "Choose a route"
+        },
+        "readMore": "繼續讀",
+        "cta": {
+            "about": "關於我",
+            "diary": "文章"
+        },
+        "marquee": {
+            "online": "網站 ONLINE",
+            "offline": "網站 OFFLINE",
+            "diary": "Diary",
+            "project": "Project",
+            "timeline": "Timeline"
+        }
+    },
+    "aboutPage": {
+        "kicker": "01 / PROFILE",
+        "grid": "PERSONAL INDEX",
+        "description": "我是誰，在意什麼，怎麼聯絡。",
+        "stat": "Keywords"
+    },
+    "projectsPage": {
+        "kicker": "04 / ARCHIVE",
+        "grid": "PERSONAL INDEX",
+        "description": "做過的專案索引。",
+        "stat": "Projects"
+    },
+    "blogPage": {
+        "kicker": "06 / WRITING",
+        "grid": "PERSONAL INDEX",
+        "description": "日記、學習筆記與心得。",
+        "localeNote": "備註：部分文章尚未提供英文版，英文介面下能看到的篇數會較少。",
+        "stat": "Posts",
+        "readStat": "閱讀時間",
+        "readStatUnit": "分鐘"
+    },
+    "timelineTypes": {
+        "study": "學習",
+        "make": "實作",
+        "life": "生活",
+        "record": "紀錄"
+    },
+    "timelinePage": {
+        "kicker": "05 / LOGBOOK",
+        "grid": "PERSONAL INDEX",
+        "title": "從國中到現在做過的一些事",
+        "description": "雜七雜八的一些 timetemp",
+        "records": "Records",
+        "filter": "Filter",
+        "all": "全部",
+        "empty": "這個分類目前沒有紀錄。",
+        "era": "從 {date} 起"
+    },
+    "friendsPage": {
+        "kicker": "07 / LINKS",
+        "grid": "PERSONAL INDEX",
+        "description": "好友的聯動網站。",
+        "stat": "Links",
+        "visit": "訪問",
+        "search": "搜尋名字、網址或介紹",
+        "empty": "未找到匹配的友站"
+    },
+    "likesPage": {
+        "kicker": "02 / LIKES",
+        "grid": "PERSONAL INDEX",
+        "description": "常碰的遊戲，還有在聽的音樂。",
+        "stat": "Items",
+        "games": "遊戲",
+        "music": "音樂"
+    },
+    "academicPage": {
+        "kicker": "03 / ACADEMIC",
+        "grid": "PERSONAL INDEX",
+        "description": "自己的研究，以及文獻地圖裡讀過的 paper。標籤依標題自動分類，可篩選。",
+        "stat": "Papers",
+        "research": "研究",
+        "papers": "讀過的 paper 或 論文",
+        "papersNote": "有一些沒放進來，然後不是每一篇都有特別精讀過。",
+        "emptyPapers": "這個分類目前沒有 paper。",
+        "filter": "Filter",
+        "all": "全部",
+        "tags": {
+            "marl": "多智能體",
+            "rl": "RL",
+            "games": "電競",
+            "imitation": "模仿學習",
+            "llm": "LLM",
+            "eval": "評估",
+            "comm": "溝通",
+            "deception": "欺騙",
+            "hierarchy": "階層",
+            "pomdp": "部分可觀測",
+            "crypto": "密碼／區塊鏈"
+        },
+        "venue": "會議／期刊：依 venue 自動分等。白皮書、學位論文、純預印本算 Unranked；Nature、Science 與少數開創性工作算 Extraordinary。",
+        "paperNote": "學習筆記",
+        "venues": {
+            "transcendent": "Extraordinary",
+            "top": "Top venue",
+            "flagship": "Flagship",
+            "solid": "Solid",
+            "workshop": "Workshop",
+            "outside": "Unranked"
+        }
+    },
+    "discordCopied": "已複製 Discord：{handle}",
+    "showAll": "顯示全部",
+    "navbar": {
+        "items": [
+            {
+                "href": "/about",
+                "icon": "user",
+                "label": "關於"
+            },
+            {
+                "href": "/likes",
+                "icon": "heart",
+                "label": "收藏"
+            },
+            {
+                "href": "/academic",
+                "icon": "academic",
+                "label": "學術"
+            },
+            {
+                "href": "/projects",
+                "icon": "folder",
+                "label": "作品"
+            },
+            {
+                "href": "/timeline",
+                "icon": "calendar",
+                "label": "時間軸"
+            },
+            {
+                "href": "/diary",
+                "icon": "notebook",
+                "label": "文章"
+            },
+            {
+                "href": "/friends",
+                "icon": "users",
+                "label": "友站"
+            }
+        ],
+        "theme": "主題",
+        "language": "語言",
+        "search": "搜尋"
+    },
+    "search": {
+        "button": "搜尋",
+        "placeholder": "搜尋頁面、文章、作品、時間軸…",
+        "hint": "輸入關鍵字搜尋這個網站",
+        "empty": "找不到相關內容",
+        "groups": {
+            "page": "頁面",
+            "diary": "文章",
+            "project": "作品",
+            "timeline": "時間軸",
+            "friend": "友站",
+            "skill": "關鍵詞",
+            "likes": "收藏",
+            "academic": "學術"
+        }
+    },
+    "blog": {
+        "title": "文章",
+        "titleWithName": "{name}的文章",
+        "readMore": "繼續讀",
+        "authorLabel": "作者",
+        "readingTime": "{minutes} 分鐘閱讀",
+        "filter": "標籤",
+        "all": "全部",
+        "empty": "這個標籤目前沒有文章。",
+        "categories": {
+            "diary": "日記",
+            "notes": "學習筆記",
+            "review": "心得",
+            "writeup": "Writeup"
+        },
+        "toc": {
+            "title": "目錄",
+            "toggle": "切換目錄",
+            "close": "關閉目錄",
+            "empty": "暫無目錄",
+            "zoomLabel": "縮放",
+            "zoomIn": "放大",
+            "zoomOut": "縮小",
+            "zoomReset": "重設縮放",
+            "collapse": "收起目錄",
+            "expand": "展開目錄"
+        },
+        "pagination": {
+            "previous": "上一頁",
+            "next": "下一頁",
+            "pageInfo": "第 {current} 頁／共 {total} 頁",
+            "previousLabel": "前往上一頁",
+            "nextLabel": "前往下一頁"
+        }
+    },
+    "footer": {
+        "navigation": {
+            "about": "關於",
+            "projects": "作品",
+            "timeline": "時間軸",
+            "diary": "日記"
+        },
+        "sections": {
+            "quickNavigation": "導覽",
+            "connect": "連結",
+            "resources": "資源",
+            "discover": "發現",
+            "contact": "聯絡"
+        },
+        "resources": [
+            {
+                "name": "文章",
+                "url": "/diary"
+            }
+        ],
+        "discover": [],
+        "contact": {
+            "support": "Email"
+        },
+        "legal": {
+            "allRightsReserved": "保留所有權利",
+            "privacyPolicy": "隱私政策",
+            "termsDisclaimer": "條款與免責聲明"
+        },
+        "bottom": {
+            "lastUpdated": "最後更新",
+            "madeWith": "用",
+            "modifiedFrom": "修改自"
+        }
+    }
+}

@@ -1,0 +1,339 @@
+{
+    "sections": {
+        "about": "About",
+        "selectedProjects": "Projects",
+        "checkOutLatestWork": "Things I have made",
+        "research": "Research",
+        "viewFullPublications": "View the full list of my publications on",
+        "skills": "Keywords",
+        "education": "Education",
+        "workExperience": "Experience",
+        "awards": "Awards & Honors",
+        "academicServices": "Academic Services",
+        "timeline": "Timeline",
+        "diary": "Writing",
+        "likes": "Likes",
+        "academic": "Academic",
+        "friends": "Friends",
+        "explore": "Explore",
+        "viewAll": "View all",
+        "news": {
+            "title": "Latest News"
+        },
+        "publications": {
+            "title": "Publications"
+        },
+        "invitedTalks": {
+            "title": "Invited Talks"
+        },
+        "teaching": {
+            "title": "Teaching",
+            "reviewerConferencesLabel": "Conference Reviewer:",
+            "reviewerJournalsLabel": "Journal Reviewer:",
+            "teachingLabel": "Teaching Assistant:"
+        },
+        "contact": "Contact",
+        "getInTouch": "Get in Touch",
+        "contactDescription": "Want to chat? Reach me by email, Discord, or Instagram.",
+        "viaEmail": "via email",
+        "askQuestions": "Ask questions",
+        "exploreCollaboration": "Explore collaboration opportunities",
+        "coffeeChat": "15-minute coffee chat",
+        "schedule": "Schedule"
+    },
+    "index": {
+        "cards": {
+            "about": {
+                "title": "About",
+                "description": "Who I am and what I care about."
+            },
+            "projects": {
+                "title": "Projects",
+                "description": "An index of things I have built."
+            },
+            "timeline": {
+                "title": "Timeline",
+                "description": "A record of where I have been."
+            },
+            "diary": {
+                "title": "Writing",
+                "description": "Diary, study notes, and reflections."
+            },
+            "likes": {
+                "title": "Likes",
+                "description": "Games I play and music I listen to."
+            },
+            "academic": {
+                "title": "Academic",
+                "description": "Research and papers I have read."
+            },
+            "friends": {
+                "title": "Friends",
+                "description": "Friends' linked sites."
+            }
+        }
+    },
+    "home": {
+        "kicker": "00 / INDEX",
+        "grid": "PERSONAL INDEX",
+        "title": "MOYAN",
+        "description": "An ordinary high school student.",
+        "stat": "Routes",
+        "profile": "Profile",
+        "focus": "Focus",
+        "since": "Since",
+        "stats": {
+            "diary": "Diary",
+            "projects": "Projects",
+            "timeline": "Timeline",
+            "skills": "Keywords"
+        },
+        "latest": {
+            "code": "06 / WRITING",
+            "title": "Latest Post",
+            "all": "All posts",
+            "notes": "Latest notes"
+        },
+        "projects": {
+            "code": "Archive / 02",
+            "title": "Projects",
+            "all": "All projects"
+        },
+        "timeline": {
+            "code": "History / 03",
+            "title": "Timeline pulse",
+            "all": "Full timeline"
+        },
+        "routes": {
+            "code": "Index / 04",
+            "title": "Choose a route"
+        },
+        "readMore": "Read more",
+        "cta": {
+            "about": "About me",
+            "diary": "Writing"
+        },
+        "marquee": {
+            "online": "SITE ONLINE",
+            "offline": "SITE OFFLINE",
+            "diary": "Diary",
+            "project": "Project",
+            "timeline": "Timeline"
+        }
+    },
+    "aboutPage": {
+        "kicker": "01 / PROFILE",
+        "grid": "PERSONAL INDEX",
+        "description": "Who I am, what I care about, and how to reach me.",
+        "stat": "Keywords"
+    },
+    "projectsPage": {
+        "kicker": "04 / ARCHIVE",
+        "grid": "PERSONAL INDEX",
+        "description": "An index of things I have built.",
+        "stat": "Projects"
+    },
+    "blogPage": {
+        "kicker": "06 / WRITING",
+        "grid": "PERSONAL INDEX",
+        "description": "Diary entries, study notes, and reflections.",
+        "localeNote": "Note: Some posts don't have an English version yet, so you'll see fewer entries here.",
+        "stat": "Posts",
+        "readStat": "Read time",
+        "readStatUnit": "min"
+    },
+    "timelineTypes": {
+        "study": "Study",
+        "make": "Build",
+        "life": "Life",
+        "record": "Record"
+    },
+    "timelinePage": {
+        "kicker": "05 / LOGBOOK",
+        "grid": "PERSONAL INDEX",
+        "title": "Things I've done since middle school",
+        "description": "A messy mix of timetemp",
+        "records": "Records",
+        "filter": "Filter",
+        "all": "All",
+        "empty": "Nothing in this category yet.",
+        "era": "From {date}"
+    },
+    "friendsPage": {
+        "kicker": "07 / LINKS",
+        "grid": "PERSONAL INDEX",
+        "description": "Friends' linked sites.",
+        "stat": "Links",
+        "visit": "Visit",
+        "search": "Search by name, URL, or note",
+        "empty": "No matching friends"
+    },
+    "likesPage": {
+        "kicker": "02 / LIKES",
+        "grid": "PERSONAL INDEX",
+        "description": "Games I play and music I listen to.",
+        "stat": "Items",
+        "games": "Games",
+        "music": "Music"
+    },
+    "academicPage": {
+        "kicker": "03 / ACADEMIC",
+        "grid": "PERSONAL INDEX",
+        "description": "My research, and papers from the reading map. Tags are inferred from titles and can be filtered.",
+        "stat": "Papers",
+        "research": "Research",
+        "papers": "Papers or writings I have read",
+        "papersNote": "Some are missing, and not every one was read closely.",
+        "emptyPapers": "No papers in this tag.",
+        "filter": "Filter",
+        "all": "All",
+        "tags": {
+            "marl": "Multi-agent",
+            "rl": "RL",
+            "games": "Esports",
+            "imitation": "Imitation",
+            "llm": "LLM",
+            "eval": "Evaluation",
+            "comm": "Communication",
+            "deception": "Deception",
+            "hierarchy": "Hierarchy",
+            "pomdp": "POMDP",
+            "crypto": "Crypto"
+        },
+        "venue": "Venue rank is inferred automatically. White papers, theses, and preprint-only items are Unranked; Nature, Science, and a few founding works are Extraordinary.",
+        "paperNote": "Study notes",
+        "venues": {
+            "transcendent": "Extraordinary",
+            "top": "Top venue",
+            "flagship": "Flagship",
+            "solid": "Solid",
+            "workshop": "Workshop",
+            "outside": "Unranked"
+        }
+    },
+    "discordCopied": "Copied Discord: {handle}",
+    "showAll": "Show All",
+    "navbar": {
+        "items": [
+            {
+                "href": "/about",
+                "icon": "user",
+                "label": "About"
+            },
+            {
+                "href": "/likes",
+                "icon": "heart",
+                "label": "Likes"
+            },
+            {
+                "href": "/academic",
+                "icon": "academic",
+                "label": "Academic"
+            },
+            {
+                "href": "/projects",
+                "icon": "folder",
+                "label": "Projects"
+            },
+            {
+                "href": "/timeline",
+                "icon": "calendar",
+                "label": "Timeline"
+            },
+            {
+                "href": "/diary",
+                "icon": "notebook",
+                "label": "Writing"
+            },
+            {
+                "href": "/friends",
+                "icon": "users",
+                "label": "Friends"
+            }
+        ],
+        "theme": "Theme",
+        "language": "Language",
+        "search": "Search"
+    },
+    "search": {
+        "button": "Search",
+        "placeholder": "Search pages, writing, projects, timeline…",
+        "hint": "Type to search this site",
+        "empty": "No matching results",
+        "groups": {
+            "page": "Pages",
+            "diary": "Writing",
+            "project": "Projects",
+            "timeline": "Timeline",
+            "friend": "Friends",
+            "skill": "Keywords",
+            "likes": "Likes",
+            "academic": "Academic"
+        }
+    },
+    "blog": {
+        "title": "Writing",
+        "titleWithName": "{name}'s writing",
+        "readMore": "Read more",
+        "authorLabel": "by",
+        "readingTime": "{minutes} min read",
+        "filter": "Tags",
+        "all": "All",
+        "empty": "Nothing in this tag yet.",
+        "categories": {
+            "diary": "Diary",
+            "notes": "Study notes",
+            "review": "Reflections",
+            "writeup": "Writeup"
+        },
+        "toc": {
+            "title": "Table of Contents",
+            "toggle": "Toggle table of contents",
+            "close": "Close table of contents",
+            "empty": "No table of contents available",
+            "zoomLabel": "Zoom",
+            "zoomIn": "Zoom in",
+            "zoomOut": "Zoom out",
+            "zoomReset": "Reset zoom",
+            "collapse": "Collapse table of contents",
+            "expand": "Expand table of contents"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next",
+            "pageInfo": "Page {current} of {total}",
+            "previousLabel": "Go to previous page",
+            "nextLabel": "Go to next page"
+        }
+    },
+    "footer": {
+        "navigation": {
+            "about": "About",
+            "projects": "Projects",
+            "timeline": "Timeline",
+            "diary": "Diary"
+        },
+        "sections": {
+            "quickNavigation": "Navigate",
+            "connect": "Connect",
+            "resources": "Resources",
+            "discover": "Discover",
+            "contact": "Contact"
+        },
+        "resources": [
+            {
+                "name": "Writing",
+                "url": "/diary"
+            }
+        ],
+        "discover": [],
+        "contact": {
+            "support": "Email"
+        },
+        "bottom": {
+            "lastUpdated": "Last updated",
+            "madeWith": "Made with",
+            "modifiedFrom": "Built from"
+        }
+    }
+}

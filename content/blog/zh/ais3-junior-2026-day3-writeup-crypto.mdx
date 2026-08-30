@@ -1,0 +1,523 @@
+---
+title: "AIS3 Junior 2026 Day3 Writeup : Crypto"
+date: "2026-08-06"
+summary: "AIS3 Junior 2026 第三天 Crypto 題解：凱薩密碼、頻率分析、RSA 與作業題。"
+category: writeup
+---
+
+## Crypto
+
+### Crypto-1
+
+> 這題是凱薩密碼
+> 總共有 26 個英文字母
+
+![image](https://hackmd.io/_uploads/rJrKnDWUfl.png)
+
+shift = 5
+
+那我先往後 shift 五位看看
+
+`QYI3{udshofje}`
+
+格式不正確
+
+不對，他的 shift 5 是 "加密"，我現在要做的是解密
+
+倒著算應該是要 26-5=21，往前 shift 21，超過 Z 的時候會跑回 A
+
+這樣就得到 flag 了
+
+`AIS3{encrypto}`
+
+### Crypto-2
+
+> 這題依舊是凱薩密碼
+
+![image](https://hackmd.io/_uploads/ryRZ0P-Uzl.png)
+
+這次的題目是說 "解密"
+
+所以往後移六位就好了
+
+`AIS3{3nCrypto}`
+
+### Crypto-3
+
+> 這次沒給 shift 及加/解密 提示
+
+![image](https://hackmd.io/_uploads/S1u81OWUfx.png)
+
+已知 flag 的格式為 `AIS3{}`
+
+所以只要讓開頭的 **J** 變成 A 就好了
+
+向前移跟向後移都可以得到答案
+
+向前 shift 17 得到 `AIS3{kn0wn_p1aintext}`
+
+向後 shift 9 得到 `AIS3{kn0wn_p1aintext}`
+
+答案一樣
+
+### Crypto-4
+
+> 使用 CyberChef 輔助
+
+向後 shift 11 得到 flag `AIS3{brut3_f0rce}`
+
+![image](https://hackmd.io/_uploads/BknPzd-Ifl.png)
+
+### Crypto-5
+
+> 這邊主要要分析頻率及嘗試的替換式密文
+
+![image](https://hackmd.io/_uploads/B1XRz_WIMl.png)
+
+![image](https://hackmd.io/_uploads/HJdbmObUGx.png)
+
+注意到有一個單格的，把他取代成 A
+
+![image](https://hackmd.io/_uploads/HJWUV5bUfg.png)
+
+頻率最高的是 M，對應的可能是 E
+
+![image](https://hackmd.io/_uploads/HJEDNqWUfe.png)
+
+有一個 A?E，感覺是 ARE
+
+![image](https://hackmd.io/_uploads/ryFA4cb8Gl.png)
+
+常見的還有像是 CAN
+
+?A? 的只有一個，把他換成 CAN
+
+![image](https://hackmd.io/_uploads/HyEgr5bLGx.png)
+
+沒有衝突
+
+C????N，他中間是回文那我猜 COMMON
+
+![image](https://hackmd.io/_uploads/B1zUHcbIzl.png)
+
+NO? -> NOT
+
+S -> T
+
+![image](https://hackmd.io/_uploads/rJ1wU5b8zl.png)
+
+只有一個是兩個空格，我猜是 IS
+
+?? -> IS
+
+FB -> IS
+
+![image](https://hackmd.io/_uploads/B1xqI5ZIzx.png)
+
+第一個單字看來是 ENGLISH
+
+![image](https://hackmd.io/_uploads/H1ER8qbUfg.png)
+
+anal?sis google 搜一下
+
+![image](https://hackmd.io/_uploads/r1cTwO-Lfl.png)
+
+自動補到 analysis
+
+![image](https://hackmd.io/_uploads/r1IgvqW8Gx.png)
+
+?HY -> WHY
+
+![image](https://hackmd.io/_uploads/HytNvq-LGx.png)
+
+SIM?LE -> SIMPLE
+
+![image](https://hackmd.io/_uploads/BkBHPcbLGe.png)
+
+?REA? -> BREAK 沒衝突
+
+![image](https://hackmd.io/_uploads/Hy11_9b8Me.png)
+
+看語意，第二段第一個單字應該是頻率 "FREQUENCY"
+
+成功拿到 flag
+
+![image](https://hackmd.io/_uploads/Hyt9cdZUfe.png)
+
+### Crypto-6
+
+> RSA 相關
+
+![image](https://hackmd.io/_uploads/Bk9Idq-UMe.png)
+
+簡單來講就是要 RSA 倒推回來
+
+已知
+
+```
+n = 5767
+p = 73
+e = 7
+c = 4780
+```
+
+照著公式去寫就好了
+
+pow 處理同餘
+
+助教給的
+
+![image](https://hackmd.io/_uploads/Hy2iY9WLze.png)
+
+```
+q = n/p
+phi = (p-1)*(q-1)
+d = pow(e,-1,phi)
+m = pow(c,d,n)
+
+printf("AIS3" + "{" + m + "}")
+```
+
+運行不了，助教幫我看了一下 (code 的問題)
+
+1. q 要為整數，直接除會小數，改成 `int q = n/p`
+2. print 不用加 f
+3. m 不能直接 +，使用 str() 轉成字串
+
+**完整 code**
+
+```python
+n = 5767
+p = 73
+e = 7
+c = 4780
+
+# q = n/p
+q = int(n/p)
+phi = (p-1)*(q-1)
+d = pow(e,-1,phi)
+m = pow(c,d,n)
+
+print("AIS3" + "{" + str(m) + "}")
+```
+
+運行即可得到 `AIS3{1337}`
+
+### Crypto-7
+
+> 上一題的變形
+
+![image](https://hackmd.io/_uploads/HkAwsqW8Mx.png)
+
+**初始**
+
+```
+n = 10807
+e = 7
+c = 1220
+```
+
+n 不大，直接硬算就行了
+
+```python
+for p in range(2, int(n**0.5) + 1):
+    if n % p == 0:
+        q = n // p
+        break
+
+phi = (p - 1) * (q - 1)
+d = pow(e, -1, phi)
+m = pow(c, d, n)
+
+print(f"p = {p}")
+print(f"q = {q}")
+print(f"phi = {phi}")
+print(f"d = {d}")
+print(f"m = {m}")
+print(f"\nFlag: AIS3{{{m}}}")
+```
+
+得到 `AIS3{7331}`
+
+### Crypto-8
+
+> 超級大數
+
+![image](https://hackmd.io/_uploads/Hkxe-1G8Ge.png)
+
+他的 n 跟 c 是大數，但是 e 非常小
+
+*公式：c ≡ m^e mod N*
+
+e = 3，那麼可以對 c 直接開立方根
+
+只不過在實作上，會需要用二分搜尋來開三次方根，避免浮點數的誤差
+
+claude 支援 code 部分
+
+```python
+n = 10000000000000000000000006692600000000000000000000673971373
+e = 3
+c = 104113716851630291574772668658086347914139279774012288613
+
+
+def integer_nth_root(x: int, n: int) -> int:
+    """回傳 floor(x^(1/n))，用二分搜尋避免浮點數誤差。"""
+    if x == 0:
+        return 0
+    lo, hi = 0, 1 << ((x.bit_length() // n) + 1)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if mid ** n <= x:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+
+
+m = integer_nth_root(c, e)
+
+assert m ** e == c, "開根失敗，c 可能已對 n 取模，需改用其他攻擊法"
+
+pt_bytes = m.to_bytes((m.bit_length() + 7) // 8, byteorder="big")
+
+print("m (整數) =", m)
+print("明文 (bytes) =", pt_bytes)
+print("明文 (str)   =", pt_bytes.decode())
+```
+
+轉 bytes 就得到 `AIS3{e3}`
+
+## HW
+
+### Crypto-HW-01
+
+> 這題看起來是某種加密，但我不知道這啥
+
+![image](https://hackmd.io/_uploads/ryZ6fjW8zx.png)
+
+我直接丟 google 搜圖
+
+![image](https://hackmd.io/_uploads/S1uofiWUGx.png)
+
+![image](https://hackmd.io/_uploads/ByC4Xo-Ufe.png)
+
+我查了一下資料，他是用格子對應圖來做簡單的替換式加密
+
+圖來自維基百科
+
+![image](https://hackmd.io/_uploads/r1WiXo-Ifx.png)
+
+數字沒有變形，對照著就可以直接解開
+
+`AIS3{P1GPEN_L00KUP}`
+
+### Crypto-HW-02
+
+`沒有提示`
+
+![image](https://hackmd.io/_uploads/H1v7HabUMg.png)
+
+`QkZXWEVNIEJUUEJTRlNUU0ZIUSBKRktNQiBFTVNTTU9CIFBUUyBFTVJWQiBFUlFEVFJETSBCU1JTRkJTRkdCLiBLTUdIS00gU0pNIFBSQk02NCBFUklNTyBVRk9CUyBTSk1RIEJIRUFNIFNKTSBHRlhKTU8uIFNKTSBVRVJEIEZCIFJGQjN7UDY0X1NKTVFfVVJ9Lg==`
+
+看起來不像是加密，比較像是編碼
+
+先用 CyberChef from base64 轉
+
+![image](https://hackmd.io/_uploads/ByydHpZIGe.png)
+
+成功看到 `{}`，目標是要讓前面的變成 AIS3
+
+嘗試使用凱薩密碼去 shift，但每一個都不行
+
+看來是替換式加密
+
+快一點的方法，使用 quippiuq.com
+
+![image](https://hackmd.io/_uploads/BkwZIpbUGl.png)
+
+跑了一百多次找到 flag
+
+![image](https://hackmd.io/_uploads/HJ0EIabIGx.png)
+
+### Crypto-HW-03
+
+> 這題要寫個 code
+
+![image](https://hackmd.io/_uploads/r1GuD6Z8Mg.png)
+
+每行的 shift 未知，但同一行內固定
+
+對每一行都去窮舉 shift 解密，只要解出的內容符合 `AIS3{}` 的格式就記錄下來
+
+統計所有解出的 flag 內容出現次數，出現次數為 1 的就是真正的 flag，其餘 9999 個都是假 flag
+
+挺麻煩的，claude 支援
+
+```python
+import re
+
+def caesar_decode(s, shift):
+    result = []
+    for c in s:
+        if 'a' <= c <= 'z':
+            result.append(chr((ord(c) - ord('a') - shift) % 26 + ord('a')))
+        elif 'A' <= c <= 'Z':
+            result.append(chr((ord(c) - ord('A') - shift) % 26 + ord('A')))
+        else:
+            result.append(c)
+    return ''.join(result)
+
+INPUT_FILE = 'challenge.txt'  # 放同一目錄下
+
+with open(INPUT_FILE) as f:
+    lines = f.readlines()
+
+flag_counts = {}
+flag_source_line = {}
+
+for line in lines:
+    line = line.rstrip('\n')
+    for shift in range(26):
+        dec = caesar_decode(line, shift)
+        m = re.search(r'AIS3\{[^}]*\}', dec)
+        if m:
+            flag = m.group(0)
+            flag_counts[flag] = flag_counts.get(flag, 0) + 1
+            flag_source_line.setdefault(flag, dec)
+            break  # 找到符合格式的位移就停止，換下一行
+
+# 出現次數最少（=1）的就是真正的 flag
+real_flag = min(flag_counts, key=lambda k: flag_counts[k])
+
+print("所有解出的 flag 與出現次數：")
+for flag, cnt in sorted(flag_counts.items(), key=lambda x: x[1]):
+    print(f"  {cnt:5d}  {flag}")
+
+print()
+print("真正的 flag：", real_flag)
+print("該行解密後內容：", flag_source_line[real_flag])
+```
+
+得到 flag
+
+`AIS3{c4es_ar0k}`
+
+### Crypto-HW-04
+
+![image](https://hackmd.io/_uploads/Hy-BFTbLzx.png)
+
+已知
+
+```
+n = 21968021
+e = 17
+c = 5854946
+```
+
+先查 factordb 得知
+
+![image](https://hackmd.io/_uploads/BJh-oabIMg.png)
+
+照著公式寫就差不多了
+
+```python
+n = 21968021
+p = 5323
+q = 4127
+e = 17
+c = 5854946
+
+phi = (p-1)*(q-1)
+d = pow(e,-1,phi)
+m = pow(c,d,n)
+
+print(str(m))
+```
+
+得到 flag
+
+`AIS3{m}` -> `AIS3{90210}`
+
+### Crypto-HW-05
+
+> 原理完全跟 Crypto-8 一樣
+
+![image](https://hackmd.io/_uploads/BkZy00W8Mg.png)
+
+已知
+
+```
+n = 468359974447286090812229949402868393194905269978966009744154040701149709191284286159384127221110732613
+e = 3
+c = 138390867184400671369429485315529066403913401512756077717260811128013885680231233545090894181
+```
+
+依舊 claude 支援 code 部分
+
+```python
+# 檢查 x 是否為負數，RSA 中的密文不能是負數，除非是０，因為０的任何次方根都是０
+
+def integer_nth_root(x: int, n: int) -> int:
+
+    if x < 0:
+        raise ValueError("x must be non-negative")
+    if x == 0:
+        return 0
+
+ # 二分搜尋找ｎ次方根
+    lo, hi = 0, 1 << ((x.bit_length() // n) + 1)
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if mid ** n <= x:
+            lo = mid
+        else:
+            hi = mid - 1
+    return lo
+
+ # 立方根攻擊
+def cube_root_attack(n: int, e: int, c: int):
+
+    root = integer_nth_root(c, e)
+
+    if root ** e == c:
+        return root
+    return None
+
+ # 把數字轉 bytes
+def int_to_bytes(m: int) -> bytes:
+    length = (m.bit_length() + 7) // 8
+    return m.to_bytes(length, byteorder="big")
+
+def main():
+    n = 468359974447286090812229949402868393194905269978966009744154040701149709191284286159384127221110732613
+    e = 3
+    c = 138390867184400671369429485315529066403913401512756077717260811128013885680231233545090894181
+
+ # 計算m
+    m = cube_root_attack(n, e, c)
+
+ # 嘗試開根
+    if m is None:
+        print("[-] 直接開根失敗")
+        print("c 可能已經對 n 取模過")
+        return
+
+    print(f"[+] 還原出的明文 m (整數) = {m}")
+
+# 嘗試轉文字
+    try:
+        pt_bytes = int_to_bytes(m)
+        print(f"[+] 明文 (bytes) = {pt_bytes}")
+        print(f"[+] 明文 (str)   = {pt_bytes.decode()}")
+    except Exception as err:
+        print(f"[-] 轉換成文字失敗: {err}")
+
+
+if __name__ == "__main__":
+    main()
+```
+
+途中會再把結果轉回 bytes，如 Crypto-8
+
+得到 flag `AIS3{cu6e_rt}`

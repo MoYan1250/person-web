@@ -1,0 +1,454 @@
+{
+  "news": {
+    "items": []
+  },
+  "projects": {
+    "items": [
+      {
+        "title": "個人網站",
+        "href": "/",
+        "dates": "2026.8",
+        "active": true,
+        "description": "這個網站：中英雙語的個人索引，收錄作品、時間軸與日記。",
+        "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
+        "authors": "",
+        "links": [],
+        "image": "/projects/personal-site.png",
+        "video": ""
+      },
+      {
+        "title": "Hinkal 雙花：本地簡化復現",
+        "dates": "2026.8",
+        "active": true,
+        "description": "以太坊上的隱私池協議 Hinkal，在 2026 年 7 月發生雙花攻擊。這是該事件的簡化復現：智能合約有上鏈，只把規模縮小、改在本地跑。",
+        "technologies": ["ZK", "Smart contracts", "Solidity", "Ethereum"],
+        "authors": "",
+        "links": [],
+        "image": "/projects/hinkal.png",
+        "video": ""
+      },
+      {
+        "title": "戰術寰宇",
+        "dates": "2026.7",
+        "active": true,
+        "description": "P 社風格的 CS2 歷史、戰術模擬與戰隊經理遊戲。用爬蟲抓上百位選手的數據並量化。",
+        "technologies": ["CS2"],
+        "authors": "",
+        "links": [],
+        "image": "/timeline/tactica-universalis.png",
+        "video": ""
+      },
+      {
+        "title": "Discord 蜜罐機器人",
+        "dates": "2025.12",
+        "active": true,
+        "description": "自己搭的 Discord 蜜罐機器人，會自動偵測並封禁濫發訊息的帳號。",
+        "technologies": ["Discord"],
+        "authors": "",
+        "links": [],
+        "image": "/projects/discord-honeypot.png",
+        "video": ""
+      }
+    ]
+  },
+  "publications": {
+    "items": []
+  },
+  "education": {
+    "items": [
+      {
+        "school": "你的學校",
+        "href": "",
+        "degree": "學位／科系",
+        "logoUrl": "",
+        "start": "20XX",
+        "end": "20XX"
+      }
+    ]
+  },
+  "work": {
+    "items": []
+  },
+  "awards": {
+    "items": []
+  },
+  "invitedTalks": {
+    "items": []
+  },
+  "teaching": {
+    "items": []
+  },
+  "timeline": {
+    "items": [
+      {
+        "date": "2026-08",
+        "title": "創建個人網站",
+        "description": "把作品、時間軸跟文章收成一個站。",
+        "type": "make",
+        "image": "/timeline/2026-08-site.png",
+        "imagePresentation": "logo",
+        "tags": ["Next.js", "Personal site"],
+        "links": [{ "label": "這個網站", "href": "/" }]
+      },
+      {
+        "date": "2026-08",
+        "title": "完善 AIS3 Junior 專題",
+        "description": "加上 ZK 電路跟智能合約，只簡化規模。",
+        "type": "make",
+        "image": "/timeline/2026-08-hinkal.png",
+        "tags": ["ZK", "Smart contracts"]
+      },
+      {
+        "date": "2026-08",
+        "title": "戰術寰宇 demo 完成",
+        "description": "第一款遊戲的 demo 做出來了。",
+        "type": "make",
+        "image": "/timeline/tactica-universalis.png",
+        "tags": ["Tactica Universalis"]
+      },
+      {
+        "date": "2026-08",
+        "title": "THJCC Summer",
+        "description": "經歷 AIS3 Junior 之後，終於有基本的資安能力了。",
+        "type": "record",
+        "image": "/timeline/2026-08-thjcc-summer.png",
+        "tags": ["CTF", "THJCC"]
+      },
+      {
+        "date": "2026-08",
+        "title": "AIS3 Junior 專題：Hinkal 雙花",
+        "description": "把 Hinkal 雙花攻擊簡化後出成題目。",
+        "type": "make",
+        "image": "/timeline/2026-08-ais3-project.png",
+        "tags": ["AIS3", "Hinkal"]
+      },
+      {
+        "date": "2026-08",
+        "title": "參加 AIS3 Junior",
+        "description": "認識了一堆資訊佬。",
+        "type": "life",
+        "image": "/timeline/2026-08-ais3.png",
+        "tags": ["AIS3"]
+      },
+      {
+        "date": "2026-07",
+        "title": "開始寫第一篇論文",
+        "description": "正式開始寫。",
+        "type": "make",
+        "image": "/timeline/2026-07-paper.png",
+        "tags": ["Research"]
+      },
+      {
+        "date": "2026-07",
+        "title": "第一款遊戲：戰術寰宇",
+        "description": "開始製作 Tactica Universalis。",
+        "type": "make",
+        "image": "/timeline/2026-07-tactica.png",
+        "tags": ["Game"]
+      },
+      {
+        "date": "2026-07",
+        "title": "第二次考 APCS",
+        "description": "刷了幾題後考了觀念 4、實作 3。",
+        "type": "record",
+        "image": "/timeline/2026-07-apcs.png",
+        "tags": ["APCS"]
+      },
+      {
+        "date": "2026-04",
+        "title": "開始接觸 ML",
+        "description": "有碰一下反向傳播，不過那時候以 LLM 為主。",
+        "type": "study",
+        "image": "/timeline/2026-04-ml.png",
+        "tags": ["ML", "LLM"]
+      },
+      {
+        "date": "2026-03",
+        "title": "MIT 進階密碼學公開課",
+        "description": "好奇，然後就看了一下 ZKP。",
+        "type": "study",
+        "image": "/timeline/2026-03-mit-crypto.png",
+        "tags": ["Cryptography", "ZKP"]
+      },
+      {
+        "date": "2026-02",
+        "title": "閱讀比特幣白皮書",
+        "description": "開啟了瘋狂讀經典論文跟 paper 的道路。",
+        "type": "study",
+        "image": "/timeline/2026-02-whitepaper.png",
+        "tags": ["Bitcoin", "Papers"]
+      },
+      {
+        "date": "2026-02",
+        "title": "北京大學區塊鏈線上公開課",
+        "description": "對區塊鏈技術有興趣。",
+        "type": "study",
+        "image": "/timeline/2026-02-blockchain.png",
+        "tags": ["Blockchain"]
+      },
+      {
+        "date": "2026-02",
+        "title": "第一次考 APCS",
+        "description": "裸考了觀念 3、實作 1。",
+        "type": "record",
+        "image": "/timeline/2026-02-apcs.png",
+        "tags": ["APCS"]
+      },
+      {
+        "date": "2026-02",
+        "title": "THJCC Winter（第一次 CTF）",
+        "description": "啥也不會，打了個 61/80。",
+        "type": "record",
+        "image": "/timeline/2026-02-thjcc-winter.png",
+        "tags": ["CTF", "THJCC"]
+      },
+      {
+        "date": "2026-01",
+        "title": "接觸 CTF",
+        "description": "稍微學了一下相關的東西。",
+        "type": "study",
+        "image": "/timeline/2026-01-ctf.png",
+        "tags": ["CTF"]
+      },
+      {
+        "date": "2025-12",
+        "title": "製作 Discord 蜜罐機器人",
+        "description": "自動偵測並封禁濫發訊息的帳號。",
+        "type": "make",
+        "image": "/timeline/2025-12-honeypot.png",
+        "imagePresentation": "logo",
+        "tags": ["Discord"]
+      },
+      {
+        "date": "2025-12",
+        "title": "中興大學強化學習先修課",
+        "description": "後面感覺太簡單，所以碰了其他公開課。",
+        "type": "study",
+        "image": "/timeline/2025-12-rl.png",
+        "tags": ["Reinforcement learning"]
+      },
+      {
+        "date": "2025-12",
+        "title": "學第一個程式語言：C++",
+        "description": "從這裡開始寫程式。",
+        "type": "study",
+        "image": "/timeline/2025-12-cpp.png",
+        "tags": ["C++"]
+      },
+      {
+        "date": "2025-11",
+        "title": "開始接觸資訊",
+        "description": "正式走進這條路。",
+        "type": "study",
+        "image": "/timeline/2025-11-cs.png",
+        "tags": ["CS"]
+      },
+      {
+        "date": "2025-05",
+        "title": "暫時停止 YouTube 更新",
+        "description": "頻道先停一陣。",
+        "type": "record",
+        "image": "/timeline/2025-05-yt-pause.png",
+        "tags": ["YouTube"]
+      },
+      {
+        "date": "2024-11",
+        "title": "接平面設計案子",
+        "description": "私人接案，雖然主要是頻道封面居多。",
+        "type": "make",
+        "image": "/timeline/2024-11-design.png",
+        "tags": ["Design"]
+      },
+      {
+        "date": "2024-07",
+        "title": "接觸荒野亂鬥社群 BrawlKuma",
+        "description": "認識了不少人。",
+        "type": "life",
+        "image": "/timeline/2024-07-brawlkuma.png",
+        "tags": ["Brawl Stars"]
+      },
+      {
+        "date": "2023-06",
+        "title": "歷史播放量最高的影片",
+        "description": "出了我頻道播放量最高的一支。",
+        "type": "record",
+        "image": "/timeline/2023-06-yt-peak.png",
+        "tags": ["YouTube"]
+      },
+      {
+        "date": "2021-12",
+        "title": "開始做遊戲相關自媒體",
+        "description": "內容轉向遊戲。",
+        "type": "make",
+        "image": "/timeline/2021-12-game-media.png",
+        "tags": ["YouTube", "Games"]
+      },
+      {
+        "date": "2021-09",
+        "title": "開始經營 YouTube",
+        "description": "正式開始更新頻道。",
+        "type": "make",
+        "image": "/timeline/2021-09-youtube.png",
+        "imageScale": 0.72,
+        "tags": ["YouTube"]
+      },
+      {
+        "date": "2021-08",
+        "title": "創立 Discord 群",
+        "description": "把人聚在一起。",
+        "type": "life",
+        "image": "/timeline/2021-08-discord.png",
+        "imagePresentation": "logo",
+        "tags": ["Discord"]
+      },
+      {
+        "date": "2021-07",
+        "title": "開始學剪輯",
+        "description": "從剪片開始。",
+        "type": "study",
+        "image": "/timeline/2021-07-editing.png",
+        "imageScale": 0.68,
+        "tags": ["Editing"]
+      }
+    ]
+  },
+  "skills": [
+    "Cryptography",
+    "Reinforcement learning",
+    "blockchain",
+    "Unity",
+    "Multiagent Systems"
+  ],
+  "aboutExperiences": {
+    "title": "一些小競賽與經歷（我東西很少.w.）",
+    "items": [
+      "2026 THJCC summer CTF 學生賽區 Rk.14/71，總賽區 Rk.65/679",
+      "AIS3 Junior 2026",
+      "APCS 4 + 3"
+    ]
+  },
+  "friends": {
+    "items": [
+      {
+        "name": "朋友的名字",
+        "url": "https://example.com",
+        "description": "把這張卡片換成真實友站：一句話介紹他們的網站。",
+        "avatar": ""
+      },
+      {
+        "name": "另一位朋友",
+        "url": "https://example.org",
+        "description": "再放一個，列表看起來會比較像格子。",
+        "avatar": ""
+      }
+    ]
+  },
+  "likes": {
+    "games": [
+      {
+        "title": "荒野亂鬥",
+        "hours": "1500 hr",
+        "status": "幾乎退了",
+        "note": "玩很久，現在幾乎不碰了。"
+      },
+      {
+        "title": "Apex Legends",
+        "hours": "1200 hr",
+        "status": "退遊",
+        "note": "還是不會身法。"
+      },
+      {
+        "title": "Warframe",
+        "hours": "1000 hr",
+        "status": "停很久",
+        "note": "上次玩大概是兩年前。"
+      },
+      {
+        "title": "崩壞：星穹鐵道",
+        "hours": "1000 hr",
+        "status": "還在碰",
+        "note": "數值漲的飛快，兩年漲了一百倍，但福利還可以，劇情也都不錯"
+      },
+      {
+        "title": "歐陸風雲 4",
+        "hours": "1000 hr",
+        "status": "偶爾還會開來玩",
+        "note": "主要碰模組了，原版已經有點玩膩了。"
+      },
+      {
+        "title": "明日方舟",
+        "hours": "500 hr",
+        "status": "休閒",
+        "note": "策略為主，隨興玩。"
+      },
+      {
+        "title": "Counter-Strike 2",
+        "hours": "150 hr",
+        "status": "最近常碰",
+        "note": "最近常玩，不過主要是看比賽。"
+      }
+    ],
+    "music": [
+      {
+        "title": "Hardstyle",
+        "artist": "之後補曲目",
+        "genre": "Hardstyle",
+        "note": "常聽的類型。把喜歡的專輯或曲目補在這裡。"
+      },
+      {
+        "title": "Drum & Bass",
+        "artist": "之後補曲目",
+        "genre": "DnB",
+        "note": "常聽的類型。把喜歡的專輯或曲目補在這裡。"
+      }
+    ]
+  },
+  "academic": {
+    "research": [
+      {
+        "title": "DISCERN",
+        "status": "草稿",
+        "description": "目前的研究草稿。",
+        "tags": ["Research"]
+      }
+    ],
+    "papers": []
+  },
+  "reviewerConferences": [],
+  "reviewerJournals": [],
+  "social": {
+    "GitHub": {
+      "name": "GitHub",
+      "url": "https://github.com/MoYan1250",
+      "icon": "github",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "instagram": {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/moyan_1250",
+      "icon": "instagram",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "discord": {
+      "name": "Discord",
+      "url": "#",
+      "copyText": "@moyan1250",
+      "icon": "discord",
+      "navbar": false,
+      "content": true,
+      "footer": true
+    },
+    "email": {
+      "name": "Email",
+      "url": "mailto:ziknsodardow@gmail.com",
+      "icon": "email",
+      "navbar": false,
+      "content": false,
+      "footer": false
+    }
+  }
+}

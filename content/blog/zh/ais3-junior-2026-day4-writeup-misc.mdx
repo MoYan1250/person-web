@@ -1,0 +1,293 @@
+---
+title: "AIS3 Junior 2026 Day4 Writeup : Misc"
+date: "2026-08-07"
+summary: "AIS3 Junior 2026 第四天 Misc 題解：steghide、OSINT、PDF/PNG 隱藏、Brainfuck 直譯器。"
+category: writeup
+---
+
+### MISC-1
+
+![image](https://hackmd.io/_uploads/Skmd6CGLMe.png)
+
+點進去會下載一個圖片 chall.jpg
+
+利用工具 steghide
+
+使用 `extract` 指令還原隱藏的內容
+
+sf 是表示含有隱藏內容的檔案
+
+![image](https://hackmd.io/_uploads/Hy4AA0z8Gl.png)
+
+輸入密碼 (題目有給)
+
+他發現裡面有一個文件 secret.txt
+
+![image](https://hackmd.io/_uploads/SJfEk1XUGl.png)
+
+直接 `cat` 讀取文件就找到 flag 了
+
+![image](https://hackmd.io/_uploads/HkcSJk7UGl.png)
+
+### Misc-HW-01
+
+![image](https://hackmd.io/_uploads/SJhilymLMe.png)
+
+先去 IG 看看
+
+![image](https://hackmd.io/_uploads/rJTCl1QLzx.png)
+
+有一個動態是跟出國有關的
+
+![image](https://hackmd.io/_uploads/SJjzf0EIfg.png)
+
+隨便使用個線上的掃碼工具看到
+
+![image](https://hackmd.io/_uploads/Bku8MRELfg.png)
+
+看到 JACKIE/LIN 那是姓氏及名字
+
+機票理論上講原理是數字跟英文
+
+把最長的那行都遍歷一次就可以得到 flag
+
+`AIS3{JACKIE_LIN_35A}`
+
+### Misc-HW-02
+
+> 與上題同個題組，也是看 IG
+
+![image](https://hackmd.io/_uploads/SkW1BaEUMe.png)
+
+看到轉發那邊有一篇貼文就是 11/4 的
+
+![image](https://hackmd.io/_uploads/S18PPCNUMg.png)
+
+看背景的右上角有建築，我直接以圖搜圖
+
+![image](https://hackmd.io/_uploads/S1-ZsANLMl.png)
+
+對應 google map 得到 flag
+
+![image](https://hackmd.io/_uploads/SkANYAVIMx.png)
+
+`AIS3{國立中正紀念堂}`
+
+### Misc-HW-03
+
+![image](https://hackmd.io/_uploads/SkdgLy78zg.png)
+
+pdf 打開看不到東西
+
+![image](https://hackmd.io/_uploads/ryx481X8Mg.png)
+
+丟給 hex editor 看看有沒有藏一些東西
+
+![image](https://hackmd.io/_uploads/S1wZrU4IMg.png)
+
+%%EOF 是 pdf 結束後，但他的後面還有東西，查了一下得知那是 ZIP 壓縮檔的開頭
+
+把他另存 .zip 並解壓看到裡面藏著 secret.txt
+
+![image](https://hackmd.io/_uploads/HkoeLL48fx.png)
+
+點開就有 flag 了
+
+`AIS3{b1nw4lk_pdf}`
+
+### Misc-HW-04
+
+![image](https://hackmd.io/_uploads/Sy0nvUN8zx.png)
+
+也是丟 hex editor
+
+查了一下 png 的結尾是 `00 00 00 00 49 45 4E 44 AE 42 60 82`
+看結尾有沒有藏東西
+
+![image](https://hackmd.io/_uploads/ByGlO8N8fg.png)
+
+他 flag 就直接放在 png 結束後
+
+`AIS3{h1dd3n_1n_pla1n}`
+
+### Misc-HW-05
+
+![image](https://hackmd.io/_uploads/Byah_U48Gl.png)
+
+點開是一張狗的照片
+
+![image](https://hackmd.io/_uploads/BkzeKLV8Ge.png)
+
+先用指令查看它的資料
+
+![image](https://hackmd.io/_uploads/rJUGxTELMx.png)
+
+看到裡面有藏 password，將這組密碼使用在 steghide 找到裡面藏的檔案
+
+![image](https://hackmd.io/_uploads/B1YvOw4Ufx.png)
+
+cat 一下就行
+
+![image](https://hackmd.io/_uploads/BkOAvjELzg.png)
+
+### Misc-HW-06
+
+> code 時間
+
+![image](https://hackmd.io/_uploads/SJLAc04LGl.png)
+
+邏輯是輸入一段 Brainfuck 原始碼，回傳所有 `.` 指令印出的字元串接成字
+
+稍微研究一下 brainfuck
+
+思想上很像是圖靈機，由簡單的向前向後加指令疊加就能圖靈完備，不得不說還挺巧妙的
+
+~~但對人類的可讀性無限趨近於零就是了~~
+
+![image](https://hackmd.io/_uploads/HJ-eRA4UMg.png)
+
+他會需要一條記憶體帶加上一個指標
+
+Brainfuck 原始碼裡任何非上述 8 個字元的內容都視為註解，直接忽略
+
+```python
+ops = [c for c in code if c in "+-<>[].,"]
+```
+
+為了避免複雜度爆掉，因此在執行前先用一個堆疊掃過一次全部指令，把每一對 `[` 和 `]` 的位置對應記錄到字典 `bracket_map` 裡
+
+```python
+bracket_map = {}
+stack = []
+for i, c in enumerate(ops):
+    if c == "[":
+        stack.append(i)
+    elif c == "]":
+        j = stack.pop()
+        bracket_map[i] = j
+        bracket_map[j] = i
+```
+
+用一個 `bytearray` 當作 tape，初始給 30000 格（Brainfuck 的傳統標準大小），配合一個 `ptr` 當指標，照著規則寫指令就行
+
+每執行完一個指令，`pc += 1` 往下走，除非剛才發生跳轉，跳轉本身已經把 `pc` 設到目標位置，後面再 `+1` 就會接著往後執行下一格
+
+最後把輸出的串列用 `"".join(...)` 接成字串回傳
+
+測試有沒有輸出 `Hello World!`
+
+```python
+if __name__ == "__main__":
+    hello_world = (
+        "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]"
+        ">>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
+    )
+    print(run_bf(hello_world))
+```
+
+完整的 code
+
+```python
+def run_bf(code: str) -> str:
+    ops = [c for c in code if c in "+-<>[].,"]
+
+    bracket_map = {}
+    stack = []
+    for i, c in enumerate(ops):
+        if c == "[":
+            stack.append(i)
+        elif c == "]":
+            if not stack:
+                raise ValueError(f"Unmatched ']' at position {i}")
+            j = stack.pop()
+            bracket_map[i] = j
+            bracket_map[j] = i
+    if stack:
+        raise ValueError(f"Unmatched '[' at position {stack[-1]}")
+
+    tape = bytearray(30000)
+    ptr = 0
+    pc = 0
+    output = []
+
+    n = len(ops)
+    while pc < n:
+        c = ops[pc]
+        if c == "+":
+            tape[ptr] = (tape[ptr] + 1) % 256
+        elif c == "-":
+            tape[ptr] = (tape[ptr] - 1) % 256
+        elif c == ">":
+            ptr += 1
+            if ptr >= len(tape):
+                tape.extend(bytearray(30000))
+        elif c == "<":
+            if ptr == 0:
+                raise IndexError("Pointer moved out of bounds (< 0)")
+            ptr -= 1
+        elif c == ".":
+            output.append(chr(tape[ptr]))
+        elif c == ",":
+            pass
+        elif c == "[":
+            if tape[ptr] == 0:
+                pc = bracket_map[pc]
+        elif c == "]":
+            if tape[ptr] != 0:
+                pc = bracket_map[pc]
+        pc += 1
+
+    return "".join(output)
+
+
+if __name__ == "__main__":
+    hello_world = (
+        "++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]"
+        ">>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++."
+    )
+    print(run_bf(hello_world))
+```
+
+上傳
+
+![image](https://hackmd.io/_uploads/HkgsHxSUzl.png)
+
+get flag
+
+![image](https://hackmd.io/_uploads/Byx3Bxr8zl.png)
+
+### Misc-HW-07
+
+> 我的社交能力零，直接當 OSINT 來解 :)
+
+![image](https://hackmd.io/_uploads/BJb7zpzLGg.png)
+
+圖片是在室內
+
+先查詢
+
+![image](https://hackmd.io/_uploads/BJTwfpfUMe.png)
+
+發現有鋼琴社
+
+![image](https://hackmd.io/_uploads/HydKf6MUzg.png)
+
+看到他們的貼文有活動的場地
+
+![image](https://hackmd.io/_uploads/r1gTMaMIGx.png)
+
+而且在交大的其他貼文有提到
+
+![image](https://hackmd.io/_uploads/rkaUmTf8zx.png)
+
+IG 上面也有
+
+![image](https://hackmd.io/_uploads/rk2Y7Tf8zx.png)
+
+那確定就是這
+
+![image](https://hackmd.io/_uploads/HJP-4TfLMl.png)
+
+得到 flag
+
+`AIS3{國立陽明交通大學浩然圖書館}`

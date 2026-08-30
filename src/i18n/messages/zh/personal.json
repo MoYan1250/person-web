@@ -1,0 +1,34 @@
+{
+  "name": {
+    "full": "魔閻 / Shang-Jing Lyu",
+    "short": "魔閻",
+    "given": "",
+    "family": "",
+    "initials": "M"
+  },
+  "subtitle": "個人網站",
+  "headline": "磐石高中 / 新竹",
+  "welcome": "歡迎！",
+  "ogImageUrl": "example.com",
+  "bioMarkdown": "程式苦手，不會競程跟資安，資安嚴格來講只會密碼學相關的理論，其他不太熟。\n\n全部幾乎都靠自學的，我是文組從零開始鬼轉過來的，原本在玩平面設計跟剪輯，目前接觸資訊領域不到一年，我資安目前也碰不到一個月 (如果不算上之前只會密碼學理論的階段的話 )，CTF打得挺爛的，比賽也不多。\n\n對學術跟技術都蠻感興趣的，為此先修了不少數學，不過我數學也不算好，目前在做一些小研究。\n\n目標是特殊選才資工系跟不分系，先求有學校再來求好學校。",
+  "location": {
+    "name": "磐石高中 / 新竹",
+    "mapUrl": "https://www.google.com/maps/place/Hsinchu"
+  },
+  "blogTagline": "日記、學習筆記與心得。",
+  "handle": "moyan1250",
+  "focus": "Cyber Security / Machine Learning / Game dev / EDM / video game",
+  "since": "2008.12.3",
+  "hero": {
+    "image": "/moyan-mark.png",
+    "alt": "魔閻",
+    "caption": "HSINCHU / 2026",
+    "href": "/about"
+  },
+  "ticker": [
+    "HSINCHU / UTC+8",
+    "STATUS: ONLINE",
+    "ABOUT / WRITING / LIKES / ACADEMIC",
+    "NO ALGORITHM HERE"
+  ]
+}

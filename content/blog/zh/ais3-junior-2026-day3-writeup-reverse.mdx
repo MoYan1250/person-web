@@ -1,0 +1,521 @@
+---
+title: "AIS3 Junior 2026 Day3 Writeup : Reverse"
+date: "2026-08-06"
+summary: "AIS3 Junior 2026 第三天 Reverse 題解：Ghidra 字串、反轉驗證、Patch 指令與作業題。"
+category: writeup
+---
+
+## Reverse
+
+### Reverse-1
+
+![image](https://hackmd.io/_uploads/S1JxTsW8ze.png)
+
+先使用 Ghidra 打開 rev01.out
+
+![image](https://hackmd.io/_uploads/SksnAoWIzg.png)
+
+點開上方的 window -> Defined Strings
+
+![image](https://hackmd.io/_uploads/rkaaRjWIzx.png)
+
+搜尋 Correct 並跳轉過去
+
+![image](https://hackmd.io/_uploads/B1xGJ3-8fx.png)
+
+他的上方就是 flag 了
+
+![image](https://hackmd.io/_uploads/SyV4yhbIGg.png)
+
+### Reverse-2
+
+> 這題要搞清楚檢查邏輯並改名變數，推導輸出
+
+![image](https://hackmd.io/_uploads/r1swknZLGg.png)
+
+先找到 main 函式
+
+![image](https://hackmd.io/_uploads/rJtwIJz8Gl.png)
+
+點進 check_password
+
+![image](https://hackmd.io/_uploads/ryak_JG8Gl.png)
+
+對其進行還原 ~~我是 C++ 低手~~
+
+```c
+bool check_password(char *input) {
+    char tmp;
+    size_t len;
+    long stack_canary;
+    int left, right;
+    char buf[72];
+
+    stack_canary = *(long*)(in_FS_OFFSET + 0x28);
+
+    strcpy(buf, input);
+    len = strlen(buf);
+    right = (int)len;
+
+    for (left = 0; right = right - 1, left < right; left = left + 1) {
+        tmp = buf[left];
+        buf[left] = buf[right];
+        buf[right] = tmp;
+    }
+
+    return strcmp(buf, expected.0) == 0;
+}
+```
+
+這函式是在字串反轉驗證
+點去 expected.0 看
+
+![image](https://hackmd.io/_uploads/HyC1cJf8Ge.png)
+
+把 `7d 65 6d 34 6e 33 72 7b 33 53 49 41` 轉成 bytes
+得到 `}em4n3r{3SIA`
+把他反轉就可以得到 flag
+
+`AIS3{r3n4me}`
+
+### Reverse-3
+
+> Patch Instruction 更改判斷條件
+
+![image](https://hackmd.io/_uploads/S1Jrs1zIGx.png)
+
+![image](https://hackmd.io/_uploads/HJgq6JzIfg.png)
+
+主函式裡面有一條關鍵是
+`if (local_58[local_80] != (local_78[local_80] ^ 0x37)) {`
+單進去定位比對迴圈的關鍵跳轉
+
+![image](https://hackmd.io/_uploads/r1GyAxMLMx.png)
+
+選取 JZ 那行 右鍵 → Patch Instruction
+JZ 是有條件跳轉，改成 JMP 無條件跳轉
+
+![image](https://hackmd.io/_uploads/B15HClGUfx.png)
+
+![image](https://hackmd.io/_uploads/ry8fJWfIGe.png)
+
+修改確認完成後，跑到終端機輸入
+
+```bash
+chmod +x rev03_patched.out
+./rev03_patched.out
+```
+
+直接執行檔案
+
+![image](https://hackmd.io/_uploads/HyQoRsG8Gl.png)
+
+基於 `if ((int)sVar1 == 0x19)` 這行
+`0x19` 十六進位轉十進位 -> `25`
+密碼長度只要為任意 25 個字元就能解鎖
+拿到 flag
+
+![image](https://hackmd.io/_uploads/ryw6Riz8Gg.png)
+
+## HW
+
+### Rev-HW-01
+
+> 提示 Defined Strings／Xref 把拼起來
+
+![image](https://hackmd.io/_uploads/rypDQlMLzl.png)
+
+點進去長這樣
+
+![image](https://hackmd.io/_uploads/ByyE7eGUfe.png)
+
+![image](https://hackmd.io/_uploads/HJEGQgz8ze.png)
+
+跟 Reverse-2 很像
+
+**check_password**
+
+```c
+bool check_password(char param_1)
+
+{
+  int iVar1;
+  size_t sVar2;
+  long in_FS_OFFSET;
+  bool bVar3;
+  char local_58 [72];
+  long local_10;
+
+  local_10 =(long )(in_FS_OFFSET + 0x28);
+  sVar2 = strlen(param_1);
+  if ((int)sVar2 == 0x11) {
+    iVar1 = strncmp(param_1,"AIS3{",5);
+    if (iVar1 == 0) {
+      iVar1 = strncmp(param_1 + 5,"sp1it",6);
+      if (iVar1 == 0) {
+        iVar1 = strncmp(param_1 + 0xb,"xrefs}",6);
+        if (iVar1 == 0) {
+          snprintf(local_58,0x40,"%s%s%s","AIS3{","sp1it","xrefs}");
+          iVar1 = strcmp(param_1,local_58);
+          bVar3 = iVar1 == 0;
+        }
+        else {
+          bVar3 = false;
+        }
+      }
+      else {
+        bVar3 = false;
+      }
+    }
+    else {
+      bVar3 = false;
+    }
+  }
+  else {
+    bVar3 = false;
+  }
+  if (local_10 !=(long )(in_FS_OFFSET + 0x28)) {
+                    / WARNING: Subroutine does not return */
+    __stack_chk_fail();
+  }
+  return bVar3;
+}
+```
+
+裡面有提到 `if ((int)sVar2 == 0x11) {`
+把這三個字串接起來 `"AIS3{" + "sp1it_" + "xrefs}"`
+長度 : 5 + 6 + 6 = 17 = 0x11
+得到 flag `AIS3{sp1it_xrefs}`
+
+### Rev-HW-02
+
+> 跟 Reverse-2 差不多
+
+![image](https://hackmd.io/_uploads/B1lSDgzUzg.png)
+
+![image](https://hackmd.io/_uploads/HJ98PlMLGe.png)
+
+依舊去找 correct!
+
+![image](https://hackmd.io/_uploads/rkOvOgM8Gl.png)
+
+依舊去看 check_password
+
+![image](https://hackmd.io/_uploads/H1huOlMUfe.png)
+
+```c
+bool check_password(char *input)
+{
+    int i;
+    size_t len;
+    long in_FS_OFFSET;
+    bool result;
+    int idx;
+    char transformed[17];
+    undefined1 null_terminator;
+    long canary;
+
+    canary = *(long *)(in_FS_OFFSET + 0x28);
+    len = strlen(input);
+    if ((int)len == 0x11) {
+        for (idx = 0; idx < 0x11; idx = idx + 1) {
+            transformed[idx] = input[idx] + '\x01';
+        }
+        null_terminator = 0;
+        i = strcmp(transformed, shifted);
+        result = i == 0;
+    }
+    else {
+        result = false;
+    }
+    if (canary != *(long *)(in_FS_OFFSET + 0x28)) {
+        __stack_chk_fail();
+    }
+    return result;
+}
+```
+
+得知輸入長度必須為 17 且每個字元的 ASCII 值都會 +1
+反之把每個 byte -1 就能得到 flag
+
+`AIS3{n0t_r4w_str}`
+
+### Rev-HW-03
+
+> 跟 Rev-HW-02 差不多只是這次要 rename 一下 function 了解邏輯
+
+![image](https://hackmd.io/_uploads/rkwt-hfLMe.png)
+
+![image](https://hackmd.io/_uploads/rJuu-2M8Mg.png)
+
+**rename main**
+
+```c
+undefined1 [16] main(void)
+{
+    undefined1  ret_val [16];
+    int         is_correct;
+    long        in_FS_OFFSET;
+    undefined1  input_buf [72];
+    long        canary;
+
+    canary = *(long *)(in_FS_OFFSET + 0x28);
+
+    printf("Password: ");
+    __isoc99_scanf(&DAT_00102022, input_buf);
+
+    is_correct = check_password(input_buf);
+
+    if (is_correct == 0) {
+        puts("Wrong!");
+    }
+    else {
+        puts("Correct!");
+    }
+
+    ret_val._8_8_ = canary - *(long *)(in_FS_OFFSET + 0x28);
+    return ret_val << 0x40;
+}
+```
+
+**rename check_password**
+
+```c
+bool check_password(char *user_input)
+{
+    char    tmp_char;
+    int     input_len;
+    size_t  len_result;
+    long    in_FS_OFFSET;
+    bool    is_match;
+    int     idx;
+    char    swapped_buf [72];
+    long    canary;
+
+    canary = *(long *)(in_FS_OFFSET + 0x28);
+
+    len_result = strlen(user_input);
+
+    if ((int)len_result == 0xe) {
+        strcpy(swapped_buf, user_input);
+
+        for (idx = 0; idx + 1 < 0xe; idx = idx + 2) {
+            tmp_char = swapped_buf[idx];
+            swapped_buf[idx] = swapped_buf[idx + 1];
+            swapped_buf[idx + 1] = tmp_char;
+        }
+
+        input_len = strcmp(swapped_buf, expected);
+        is_match = input_len == 0;
+    }
+    else {
+        is_match = false;
+    }
+
+    if (canary != *(long *)(in_FS_OFFSET + 0x28)) {
+        __stack_chk_fail();
+    }
+
+    return is_match;
+}
+```
+
+![image](https://hackmd.io/_uploads/SJ4A-hMIfe.png)
+
+去看 expected 那邊
+
+![image](https://hackmd.io/_uploads/BJ84z3fIfl.png)
+
+![image](https://hackmd.io/_uploads/r1S0O3GUMx.png)
+
+先轉成 bytes
+
+`IA3S0{dd3_3v}n`
+
+從前面的 code 可知，他會把每兩個相鄰字元被交換位置，那把它們再換回來就可以得到 flag
+
+`AIS3{0dd_3v3n}`
+
+### Rev-HW-04
+
+> 關鍵字是兩段轉換
+
+![image](https://hackmd.io/_uploads/HJ0UkLmUfl.png)
+
+![image](https://hackmd.io/_uploads/ByG3rDXLzg.png)
+
+這次的 check 條件很多很長
+
+![image](https://hackmd.io/_uploads/SkPULPXIGg.png)
+
+先抓出來還原變數及結構
+
+```c
+undefined8 check_password(char *param_1)
+{
+    byte tmp;
+    size_t len;
+    undefined8 result;
+    long in_FS_OFFSET;
+    int i;
+    int j;
+    int k;
+    byte buf[72];
+    long canary;
+
+    canary = *(long *)(in_FS_OFFSET + 0x28);
+    len = strlen(param_1);
+    if ((int)len == 0x11) {
+        strcpy((char *)buf, param_1);
+
+        j = 0x11;
+        for (i = 0; j = j - 1, i < j; i = i + 1) {
+            tmp = buf[i];
+            buf[i] = buf[j];
+            buf[j] = tmp;
+        }
+
+        for (k = 0; k < 0x11; k = k + 1) {
+            buf[k] = (byte)k ^ buf[k];
+        }
+
+        for (k = 0; k < 0x11; k = k + 1) {
+            if (buf[k] != expected[k]) {
+                result = 0;
+                goto END;
+            }
+        }
+        result = 1;
+    } else {
+        result = 0;
+    }
+```
+
+總結 code，目標是輸入必須剛好 17 個字元
+需將整個的字串原地反轉
+並對每個 bytes 都跟它的 index（0~16）做異或
+最終結果要跟 `expected[]` 裡面的數組完全一樣
+
+![image](https://hackmd.io/_uploads/ByBzWu78zx.png)
+
+從 .data section 中讀出的 expected[] 數值
+並照著前面的想法實作 py
+
+```python
+expected = [
+    0x7d, 0x6f, 0x36, 0x71, 0x70, 0x5a, 0x63, 0x6b, 0x6a,
+    0x7c, 0x3a, 0x6f, 0x77, 0x3e, 0x5d, 0x46, 0x51,
+]
+
+def reverse_check_password(expected: list[int]) -> str:
+    n = len(expected)
+
+    xored = [expected[k] ^ k for k in range(n)]
+
+    buf = xored[:]
+    i, j = 0, n - 1
+    while i < j:
+        buf[i], buf[j] = buf[j], buf[i]
+        i += 1
+        j -= 1
+
+    return bytes(buf).decode()
+
+
+def forward_check(password: str, expected: list[int]) -> bool:
+    """用原始正向邏輯驗證答案是否正確"""
+    buf = list(password.encode())
+    n = len(buf)
+    if n != 0x11:
+        return False
+
+    i, j = 0, n - 1
+    while i < j:
+        buf[i], buf[j] = buf[j], buf[i]
+        i += 1
+        j -= 1
+
+    # XOR index
+    for k in range(n):
+        buf[k] = k ^ buf[k]
+
+    return buf == expected
+
+
+if __name__ == "__main__":
+    password = reverse_check_password(expected)
+    print(f"[+] Recovered password: {password}")
+
+    ok = forward_check(password, expected)
+    print(f"[+] Forward verification: {'PASS' if ok else 'FAIL'}")
+```
+
+取得 flag
+
+`AIS3{d0uble_tr4n}`
+
+### Rev-HW-05
+
+![image](https://hackmd.io/_uploads/SJbqHdm8Mx.png)
+
+![image](https://hackmd.io/_uploads/ByIfjdQ8Mg.png)
+
+先去尋找 Access_denied
+
+![image](https://hackmd.io/_uploads/H1sEou7IGl.png)
+
+點進 deny
+
+![image](https://hackmd.io/_uploads/r1_FhW4Izx.png)
+
+右上角綠色的有兩個 gate (bytes 跟 length)
+
+![image](https://hackmd.io/_uploads/HkmwROQUMg.png)
+
+gate_bytes 跟 gate_length 那邊跳轉過去都能看到有 JZ
+
+![image](https://hackmd.io/_uploads/HynFetmIGe.png)
+
+![image](https://hackmd.io/_uploads/B1INTlNUze.png)
+
+改成 JMP
+
+![image](https://hackmd.io/_uploads/SJHNZmNIMe.png)
+
+點到左上角的 `File → Export Program` 選擇 Original File，我另存一個新的叫 rev05.out
+以防我避免沒修改到
+~~我因為這個而卡了一個小時~~
+
+![image](https://hackmd.io/_uploads/B1g5lrVLGl.png)
+
+因為我把那邊所有的 JZ 都換掉了，所以這次連字元數量都不用管，隨意輸入就可以拿到 flag
+
+![image](https://hackmd.io/_uploads/B1ISWrV8fe.png)
+
+### Rev-HW-06
+
+> 這題要追很多層函式再去改寫
+
+![image](https://hackmd.io/_uploads/HJvxfr48Gl.png)
+
+main 確實看起來很正常
+這次無法直接看到他從哪裡判斷的
+
+![image](https://hackmd.io/_uploads/BytyQSEUfg.png)
+
+注意到 `verify(local_58, siglen, in_RCX, in_R8);` 這個函式有東西
+如果 = 1 就會呼叫 deny，要讓他不等於 1，直接改 JNZ 就可以跨過去，不過還有 stage_one 這個函式
+
+![image](https://hackmd.io/_uploads/rJwoUHN8Gg.png)
+
+前面的一坨對變數運算不用管，重點是 stage_one 裡面還有一個 stage_two，只要越過那邊的條件 (把那邊的改成 JMP) 就行
+
+![image](https://hackmd.io/_uploads/ry5BdB4IMe.png)
+
+第二層看到 win 了，把 iVar1 跟 local_c 那邊改為 JMP 就可以成立
+
+![image](https://hackmd.io/_uploads/S1D5cBNLfx.png)
+
+執行就可以找到 flag
+
+![image](https://hackmd.io/_uploads/Bkz6iHEIMx.png)
