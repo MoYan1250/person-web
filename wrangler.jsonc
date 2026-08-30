@@ -3,6 +3,7 @@
   "main": ".open-next/worker.js",
   "name": "person-web",
   "compatibility_date": "2025-04-01",
+  "minify": true,
   "compatibility_flags": [
     // Enable Node.js API
     "nodejs_compat",

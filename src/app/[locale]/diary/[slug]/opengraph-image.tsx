@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { siteConfig } from "@/data/site";
 import type { Locale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
-import { getPost } from "@/lib/blog";
+import { getBlogIndex } from "@/lib/blog-index";
 
 // Helper function to load Google Font dynamically
 async function loadGoogleFont(
@@ -58,6 +58,15 @@ function truncateText(text: string, maxLength: number): string {
   return text.slice(0, maxLength - 3) + "...";
 }
 
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return [
+    ...getBlogIndex("en").map((post) => ({ locale: "en", slug: post.slug })),
+    ...getBlogIndex("zh").map((post) => ({ locale: "zh", slug: post.slug })),
+  ];
+}
+
 // Image generation
 export default async function Image({
   params,
@@ -67,8 +76,7 @@ export default async function Image({
   const { locale, slug } = await params;
   const resolvedLocale = (locale || routing.defaultLocale) as Locale;
 
-  // Get blog post data
-  const post = await getPost(slug, resolvedLocale);
+  const post = getBlogIndex(resolvedLocale).find((entry) => entry.slug === slug);
 
   if (!post) {
     // Return a default image if post not found
@@ -94,7 +102,7 @@ export default async function Image({
     );
   }
 
-  const { title, summary, date } = post.metadata;
+  const { title, summary, date } = post;
   const blogTitle = title || "Blog Post";
   const blogSummary = summary || "";
   const formattedDate = date ? formatDate(date, resolvedLocale) : "";

@@ -5,7 +5,7 @@ import { PapersGrid } from "@/components/academic/papers-grid";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { READ_PAPERS } from "@/data/read-papers";
 import { routing } from "@/i18n/routing";
-import { getBlogIndex } from "@/lib/blog";
+import { getBlogIndex } from "@/lib/blog-index";
 import { type ResearchWork } from "@/lib/content";
 import { constructMetadata } from "@/lib/metadata";
 import {

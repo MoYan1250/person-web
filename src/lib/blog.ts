@@ -18,6 +18,11 @@ import {
   normalizeArticleCategory,
   type ArticleCategory,
 } from "@/lib/articles";
+import {
+  estimateReadingTimeMinutes,
+  getBlogContentDir,
+  getMDXFiles,
+} from "@/lib/blog-index";
 
 const MATH_UNICODE_REPLACEMENTS: Array<[RegExp, string]> = [[/𝜇/gu, "\\mu"]];
 const BLOG_HTML_SANITIZE_SCHEMA = {
@@ -43,12 +48,6 @@ const BLOG_HTML_SANITIZE_SCHEMA = {
   },
 };
 
-function getBlogContentDir(locale: string): string {
-  const localeDir = locale === "zh" ? "zh" : "en";
-  return path.join(process.cwd(), "content", "blog", localeDir);
-}
-
-// Define the expected metadata structure
 interface BlogPostMetadata {
   title: string;
   date: string;
@@ -57,70 +56,11 @@ interface BlogPostMetadata {
   [key: string]: unknown;
 }
 
-// Define the blog post type
 export interface BlogPost {
   metadata: BlogPostMetadata;
   slug: string;
   source: string;
   locale: string;
-}
-
-function getMDXFiles(dir: string) {
-  if (!fs.existsSync(dir)) return [];
-  return fs.readdirSync(dir).filter((file) => path.extname(file) === ".mdx");
-}
-
-export type BlogIndexEntry = {
-  slug: string;
-  title: string;
-  summary: string;
-  date: string;
-  category: ArticleCategory;
-  /** Links this post to a paper tile on /academic. */
-  paperId?: string;
-};
-
-export function getBlogIndex(locale: string = "en"): BlogIndexEntry[] {
-  const dir = getBlogContentDir(locale);
-  return getMDXFiles(dir).map((file) => {
-    const slug = path.basename(file, path.extname(file));
-    const source = fs.readFileSync(path.join(dir, file), "utf-8");
-    const { data } = matter(source);
-    const paperId =
-      typeof data.paperId === "string" && data.paperId.trim()
-        ? data.paperId.trim()
-        : undefined;
-    return {
-      slug,
-      title: String(data.title || slug),
-      summary: String(data.summary || ""),
-      date: String(data.date || ""),
-      category: normalizeArticleCategory(data.category),
-      paperId,
-    };
-  });
-}
-
-export function estimateReadingTimeMinutes(markdown: string): number {
-  const codeSections = markdown.match(/```[\s\S]*?```/g) || [];
-  const codeLines = codeSections.reduce(
-    (total, block) => total + block.split("\n").length,
-    0,
-  );
-  const withoutCode = markdown.replace(/```[\s\S]*?```/g, " ");
-  const plain = withoutCode
-    .replace(/!\[[^\]]*\]\([^)]+\)/g, " ")
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/[#>*_~`|]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  const cjk = (plain.match(/[\u4e00-\u9fff\u3400-\u4dbf]/gu) || []).length;
-  const latin = plain.replace(/[\u4e00-\u9fff\u3400-\u4dbf]/gu, " ");
-  const words = latin.split(/\s+/).filter(Boolean).length;
-
-  const minutes = cjk / 500 + words / 200 + codeLines / 80;
-  return Math.max(1, Math.ceil(minutes));
 }
 
 export async function markdownToHTML(markdown: string) {
@@ -139,7 +79,6 @@ export async function markdownToHTML(markdown: string) {
     .use(rehypeSlug)
     .use(rehypeKatex, { strict: "ignore" })
     .use(rehypePrettyCode, {
-      // https://rehype-pretty.pages.dev/#usage
       theme: {
         light: "github-light",
         dark: "github-dark-dimmed",
@@ -158,7 +97,6 @@ export async function getPost(
 ): Promise<BlogPost | null> {
   const filePath = path.join(getBlogContentDir(locale), `${slug}.mdx`);
 
-  // Check if file exists
   if (!fs.existsSync(filePath)) {
     return null;
   }
@@ -167,7 +105,6 @@ export async function getPost(
   const { content: rawContent, data: rawMetadata } = matter(source);
   const content = await markdownToHTML(rawContent);
 
-  // Ensure required fields exist and type the metadata properly
   const metadata: BlogPostMetadata = {
     title: rawMetadata.title || "",
     date: rawMetadata.date || "",
@@ -205,7 +142,6 @@ async function getAllPosts(
     }),
   );
 
-  // Filter out null values (posts that don't exist)
   return posts.filter((post): post is BlogPost => post !== null);
 }
 
@@ -221,7 +157,6 @@ export interface PaginatedBlogPosts {
   postsPerPage: number;
 }
 
-/* Sort posts in descending order by date (newest first) */
 export function sortPostsByDate(posts: BlogPost[]): BlogPost[] {
   return [...posts].sort(
     (a, b) =>
@@ -229,10 +164,7 @@ export function sortPostsByDate(posts: BlogPost[]): BlogPost[] {
   );
 }
 
-export function getPostPreviewText(
-  post: BlogPost,
-  maxLength = 420,
-): string {
+export function getPostPreviewText(post: BlogPost, maxLength = 420): string {
   const html = post.source || "";
   const plain = html
     .replace(/<pre[\s\S]*?<\/pre>/gi, "\n")
@@ -267,10 +199,6 @@ export function getPostPreviewText(
   return cut.trim();
 }
 
-/*
- * Get a paginated slice of blog posts for the given locale and page.
- * `currentPage` is 1-indexed; pages out of range yield an empty `posts` array.
- */
 export async function getPaginatedBlogPosts(
   locale: string,
   currentPage: number,
@@ -289,16 +217,6 @@ export async function getPaginatedBlogPosts(
     totalPosts,
     postsPerPage,
   };
-}
-
-export async function hasChineseVersion(slug: string): Promise<boolean> {
-  const chineseFilePath = path.join(getBlogContentDir("zh"), `${slug}.mdx`);
-  return fs.existsSync(chineseFilePath);
-}
-
-export async function hasEnglishVersion(slug: string): Promise<boolean> {
-  const englishFilePath = path.join(getBlogContentDir("en"), `${slug}.mdx`);
-  return fs.existsSync(englishFilePath);
 }
 
 export async function getAvailableLocales(

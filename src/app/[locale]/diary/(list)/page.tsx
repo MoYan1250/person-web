@@ -4,7 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { ArticlesIndex } from "@/components/blog/articles-index";
 import { routing } from "@/i18n/routing";
-import { getBlogPosts, sortPostsByDate } from "@/lib/blog";
+import { getBlogIndex, sortIndexByDate } from "@/lib/blog-index";
 import { normalizeArticleCategory } from "@/lib/articles";
 import { generateBlogJsonLd } from "@/lib/jsonld";
 import { constructMetadata } from "@/lib/metadata";
@@ -35,8 +35,17 @@ export default async function BlogPage(props: {
 }) {
   const params = await props.params;
   const locale = params.locale || routing.defaultLocale;
-  const posts = sortPostsByDate(await getBlogPosts(locale));
-  const blogJsonLd = generateBlogJsonLd(posts);
+  const posts = sortIndexByDate(getBlogIndex(locale));
+  const blogJsonLd = generateBlogJsonLd(
+    posts.map((post) => ({
+      slug: post.slug,
+      metadata: {
+        title: post.title,
+        date: post.date,
+        summary: post.summary,
+      },
+    })),
+  );
   const t = await getTranslations({ locale });
 
   return (
@@ -57,10 +66,10 @@ export default async function BlogPage(props: {
           locale={locale}
           posts={posts.map((post) => ({
             slug: post.slug,
-            title: post.metadata.title,
-            date: post.metadata.date,
-            summary: post.metadata.summary,
-            category: normalizeArticleCategory(post.metadata.category),
+            title: post.title,
+            date: post.date,
+            summary: post.summary,
+            category: normalizeArticleCategory(post.category),
           }))}
           labels={{
             diary: t("blog.categories.diary"),

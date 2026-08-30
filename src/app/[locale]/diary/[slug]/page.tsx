@@ -5,31 +5,15 @@ import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { ArticleZoomContent } from "@/components/blog/toc/article-zoom";
 import { routing } from "@/i18n/routing";
 import { normalizeArticleCategory } from "@/lib/articles";
-import { getBlogPosts, getPost } from "@/lib/blog";
+import { getPost } from "@/lib/blog";
+import { getBlogIndex } from "@/lib/blog-index";
 import { formatDate } from "@/lib/utils";
 
 export async function generateStaticParams() {
-  const enPosts = await getBlogPosts("en");
-  const zhPosts = await getBlogPosts("zh");
-
-  const params: Array<{ locale: string; slug: string }> = [];
-
-  const enArray = Array.isArray(enPosts) ? enPosts : [];
-  const zhArray = Array.isArray(zhPosts) ? zhPosts : [];
-
-  enArray.forEach((post) => {
-    if (post?.slug) {
-      params.push({ locale: "en", slug: post.slug });
-    }
-  });
-
-  zhArray.forEach((post) => {
-    if (post?.slug) {
-      params.push({ locale: "zh", slug: post.slug });
-    }
-  });
-
-  return params;
+  return [
+    ...getBlogIndex("en").map((post) => ({ locale: "en", slug: post.slug })),
+    ...getBlogIndex("zh").map((post) => ({ locale: "zh", slug: post.slug })),
+  ];
 }
 
 export default async function Blog(props: {

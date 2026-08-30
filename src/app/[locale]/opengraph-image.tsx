@@ -5,6 +5,7 @@ import { ImageResponse } from "next/og";
 import { getTranslations } from "next-intl/server";
 
 import { siteConfig } from "@/data/site";
+import { routing } from "@/i18n/routing";
 
 // Helper function to load Google Font dynamically
 async function loadGoogleFont(
@@ -37,6 +38,12 @@ export const size = {
 };
 
 export const contentType = "image/png";
+
+export const dynamic = "force-static";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 // Image generation
 export default async function Image({

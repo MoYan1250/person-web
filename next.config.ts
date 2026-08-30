@@ -6,7 +6,27 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  serverExternalPackages: ["@google-analytics/data", "google-auth-library"],
+  serverExternalPackages: [
+    "@google-analytics/data",
+    "google-auth-library",
+    "shiki",
+    "@shikijs/core",
+    "@shikijs/engine-oniguruma",
+    "@shikijs/vscode-textmate",
+    "rehype-pretty-code",
+    "rehype-katex",
+    "katex",
+    "rehype-raw",
+    "rehype-sanitize",
+    "rehype-slug",
+    "rehype-stringify",
+    "remark-gfm",
+    "remark-math",
+    "remark-parse",
+    "remark-rehype",
+    "unified",
+    "gray-matter",
+  ],
   async redirects() {
     return [
       { source: "/blog", destination: "/diary", permanent: true },

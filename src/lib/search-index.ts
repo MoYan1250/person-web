@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 
-import { getBlogIndex } from "@/lib/blog";
+import { getBlogIndex } from "@/lib/blog-index";
 import { getPaperBlurb } from "@/data/paper-blurbs";
 import { READ_PAPERS } from "@/data/read-papers";
 import {

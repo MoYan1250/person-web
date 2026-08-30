@@ -1,19 +1,11 @@
 import { DATA, getEmail } from "@/data";
-import { getBlogPosts } from "@/lib/blog";
+import { getBlogIndex, sortIndexByDate } from "@/lib/blog-index";
 
-// ISR configuration - revalidate every hour (3600 seconds)
-export const revalidate = 3600;
+export const dynamic = "force-static";
 
 export async function GET() {
-  const posts = await getBlogPosts();
+  const posts = sortIndexByDate(getBlogIndex());
   const authorEmail = extractEmailAddress(getEmail());
-
-  // Sort posts by published date (newest first)
-  const sortedPosts = posts.sort((a, b) => {
-    return (
-      new Date(b.metadata.date).getTime() - new Date(a.metadata.date).getTime()
-    );
-  });
 
   const atomFeed = `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -27,25 +19,23 @@ export async function GET() {
     <email>${authorEmail}</email>
   </author>
   <updated>${new Date().toISOString()}</updated>
-  ${sortedPosts
+  ${posts
     .map((post) => {
       const postUrl = `${DATA.url}/diary/${post.slug}`;
-      const publishedDate = new Date(post.metadata.date).toISOString();
-      const updatedDate = new Date(post.metadata.date).toISOString();
+      const publishedDate = new Date(post.date).toISOString();
 
       return `
   <entry>
-    <title>${escapeXml(post.metadata.title)}</title>
+    <title>${escapeXml(post.title)}</title>
     <link href="${postUrl}"/>
     <id>${postUrl}</id>
     <published>${publishedDate}</published>
-    <updated>${updatedDate}</updated>
+    <updated>${publishedDate}</updated>
     <author>
       <name>${DATA.name}</name>
       <email>${authorEmail}</email>
     </author>
-    <summary>${escapeXml(post.metadata.summary || "")}</summary>
-    <content type="html">${escapeXml(post.source)}</content>
+    <summary>${escapeXml(post.summary || "")}</summary>
   </entry>`;
     })
     .join("")}

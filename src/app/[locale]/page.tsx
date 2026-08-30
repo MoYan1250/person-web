@@ -9,7 +9,7 @@ import { HomeProfileCard } from "@/components/home/home-profile-card";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { BLUR_FADE_DELAY, siteConfig } from "@/data/site";
 import { routing } from "@/i18n/routing";
-import { getBlogPosts, getPostPreviewText, sortPostsByDate } from "@/lib/blog";
+import { getBlogIndex, sortIndexByDate } from "@/lib/blog-index";
 import { normalizeArticleCategory } from "@/lib/articles";
 import {
   getCollectionItems,
@@ -33,15 +33,15 @@ export default async function Page(props: {
   );
   const projectsItems = getCollectionItems<ProjectItem>(t, "projects.items");
   const timelineItems = getCollectionItems<TimelineItem>(t, "timeline.items");
-  const diaryPosts = sortPostsByDate(await getBlogPosts(locale));
+  const diaryPosts = sortIndexByDate(getBlogIndex(locale));
   const latestPost = diaryPosts[0];
   const latestCategory = latestPost
-    ? normalizeArticleCategory(latestPost.metadata.category)
+    ? normalizeArticleCategory(latestPost.category)
     : null;
   const latestSignals = collectLatestSignals({
     diary: diaryPosts.map((post) => ({
-      date: post.metadata.date,
-      title: post.metadata.title,
+      date: post.date,
+      title: post.title,
       slug: post.slug,
     })),
     projects: projectsItems,
@@ -107,11 +107,9 @@ export default async function Page(props: {
               />
               <HomeLatestWriting
                 slug={latestPost?.slug}
-                title={latestPost?.metadata.title}
-                excerpt={
-                  latestPost ? getPostPreviewText(latestPost, 520) : undefined
-                }
-                date={latestPost?.metadata.date}
+                title={latestPost?.title}
+                excerpt={latestPost?.summary}
+                date={latestPost?.date}
                 categoryLabel={
                   latestCategory
                     ? t(`blog.categories.${latestCategory}`)

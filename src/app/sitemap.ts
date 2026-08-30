@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 import { siteConfig } from "@/data/site";
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/routing";
-import { getBlogPosts } from "@/lib/blog";
+import { getBlogIndex } from "@/lib/blog-index";
 
 const siteUrl = siteConfig.url;
 const postsPerPage = siteConfig.blog.postsPerPage;
@@ -40,10 +40,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const blogPaginationEntries: MetadataRoute.Sitemap = [];
 
   for (const locale of LOCALES) {
-    const posts = await getBlogPosts(locale);
+    const posts = getBlogIndex(locale);
     const visiblePosts = posts.filter(
-      (post) =>
-        post.slug && (post.metadata.status !== "draft" || !post.metadata.status),
+      (post) => post.slug && (post.status !== "draft" || !post.status),
     );
 
     visiblePosts.forEach((post) => {
@@ -51,10 +50,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       if (slugPart) {
         allBlogSitemapEntries.push({
           url: `${siteUrl}${localePathPrefix(locale)}/diary/${slugPart}`,
-          lastModified: post.metadata.updatedAt
-            ? new Date(post.metadata.updatedAt as string)
-            : post.metadata.date
-              ? new Date(post.metadata.date)
+          lastModified: post.updatedAt
+            ? new Date(post.updatedAt)
+            : post.date
+              ? new Date(post.date)
               : new Date(),
           changeFrequency: "monthly" as ChangeFrequency,
           priority: 0.7,

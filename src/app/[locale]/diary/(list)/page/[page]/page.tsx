@@ -7,7 +7,7 @@ import { BlogCard } from "@/components/blog/blog-card";
 import { BlogPagination } from "@/components/blog/blog-pagination";
 import { siteConfig } from "@/data/site";
 import { LOCALES, routing } from "@/i18n/routing";
-import { getBlogPosts, getPaginatedBlogPosts } from "@/lib/blog";
+import { getBlogIndex, sortIndexByDate } from "@/lib/blog-index";
 import { generateBlogJsonLd } from "@/lib/jsonld";
 import { constructMetadata } from "@/lib/metadata";
 import { jsonldScript } from "@/lib/utils";
@@ -24,7 +24,6 @@ type MetadataProps = {
 function parsePage(value: string): number | null {
   if (!/^\d+$/.test(value)) return null;
   const parsed = Number.parseInt(value, 10);
-  /* Page 1 lives at /diary – avoid duplicate URLs by 404'ing /diary/page/1 */
   return parsed >= 2 ? parsed : null;
 }
 
@@ -33,7 +32,7 @@ export async function generateStaticParams() {
   const params: Array<{ locale: string; page: string }> = [];
 
   for (const locale of LOCALES) {
-    const posts = await getBlogPosts(locale);
+    const posts = getBlogIndex(locale);
     const totalPages = Math.max(1, Math.ceil(posts.length / postsPerPage));
     for (let page = 2; page <= totalPages; page++) {
       params.push({ locale, page: String(page) });
@@ -79,17 +78,26 @@ export default async function BlogPaginatedPage(props: {
 
   if (pageNumber === null) notFound();
 
-  const { posts, currentPage, totalPages } = await getPaginatedBlogPosts(
-    locale,
-    pageNumber,
-  );
+  const postsPerPage = siteConfig.blog.postsPerPage;
+  const allPosts = sortIndexByDate(getBlogIndex(locale));
+  const totalPosts = allPosts.length;
+  const totalPages = Math.max(1, Math.ceil(totalPosts / postsPerPage));
+  const start = (pageNumber - 1) * postsPerPage;
+  const posts = allPosts.slice(start, start + postsPerPage);
 
   if (pageNumber > totalPages || posts.length === 0) notFound();
 
-  const blogJsonLd = generateBlogJsonLd(posts);
+  const blogJsonLd = generateBlogJsonLd(
+    posts.map((post) => ({
+      slug: post.slug,
+      metadata: {
+        title: post.title,
+        date: post.date,
+        summary: post.summary,
+      },
+    })),
+  );
   const t = await getTranslations({ locale });
-
-  const allPosts = await getBlogPosts(locale);
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
@@ -100,7 +108,7 @@ export default async function BlogPaginatedPage(props: {
         title={t("blog.title")}
         description={t("blogPage.description")}
         statLabel={t("blogPage.stat")}
-        statValue={allPosts.length}
+        statValue={totalPosts}
       />
 
       <p className="text-muted-foreground mb-8 text-sm leading-6 sm:text-base sm:leading-7">
@@ -113,15 +121,15 @@ export default async function BlogPaginatedPage(props: {
             key={post.slug}
             locale={locale}
             slug={post.slug}
-            title={post.metadata.title}
-            date={post.metadata.date}
-            summary={post.metadata.summary}
+            title={post.title}
+            date={post.date}
+            summary={post.summary}
           />
         ))}
       </div>
 
       <BlogPagination
-        currentPage={currentPage}
+        currentPage={pageNumber}
         totalPages={totalPages}
         locale={locale}
       />
