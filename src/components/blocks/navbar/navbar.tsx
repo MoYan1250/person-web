@@ -31,6 +31,26 @@ const NAV_ICONS: Record<
   academic: Icons.academic,
 };
 
+function NavItemLink({
+  item,
+  className,
+}: {
+  item: { href: string; icon: string; label: string };
+  className?: string;
+}) {
+  const Icon = NAV_ICONS[item.icon] || Icons.home;
+
+  return (
+    <Link
+      href={item.href}
+      className={className}
+      aria-label={item.label}
+    >
+      <Icon className="size-4" />
+    </Link>
+  );
+}
+
 export default function Navbar() {
   const t = useTranslations();
   const [isDesktop, setIsDesktop] = useState(false);
@@ -53,51 +73,46 @@ export default function Navbar() {
     };
   }, []);
 
+  const linkClassName = cn(
+    buttonVariants({ variant: "ghost", size: "icon" }),
+    "size-9 touch-manipulation transition-transform active:scale-95 md:size-12 md:active:scale-100",
+  );
+
   return (
     <div
       data-no-drag
       className={cn(
-        "pointer-events-none fixed inset-x-0 bottom-0 z-40 mx-auto mb-9 flex h-full max-h-14 origin-bottom justify-center px-3 md:top-0 md:mb-0 md:px-0",
+        "pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-2",
+        "pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))]",
+        "md:top-3 md:bottom-auto md:px-0 md:pb-0",
       )}
     >
       <div
         className={cn(
-          "bg-background dark:bg-background fixed inset-x-0 bottom-0 h-16 w-full to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] md:top-0",
+          "bg-background dark:bg-background pointer-events-none fixed inset-x-0 bottom-0 h-[5.5rem] to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] md:top-0 md:h-16",
         )}
-      ></div>
-      <div className="pointer-events-auto relative z-50 w-full max-md:max-w-full max-md:overflow-x-auto max-md:overscroll-x-contain max-md:[-ms-overflow-style:none] max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden md:w-auto">
-        <Dock
-          iconSize={isDesktop ? 40 : 34}
-          className="bg-background relative z-50 mx-auto flex h-full min-h-full w-max shrink-0 transform-gpu items-center px-1 max-md:!gap-0.5 max-md:!p-1.5 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]"
-        >
-        {items.map((item) => {
-          const Icon = NAV_ICONS[item.icon] || Icons.home;
-
-          return (
-            <DockIcon key={item.href}>
+        aria-hidden
+      />
+      <Dock
+        iconSize={isDesktop ? 40 : 30}
+        className="bg-background pointer-events-auto relative z-50 mx-auto flex w-max max-w-[calc(100vw-1rem)] shrink-0 transform-gpu items-center px-1 max-md:!mt-0 max-md:!gap-0.5 max-md:!p-1.5 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]"
+      >
+        {items.map((item) => (
+          <DockIcon key={item.href}>
+            {isDesktop ? (
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      buttonVariants({ variant: "ghost", size: "icon" }),
-                      "size-9 md:size-12",
-                    )}
-                    aria-label={item.label}
-                  >
-                    <Icon className="size-4" />
-                  </Link>
+                  <NavItemLink item={item} className={linkClassName} />
                 </TooltipTrigger>
-                <TooltipContent
-                  side={isDesktop ? "bottom" : "top"}
-                  sideOffset={8}
-                >
+                <TooltipContent side="bottom" sideOffset={8}>
                   <p>{item.label}</p>
                 </TooltipContent>
               </Tooltip>
-            </DockIcon>
-          );
-        })}
+            ) : (
+              <NavItemLink item={item} className={linkClassName} />
+            )}
+          </DockIcon>
+        ))}
         <div className="hidden md:contents">
           <Separator orientation="vertical" className="h-full" />
           <DockIcon>
@@ -105,10 +120,7 @@ export default function Navbar() {
               <TooltipTrigger asChild>
                 <ModeToggle />
               </TooltipTrigger>
-              <TooltipContent
-                side={isDesktop ? "bottom" : "top"}
-                sideOffset={8}
-              >
+              <TooltipContent side="bottom" sideOffset={8}>
                 <p>{t("navbar.theme")}</p>
               </TooltipContent>
             </Tooltip>
@@ -118,17 +130,13 @@ export default function Navbar() {
               <TooltipTrigger asChild>
                 <LanguageToggle />
               </TooltipTrigger>
-              <TooltipContent
-                side={isDesktop ? "bottom" : "top"}
-                sideOffset={8}
-              >
+              <TooltipContent side="bottom" sideOffset={8}>
                 <p>{t("navbar.language")}</p>
               </TooltipContent>
             </Tooltip>
           </DockIcon>
         </div>
       </Dock>
-      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import { PageMotionHeader, PageMotionSection } from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { TimelineLogbook } from "@/components/portfolio/timeline-logbook";
 import { routing } from "@/i18n/routing";
@@ -34,17 +35,20 @@ export default async function TimelinePage(props: {
   const timelineItems = getCollectionItems<TimelineItem>(t, "timeline.items");
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
-      <PageLogbookHeader
-        kicker={t("timelinePage.kicker")}
-        grid={t("timelinePage.grid")}
-        title={t("timelinePage.title")}
-        description={t("timelinePage.description")}
-        statLabel={t("timelinePage.records")}
-        statValue={timelineItems.length}
-      />
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("timelinePage.kicker")}
+          grid={t("timelinePage.grid")}
+          title={t("timelinePage.title")}
+          description={t("timelinePage.description")}
+          statLabel={t("timelinePage.records")}
+          statValue={timelineItems.length}
+        />
+      </PageMotionHeader>
 
-      <TimelineLogbook
+      <PageMotionSection>
+        <TimelineLogbook
         items={timelineItems}
         labels={{
           study: t("timelineTypes.study"),
@@ -59,6 +63,7 @@ export default async function TimelinePage(props: {
           era: t.raw("timelinePage.era") as string,
         }}
       />
+      </PageMotionSection>
     </main>
   );
 }

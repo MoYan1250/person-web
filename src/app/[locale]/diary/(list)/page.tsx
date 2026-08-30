@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import {
+  PageMotionHeader,
+  PageMotionSection,
+} from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { ArticlesIndex } from "@/components/blog/articles-index";
 import { routing } from "@/i18n/routing";
@@ -49,20 +53,23 @@ export default async function BlogPage(props: {
   const t = await getTranslations({ locale });
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
       {jsonldScript(blogJsonLd)}
-      <PageLogbookHeader
-        kicker={t("blogPage.kicker")}
-        grid={t("blogPage.grid")}
-        title={t("blog.title")}
-        description={t("blogPage.description")}
-        statLabel={t("blogPage.stat")}
-        statValue={posts.length}
-      />
-      <p className="text-muted-foreground mb-8 text-sm leading-6 sm:text-base sm:leading-7">
-        {t("blogPage.localeNote")}
-      </p>
-      <ArticlesIndex
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("blogPage.kicker")}
+          grid={t("blogPage.grid")}
+          title={t("blog.title")}
+          description={t("blogPage.description")}
+          statLabel={t("blogPage.stat")}
+          statValue={posts.length}
+        />
+      </PageMotionHeader>
+      <PageMotionSection>
+        <p className="text-muted-foreground mb-8 text-sm leading-6 sm:text-base sm:leading-7">
+          {t("blogPage.localeNote")}
+        </p>
+        <ArticlesIndex
           locale={locale}
           posts={posts.map((post) => ({
             slug: post.slug,
@@ -83,6 +90,7 @@ export default async function BlogPage(props: {
             empty: t("blog.empty"),
           }}
         />
+      </PageMotionSection>
     </main>
   );
 }

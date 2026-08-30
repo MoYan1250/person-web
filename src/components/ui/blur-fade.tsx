@@ -13,6 +13,11 @@ import { useRef, useState } from "react";
 
 type MarginType = UseInViewOptions["margin"];
 
+const STAGGER_STEP = 0.04;
+const MAX_STAGGER_DELAY = 0.4;
+const TOUCH_BLUR = "3px";
+const DESKTOP_BLUR = "6px";
+
 interface BlurFadeProps extends MotionProps {
   children: React.ReactNode;
   className?: string;
@@ -22,6 +27,7 @@ interface BlurFadeProps extends MotionProps {
   };
   duration?: number;
   delay?: number;
+  staggerIndex?: number;
   offset?: number;
   direction?: "up" | "down" | "left" | "right";
   inView?: boolean;
@@ -35,41 +41,48 @@ export function BlurFade({
   variant,
   duration = 0.4,
   delay = 0,
+  staggerIndex = 0,
   offset = 6,
   direction = "down",
   inView = false,
   inViewMargin = "-50px",
-  blur = "6px",
+  blur,
   ...props
 }: BlurFadeProps) {
   const ref = useRef(null);
   const reducedMotion = useReducedMotion();
-  const [disableBlur, setDisableBlur] = useState(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia("(pointer: coarse)").matches;
+  const [activeBlur] = useState(() => {
+    if (typeof window === "undefined") return DESKTOP_BLUR;
+    return window.matchMedia("(pointer: coarse)").matches ? TOUCH_BLUR : DESKTOP_BLUR;
   });
   const inViewResult = useInView(ref, { once: true, margin: inViewMargin });
   const isInView = !inView || inViewResult;
+
+  const resolvedDelay =
+    delay + Math.min(staggerIndex * STAGGER_STEP, MAX_STAGGER_DELAY);
+  const resolvedBlur = blur ?? activeBlur;
 
   if (reducedMotion) {
     return <div className={className}>{children}</div>;
   }
 
-  const activeBlur = disableBlur ? "0px" : blur;
-  const defaultVariants: Variants = {
+  const axis = direction === "left" || direction === "right" ? "x" : "y";
+  const fromOffset =
+    direction === "right" || direction === "down" ? -offset : offset;
+
+  const motionVariants: Variants = variant ?? {
     hidden: {
-      [direction === "left" || direction === "right" ? "x" : "y"]:
-        direction === "right" || direction === "down" ? -offset : offset,
+      [axis]: fromOffset,
       opacity: 0,
-      filter: activeBlur === "0px" ? "none" : `blur(${activeBlur})`,
+      filter: `blur(${resolvedBlur})`,
     },
     visible: {
-      [direction === "left" || direction === "right" ? "x" : "y"]: 0,
+      [axis]: 0,
       opacity: 1,
       filter: "none",
     },
   };
-  const combinedVariants = variant || defaultVariants;
+
   return (
     <AnimatePresence>
       <motion.div
@@ -77,9 +90,9 @@ export function BlurFade({
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         exit="hidden"
-        variants={combinedVariants}
+        variants={motionVariants}
         transition={{
-          delay: 0.04 + delay,
+          delay: 0.04 + resolvedDelay,
           duration,
           ease: "easeOut",
         }}

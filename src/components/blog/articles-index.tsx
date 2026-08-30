@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { BlogCard } from "@/components/blog/blog-card";
+import { BlurFade } from "@/components/ui/blur-fade";
 import {
   ARTICLE_CATEGORIES,
   type ArticleCategory,
@@ -57,43 +58,46 @@ export function ArticlesIndex({
 
   return (
     <>
-      <div className="mb-8" aria-label={copy.filter}>
-        <p className="text-muted-foreground mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
-          {copy.filter}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <FilterChip
-            pressed={active === "all"}
-            onClick={() => setActive("all")}
-            label={copy.all}
-            count={counts.all}
-          />
-          {ARTICLE_CATEGORIES.map((category) => (
+      <BlurFade delay={0}>
+        <div className="mb-8" aria-label={copy.filter}>
+          <p className="text-muted-foreground mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
+            {copy.filter}
+          </p>
+          <div className="flex flex-wrap gap-2">
             <FilterChip
-              key={category}
-              pressed={active === category}
-              onClick={() => setActive(category)}
-              label={labels[category]}
-              count={counts[category]}
+              pressed={active === "all"}
+              onClick={() => setActive("all")}
+              label={copy.all}
+              count={counts.all}
             />
-          ))}
+            {ARTICLE_CATEGORIES.map((category) => (
+              <FilterChip
+                key={category}
+                pressed={active === category}
+                onClick={() => setActive(category)}
+                label={labels[category]}
+                count={counts[category]}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      </BlurFade>
 
       {visible.length === 0 ? (
         <p className="text-muted-foreground text-sm">{copy.empty}</p>
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:gap-5">
-          {visible.map((post) => (
-            <BlogCard
-              key={post.slug}
-              locale={locale}
-              slug={post.slug}
-              title={post.title}
-              date={post.date}
-              summary={post.summary}
-              categoryLabel={labels[post.category]}
-            />
+          {visible.map((post, index) => (
+            <BlurFade key={post.slug} inView staggerIndex={index}>
+              <BlogCard
+                locale={locale}
+                slug={post.slug}
+                title={post.title}
+                date={post.date}
+                summary={post.summary}
+                categoryLabel={labels[post.category]}
+              />
+            </BlurFade>
           ))}
         </div>
       )}

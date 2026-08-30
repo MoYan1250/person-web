@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { ProjectCard } from "@/components/portfolio/projects-section/project-card";
 import { Button } from "@/components/ui/button";
+import { BlurFade } from "@/components/ui/blur-fade";
 
 interface ProjectLink {
   readonly icon: React.ReactNode;
@@ -68,9 +69,30 @@ export default function ProjectsSection({
   if (!mounted) {
     return (
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.slice(0, displayCount).map((project) => (
+        {projects.slice(0, displayCount).map((project, index) => (
+          <BlurFade key={project.title} inView staggerIndex={index}>
+            <ProjectCard
+              href={project.href}
+              title={project.title}
+              description={project.description}
+              dates={project.dates}
+              tags={project.technologies}
+              image={project.image}
+              video={project.video}
+              links={project.links}
+              authors={project.authors}
+            />
+          </BlurFade>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {displayed.map((project, index) => (
+        <BlurFade key={project.title} inView staggerIndex={index}>
           <ProjectCard
-            key={project.title}
             href={project.href}
             title={project.title}
             description={project.description}
@@ -81,26 +103,7 @@ export default function ProjectsSection({
             links={project.links}
             authors={project.authors}
           />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div className="mx-auto grid max-w-6xl grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {displayed.map((project) => (
-        <ProjectCard
-          key={project.title}
-          href={project.href}
-          title={project.title}
-          description={project.description}
-          dates={project.dates}
-          tags={project.technologies}
-          image={project.image}
-          video={project.video}
-          links={project.links}
-          authors={project.authors}
-        />
+        </BlurFade>
       ))}
       {hasMore && !showAll && (
         <div className="col-span-full flex justify-center pt-1">

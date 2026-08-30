@@ -309,6 +309,16 @@
             "pageInfo": "第 {current} 頁／共 {total} 頁",
             "previousLabel": "前往上一頁",
             "nextLabel": "前往下一頁"
+        },
+        "unavailable": {
+            "title": "暫無此語言版本",
+            "heading": "該文章暫時沒有中文版。",
+            "description": "此文章目前可能僅提供其他語言版本。",
+            "readIn": {
+                "zh": "閱讀中文版",
+                "en": "閱讀英文版"
+            },
+            "backToList": "返回文章列表"
         }
     },
     "footer": {

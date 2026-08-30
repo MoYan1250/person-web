@@ -3,6 +3,7 @@
 import { useMemo, useState, type ReactNode } from "react";
 
 import { Icons } from "@/components/icons";
+import { BlurFade } from "@/components/ui/blur-fade";
 import {
   Tooltip,
   TooltipContent,
@@ -109,7 +110,8 @@ export function PapersGrid({
 
   return (
     <>
-      <div className="mb-6 space-y-4" aria-label={copy.filter}>
+      <BlurFade delay={0}>
+        <div className="mb-6 space-y-4" aria-label={copy.filter}>
         <div>
           <p className="text-muted-foreground mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
             {copy.filter}
@@ -157,20 +159,23 @@ export function PapersGrid({
             ))}
           </div>
         </div>
-      </div>
+        </div>
+      </BlurFade>
 
       {visible.length === 0 ? (
         <p className="text-muted-foreground text-sm">{copy.empty}</p>
       ) : (
         <ul className="grid grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4">
-          {visible.map((paper) => (
+          {visible.map((paper, index) => (
             <li key={paper.id}>
-              <PaperTile
-                paper={paper}
-                tagLabels={labels}
-                venueLabels={venueLabels}
-                noteLabel={copy.paperNote}
-              />
+              <BlurFade inView staggerIndex={index}>
+                <PaperTile
+                  paper={paper}
+                  tagLabels={labels}
+                  venueLabels={venueLabels}
+                  noteLabel={copy.paperNote}
+                />
+              </BlurFade>
             </li>
           ))}
         </ul>

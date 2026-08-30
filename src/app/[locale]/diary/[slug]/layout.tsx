@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 import { ArticleZoomProvider } from "@/components/blog/toc/article-zoom";
 import {
@@ -31,7 +32,19 @@ export async function generateMetadata(props: {
   const post = await getPost(params.slug, locale);
 
   if (!post) {
-    return undefined;
+    const availableLocales = await getAvailableLocales(params.slug, LOCALES);
+    if (availableLocales.length === 0) {
+      return undefined;
+    }
+
+    const t = await getTranslations({ locale });
+    return constructMetadata({
+      title: t("blog.unavailable.title"),
+      description: t("blog.unavailable.description"),
+      path: `/diary/${params.slug}`,
+      locale,
+      availableLocales,
+    });
   }
 
   const { title, date: publishedTime, summary: description } = post.metadata;
@@ -69,7 +82,21 @@ export default async function BlogLayout(props: {
   const post = await getPost(params.slug, locale);
 
   if (!post) {
-    notFound();
+    const availableLocales = await getAvailableLocales(params.slug, LOCALES);
+    if (availableLocales.length === 0) {
+      notFound();
+    }
+
+    return (
+      <ArticleSidebarProvider>
+        <main
+          id="blog"
+          className="pt-16 pb-12 sm:pt-24 sm:pb-14 md:pt-32 md:pb-16 lg:pt-36 xl:pt-40"
+        >
+          <ArticleColumn>{props.children}</ArticleColumn>
+        </main>
+      </ArticleSidebarProvider>
+    );
   }
 
   const blogPostingJsonLd = await generateBlogPostingJsonLd(post);

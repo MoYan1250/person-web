@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 
+import { BlurFade } from "@/components/ui/blur-fade";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
@@ -23,8 +26,10 @@ export type HomeBentoCard = {
 export function HomeBento({ cards }: { cards: HomeBentoCard[] }) {
   return (
     <div className="flex flex-col gap-4">
-      {cards.map((card) => (
-        <HomeBentoRow key={card.area} card={card} />
+      {cards.map((card, index) => (
+        <BlurFade key={card.area} staggerIndex={index}>
+          <HomeBentoRow card={card} />
+        </BlurFade>
       ))}
     </div>
   );

@@ -153,11 +153,15 @@ const DockIcon = ({
   return (
     <motion.div
       ref={ref}
-      style={{ 
-        width: shouldAnimate ? scaleSize : size, 
-        height: shouldAnimate ? scaleSize : size, 
-        padding 
-      }}
+      style={
+        shouldAnimate
+          ? {
+              width: scaleSize,
+              height: scaleSize,
+              padding,
+            }
+          : { width: size, height: size, padding }
+      }
       className={cn(
         "flex aspect-square cursor-pointer items-center justify-center rounded-full",
         disableMagnification && "hover:bg-muted-foreground transition-colors",
@@ -165,7 +169,7 @@ const DockIcon = ({
       )}
       {...props}
     >
-      <div>{children}</div>
+      <div className="flex size-full items-center justify-center">{children}</div>
     </motion.div>
   );
 };

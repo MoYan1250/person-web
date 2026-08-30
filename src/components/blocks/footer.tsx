@@ -6,7 +6,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t">
-      <div className="text-muted-foreground mx-auto max-w-7xl px-6 py-8 pb-20 text-center text-sm md:pb-8 sm:px-16 md:px-20 lg:px-24 xl:px-32">
+      <div className="text-muted-foreground mx-auto max-w-7xl px-6 py-8 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] text-center text-sm md:pb-8 sm:px-16 md:px-20 lg:px-24 xl:px-32">
         <p>{`© ${year} Shang-Jing Lyu. All Rights Reserved.`}</p>
         <p className="mt-1">
           {`Powered by `}

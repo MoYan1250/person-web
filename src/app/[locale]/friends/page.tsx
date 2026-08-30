@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import { PageMotionHeader, PageMotionSection } from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { FriendsGrid } from "@/components/portfolio/friends-grid";
 import { routing } from "@/i18n/routing";
@@ -34,21 +35,25 @@ export default async function FriendsPage(props: {
   const friends = getCollectionItems<FriendItem>(t, "friends.items");
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
-      <PageLogbookHeader
-        kicker={t("friendsPage.kicker")}
-        grid={t("friendsPage.grid")}
-        title={t("sections.friends")}
-        description={t("friendsPage.description")}
-        statLabel={t("friendsPage.stat")}
-        statValue={friends.length}
-      />
-      <FriendsGrid
+    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("friendsPage.kicker")}
+          grid={t("friendsPage.grid")}
+          title={t("sections.friends")}
+          description={t("friendsPage.description")}
+          statLabel={t("friendsPage.stat")}
+          statValue={friends.length}
+        />
+      </PageMotionHeader>
+      <PageMotionSection>
+        <FriendsGrid
         friends={friends}
         visitLabel={t("friendsPage.visit")}
         searchPlaceholder={t("friendsPage.search")}
         emptyLabel={t("friendsPage.empty")}
       />
+      </PageMotionSection>
     </main>
   );
 }

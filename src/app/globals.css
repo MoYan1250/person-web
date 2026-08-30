@@ -571,4 +571,14 @@ html.pointer-light-on .pointer-light {
   .dark .glass-panel {
     border-color: hsl(var(--border) / 0.42);
   }
+
+  .mobile-page-pad {
+    padding-bottom: calc(7.5rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  @media (min-width: 768px) {
+    .mobile-page-pad {
+      padding-bottom: 6rem;
+    }
+  }
 }

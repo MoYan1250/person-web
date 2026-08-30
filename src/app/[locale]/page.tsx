@@ -61,7 +61,7 @@ export default async function Page(props: {
   ] as const;
 
   return (
-    <main className="pb-24">
+    <main className="mobile-page-pad">
       {jsonldScript(personJsonLd)}
       <HomeDragScroll />
       <div className="mt-16 md:mt-20">
@@ -123,8 +123,7 @@ export default async function Page(props: {
               />
             </BlurFade>
 
-            <BlurFade delay={BLUR_FADE_DELAY * 2}>
-              <HomeBento
+            <HomeBento
                 cards={[
                   {
                     area: "about",
@@ -185,7 +184,6 @@ export default async function Page(props: {
                   },
                 ]}
               />
-            </BlurFade>
           </div>
         </div>
       </div>

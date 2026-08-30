@@ -2,6 +2,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
+import {
+  PageMotionHeader,
+  PageMotionSection,
+  StaggerItem,
+} from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { BlogCard } from "@/components/blog/blog-card";
 import { BlogPagination } from "@/components/blog/blog-pagination";
@@ -100,39 +105,44 @@ export default async function BlogPaginatedPage(props: {
   const t = await getTranslations({ locale });
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
       {jsonldScript(blogJsonLd)}
-      <PageLogbookHeader
-        kicker={t("blogPage.kicker")}
-        grid={t("blogPage.grid")}
-        title={t("blog.title")}
-        description={t("blogPage.description")}
-        statLabel={t("blogPage.stat")}
-        statValue={totalPosts}
-      />
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("blogPage.kicker")}
+          grid={t("blogPage.grid")}
+          title={t("blog.title")}
+          description={t("blogPage.description")}
+          statLabel={t("blogPage.stat")}
+          statValue={totalPosts}
+        />
+      </PageMotionHeader>
 
-      <p className="text-muted-foreground mb-8 text-sm leading-6 sm:text-base sm:leading-7">
-        {t("blogPage.localeNote")}
-      </p>
+      <PageMotionSection>
+        <p className="text-muted-foreground mb-8 text-sm leading-6 sm:text-base sm:leading-7">
+          {t("blogPage.localeNote")}
+        </p>
 
-      <div className="grid grid-cols-1 gap-4 sm:gap-5">
-        {posts.map((post) => (
-          <BlogCard
-            key={post.slug}
-            locale={locale}
-            slug={post.slug}
-            title={post.title}
-            date={post.date}
-            summary={post.summary}
-          />
-        ))}
-      </div>
+        <div className="grid grid-cols-1 gap-4 sm:gap-5">
+          {posts.map((post, index) => (
+            <StaggerItem key={post.slug} index={index}>
+              <BlogCard
+                locale={locale}
+                slug={post.slug}
+                title={post.title}
+                date={post.date}
+                summary={post.summary}
+              />
+            </StaggerItem>
+          ))}
+        </div>
 
-      <BlogPagination
-        currentPage={pageNumber}
-        totalPages={totalPages}
-        locale={locale}
-      />
+        <BlogPagination
+          currentPage={pageNumber}
+          totalPages={totalPages}
+          locale={locale}
+        />
+      </PageMotionSection>
     </main>
   );
 }

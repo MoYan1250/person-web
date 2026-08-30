@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import { PageMotionHeader, PageMotionSection } from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import ProjectsSection from "@/components/portfolio/projects-section/projects-section";
 import { routing } from "@/i18n/routing";
@@ -35,16 +36,19 @@ export default async function ProjectsPage(props: {
   const projectsItems = getCollectionItems<ProjectItem>(t, "projects.items");
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-7xl flex-col px-6 pt-20 pb-24 sm:px-16 md:px-20 md:pt-32 lg:px-24">
-      <PageLogbookHeader
-        kicker={t("projectsPage.kicker")}
-        grid={t("projectsPage.grid")}
-        title={t("sections.selectedProjects")}
-        description={t("projectsPage.description")}
-        statLabel={t("projectsPage.stat")}
-        statValue={projectsItems.length}
-      />
-      <ProjectsSection
+    <main className="mx-auto flex min-h-dvh max-w-7xl flex-col px-6 pt-20 mobile-page-pad sm:px-16 md:px-20 md:pt-32 lg:px-24">
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("projectsPage.kicker")}
+          grid={t("projectsPage.grid")}
+          title={t("sections.selectedProjects")}
+          description={t("projectsPage.description")}
+          statLabel={t("projectsPage.stat")}
+          statValue={projectsItems.length}
+        />
+      </PageMotionHeader>
+      <PageMotionSection>
+        <ProjectsSection
         projects={projectsItems.map((project) => ({
           ...project,
           links: project.links?.map((link) => ({
@@ -55,6 +59,7 @@ export default async function ProjectsPage(props: {
         mobileDisplayCount={12}
         desktopDisplayCount={12}
       />
+      </PageMotionSection>
     </main>
   );
 }

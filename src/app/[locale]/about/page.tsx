@@ -51,7 +51,7 @@ export default async function AboutPage(props: {
     "prose text-muted-foreground dark:prose-invert max-w-full font-sans text-base leading-8 sm:text-lg sm:leading-9 [&_p]:mb-6 [&_p:last-child]:mb-0 text-pretty";
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col space-y-12 px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col space-y-12 px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
       <BlurFade delay={0}>
         <PageLogbookHeader
           kicker={t("aboutPage.kicker")}

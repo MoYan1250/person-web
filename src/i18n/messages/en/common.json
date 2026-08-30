@@ -309,6 +309,16 @@
             "pageInfo": "Page {current} of {total}",
             "previousLabel": "Go to previous page",
             "nextLabel": "Go to next page"
+        },
+        "unavailable": {
+            "title": "Translation unavailable",
+            "heading": "This article is not available in English yet.",
+            "description": "It may only be published in another language for now.",
+            "readIn": {
+                "zh": "Read Chinese version",
+                "en": "Read English version"
+            },
+            "backToList": "Back to writing"
         }
     },
     "footer": {

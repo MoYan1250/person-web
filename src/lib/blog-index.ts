@@ -87,3 +87,24 @@ export function sortIndexByDate(posts: BlogIndexEntry[]): BlogIndexEntry[] {
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 }
+
+export function postExists(slug: string, locale: string): boolean {
+  return fs.existsSync(path.join(getBlogContentDir(locale), `${slug}.mdx`));
+}
+
+export function getAllBlogSlugs(): string[] {
+  const slugs = new Set<string>();
+  for (const locale of ["en", "zh"]) {
+    for (const post of getBlogIndex(locale)) {
+      slugs.add(post.slug);
+    }
+  }
+  return [...slugs];
+}
+
+export function getBlogSlugLocaleParams(): Array<{ locale: string; slug: string }> {
+  const slugs = getAllBlogSlugs();
+  return ["en", "zh"].flatMap((locale) =>
+    slugs.map((slug) => ({ locale, slug })),
+  );
+}

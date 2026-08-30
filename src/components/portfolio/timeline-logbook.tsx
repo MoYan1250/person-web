@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 
+import { BlurFade } from "@/components/ui/blur-fade";
 import { Link } from "@/i18n/routing";
 import {
   TIMELINE_TYPES,
@@ -99,28 +100,30 @@ export function TimelineLogbook({
 
   return (
     <>
-      <div className="border-border mt-10 border-y py-4" aria-label={copy.filter}>
-        <p className="text-muted-foreground mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
-          {copy.filter}
-        </p>
-        <div className="flex flex-wrap gap-2">
-          <FilterChip
-            pressed={active === "all"}
-            onClick={() => setActive("all")}
-            label={copy.all}
-            count={counts.all}
-          />
-          {filters.map((filter) => (
+      <BlurFade delay={0}>
+        <div className="border-border mt-10 border-y py-4" aria-label={copy.filter}>
+          <p className="text-muted-foreground mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
+            {copy.filter}
+          </p>
+          <div className="flex flex-wrap gap-2">
             <FilterChip
-              key={filter.key}
-              pressed={active === filter.key}
-              onClick={() => setActive(filter.key)}
-              label={filter.label}
-              count={filter.count}
+              pressed={active === "all"}
+              onClick={() => setActive("all")}
+              label={copy.all}
+              count={counts.all}
             />
-          ))}
+            {filters.map((filter) => (
+              <FilterChip
+                key={filter.key}
+                pressed={active === filter.key}
+                onClick={() => setActive(filter.key)}
+                label={filter.label}
+                count={filter.count}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      </BlurFade>
 
       {visible.length === 0 ? (
         <p className="text-muted-foreground font-serif mt-10 text-sm font-bold">{copy.empty}</p>
@@ -140,6 +143,7 @@ export function TimelineLogbook({
                   key={`${row.item.date}-${row.item.title}-${row.index}`}
                   item={row.item}
                   labels={labels}
+                  staggerIndex={row.index}
                 />
               ),
             )}
@@ -204,9 +208,11 @@ function TimelineEraSplit({ date, label }: { date: string; label: string }) {
 function TimelineEntry({
   item,
   labels,
+  staggerIndex,
 }: {
   item: TimelineItem;
   labels: Record<TimelineType, string>;
+  staggerIndex: number;
 }) {
   const types = getTimelineTypes(item);
 
@@ -218,7 +224,8 @@ function TimelineEntry({
       <div className="border-primary/40 bg-background relative z-10 mt-1 grid size-4 place-items-center rounded-full border shadow-[0_0_0_6px_hsl(var(--primary)/0.08)]">
         <span className="bg-primary size-1.5 rounded-full" />
       </div>
-      <div className="glass-panel rounded-2xl p-4 sm:p-5 md:p-6">
+      <BlurFade inView staggerIndex={staggerIndex}>
+        <div className="glass-panel rounded-2xl p-4 sm:p-5 md:p-6">
         <time className="text-muted-foreground mb-2 block font-mono text-xs md:hidden">
           {item.date}
         </time>
@@ -289,7 +296,8 @@ function TimelineEntry({
             </div>
           ) : null}
         </div>
-      </div>
+        </div>
+      </BlurFade>
     </li>
   );
 }

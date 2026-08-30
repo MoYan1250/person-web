@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { PapersGrid } from "@/components/academic/papers-grid";
+import {
+  PageMotionHeader,
+  PageMotionSection,
+  StaggerItem,
+} from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { READ_PAPERS } from "@/data/read-papers";
 import { routing } from "@/i18n/routing";
@@ -59,35 +64,40 @@ export default async function AcademicPage(props: {
   ) as Record<PaperTag, string>;
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
-      <PageLogbookHeader
-        kicker={t("academicPage.kicker")}
-        grid={t("academicPage.grid")}
-        title={t("sections.academic")}
-        description={t("academicPage.description")}
-        statLabel={t("academicPage.stat")}
-        statValue={papers.length}
-      />
+    <main className="mx-auto flex min-h-dvh max-w-6xl flex-col px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("academicPage.kicker")}
+          grid={t("academicPage.grid")}
+          title={t("sections.academic")}
+          description={t("academicPage.description")}
+          statLabel={t("academicPage.stat")}
+          statValue={papers.length}
+        />
+      </PageMotionHeader>
 
-      <section className="mb-12">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">
-          {t("academicPage.research")}
-        </h2>
-        <div className="flex flex-col gap-3">
-          {research.map((item) => (
-            <ResearchCard key={item.title} item={item} />
-          ))}
-        </div>
-      </section>
+      <PageMotionSection>
+        <section className="mb-12">
+          <h2 className="mb-4 text-xl font-semibold tracking-tight">
+            {t("academicPage.research")}
+          </h2>
+          <div className="flex flex-col gap-3">
+            {research.map((item, index) => (
+              <StaggerItem key={item.title} index={index}>
+                <ResearchCard item={item} />
+              </StaggerItem>
+            ))}
+          </div>
+        </section>
 
-      <section>
-        <h2 className="text-xl font-semibold tracking-tight">
-          {t("academicPage.papers")}
-        </h2>
-        <p className="text-muted-foreground mt-1 mb-4 text-sm leading-6">
-          {t("academicPage.papersNote")}
-        </p>
-        <PapersGrid
+        <section>
+          <h2 className="text-xl font-semibold tracking-tight">
+            {t("academicPage.papers")}
+          </h2>
+          <p className="text-muted-foreground mt-1 mb-4 text-sm leading-6">
+            {t("academicPage.papersNote")}
+          </p>
+          <PapersGrid
           papers={papers}
           labels={tagLabels}
           venueLabels={VENUE_TIER_LABELS}
@@ -99,7 +109,8 @@ export default async function AcademicPage(props: {
             paperNote: t("academicPage.paperNote"),
           }}
         />
-      </section>
+        </section>
+      </PageMotionSection>
     </main>
   );
 }

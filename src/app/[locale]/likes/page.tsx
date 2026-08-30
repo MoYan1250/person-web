@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import {
+  PageMotionHeader,
+  PageMotionSection,
+  StaggerItem,
+} from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { GameCard } from "@/components/likes/game-card";
 import { LIKED_GAME_COVERS } from "@/data/liked-game-covers";
@@ -43,33 +48,38 @@ export default async function LikesPage(props: {
   const music = likes?.music ?? [];
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 pb-24 sm:px-8 md:px-10 md:pt-32">
-      <PageLogbookHeader
-        kicker={t("likesPage.kicker")}
-        grid={t("likesPage.grid")}
-        title={t("sections.likes")}
-        description={t("likesPage.description")}
-        statLabel={t("likesPage.stat")}
-        statValue={games.length + music.length}
-      />
+    <main className="mx-auto flex min-h-dvh max-w-5xl flex-col px-6 pt-20 mobile-page-pad sm:px-8 md:px-10 md:pt-32">
+      <PageMotionHeader>
+        <PageLogbookHeader
+          kicker={t("likesPage.kicker")}
+          grid={t("likesPage.grid")}
+          title={t("sections.likes")}
+          description={t("likesPage.description")}
+          statLabel={t("likesPage.stat")}
+          statValue={games.length + music.length}
+        />
+      </PageMotionHeader>
 
-      <section className="mb-12">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">
-          {t("likesPage.games")}
-        </h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {games.map((game) => (
-            <GameCard key={game.title} game={game} />
-          ))}
-        </div>
-      </section>
+      <PageMotionSection>
+        <section className="mb-12">
+          <h2 className="mb-4 text-xl font-semibold tracking-tight">
+            {t("likesPage.games")}
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {games.map((game, index) => (
+              <StaggerItem key={game.title} index={index}>
+                <GameCard game={game} />
+              </StaggerItem>
+            ))}
+          </div>
+        </section>
 
-      <section>
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">
-          {t("likesPage.music")}
-        </h2>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {music.map((track) => {
+        <section>
+          <h2 className="mb-4 text-xl font-semibold tracking-tight">
+            {t("likesPage.music")}
+          </h2>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {music.map((track, index) => {
             const inner = (
               <>
                 <p className="text-muted-foreground font-mono text-[10px] tracking-widest uppercase">
@@ -90,26 +100,33 @@ export default async function LikesPage(props: {
             );
 
             return track.url ? (
-              <a
+              <StaggerItem
                 key={`${track.title}-${track.artist}`}
-                href={track.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-border glass-panel hover:bg-accent/40 block rounded-xl border p-5 transition-colors"
+                index={games.length + index}
               >
-                {inner}
-              </a>
+                <a
+                  href={track.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-border glass-panel hover:bg-accent/40 block rounded-xl border p-5 transition-colors"
+                >
+                  {inner}
+                </a>
+              </StaggerItem>
             ) : (
-              <article
+              <StaggerItem
                 key={`${track.title}-${track.artist}`}
-                className="border-border glass-panel rounded-xl border p-5"
+                index={games.length + index}
               >
-                {inner}
-              </article>
+                <article className="border-border glass-panel rounded-xl border p-5">
+                  {inner}
+                </article>
+              </StaggerItem>
             );
           })}
-        </div>
-      </section>
+          </div>
+        </section>
+      </PageMotionSection>
     </main>
   );
 }

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { BlurFade } from "@/components/ui/blur-fade";
 import {
   friendDomain,
   friendInitials,
@@ -37,27 +38,30 @@ export function FriendsGrid({
 
   return (
     <div>
-      <label className="sr-only" htmlFor="friends-search">
-        {searchPlaceholder}
-      </label>
-      <input
-        id="friends-search"
-        type="search"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
-        placeholder={searchPlaceholder}
-        className="border-border glass-panel text-foreground placeholder:text-muted-foreground mb-8 w-full rounded-xl border px-4 py-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-      />
+      <BlurFade delay={0}>
+        <label className="sr-only" htmlFor="friends-search">
+          {searchPlaceholder}
+        </label>
+        <input
+          id="friends-search"
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          placeholder={searchPlaceholder}
+          className="border-border glass-panel text-foreground placeholder:text-muted-foreground mb-8 w-full rounded-xl border px-4 py-2.5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+        />
+      </BlurFade>
 
       {visible.length === 0 ? (
         <p className="text-muted-foreground text-sm">{emptyLabel}</p>
       ) : (
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {visible.map((friend) => {
+          {visible.map((friend, index) => {
             const domain = friendDomain(friend);
             return (
               <li key={`${friend.name}-${friend.url}`}>
-                <article className="border-border glass-panel hover:border-primary/40 flex h-full flex-col rounded-xl border p-5 transition-colors">
+                <BlurFade inView staggerIndex={index}>
+                  <article className="border-border glass-panel hover:border-primary/40 flex h-full flex-col rounded-xl border p-5 transition-colors">
                   <div className="flex items-center gap-3">
                     <Avatar className="size-12 border">
                       {friend.avatar ? (
@@ -92,6 +96,7 @@ export function FriendsGrid({
                     {visitLabel}
                   </a>
                 </article>
+                </BlurFade>
               </li>
             );
           })}
