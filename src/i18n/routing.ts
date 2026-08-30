@@ -17,7 +17,8 @@ export const LOCALE_TO_HREFLANG: Record<Locale, string> = {
 export const routing = defineRouting({
   locales: LOCALES,
   defaultLocale: DEFAULT_LOCALE,
-  localePrefix: "as-needed",
+  localePrefix: "always",
+  localeDetection: false,
 });
 
 export const { Link, redirect, usePathname, useRouter, getPathname } =

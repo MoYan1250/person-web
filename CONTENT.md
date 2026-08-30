@@ -143,6 +143,6 @@ category: diary
 [`src/i18n/routing.ts`](src/i18n/routing.ts)
 
 - 預設語系是 `zh`（繁中）
-- `/` 是中文，`/en` 是英文
+- `/zh` 是中文，`/en` 是英文；開 `/` 會轉到 `/zh`
 
-網站網址由環境變數 `NEXT_PUBLIC_SITE_URL` 決定（見 [README](./README.md) 的上線說明）。本機沒設時預設是 `http://localhost:3000`。上線後把這個變數設成實際網址（例如 `https://person-web.<帳號>.workers.dev`），Open Graph 與 sitemap 才會正確。
+網站網址由環境變數 `NEXT_PUBLIC_SITE_URL` 決定（見 [README](./README.md) 的上線說明）。本機沒設時預設是 `http://localhost:3000`。上線後把這個變數設成實際網址（例如 `https://<專案>.pages.dev`），Open Graph 與 sitemap 才會正確。

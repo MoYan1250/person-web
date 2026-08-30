@@ -36,6 +36,9 @@ yarn-error.log*
 .open-next
 .wrangler
 
+# generated at prebuild
+/public/api/feed/atom.xml
+
 # vercel
 .vercel
 

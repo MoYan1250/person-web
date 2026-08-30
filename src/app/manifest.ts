@@ -2,6 +2,8 @@ import type { MetadataRoute } from "next";
 
 import enMessages from "@/i18n/messages/en/personal.json";
 
+export const dynamic = "force-static";
+
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: enMessages.name.full,

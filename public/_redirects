@@ -1,0 +1,24 @@
+# Default locale (static export has no middleware)
+/ /zh 302
+
+# Old unprefixed URLs from localePrefix: as-needed
+/about /zh/about 301
+/diary /zh/diary 301
+/diary/* /zh/diary/:splat 301
+/projects /zh/projects 301
+/timeline /zh/timeline 301
+/friends /zh/friends 301
+/likes /zh/likes 301
+/academic /zh/academic 301
+
+# Legacy /blog
+/blog /zh/diary 301
+/blog/* /zh/diary/:splat 301
+/en/blog /en/diary 301
+/en/blog/* /en/diary/:splat 301
+/zh/blog /zh/diary 301
+/zh/blog/* /zh/diary/:splat 301
+
+# Template docs proxy (was a Next.js rewrite)
+/open-source/nextjs-portfolio-blog-research/docs https://nextjs-portfolio-blog-research-docs.vercel.app/open-source/nextjs-portfolio-blog-research/docs 200
+/open-source/nextjs-portfolio-blog-research/docs/* https://nextjs-portfolio-blog-research-docs.vercel.app/open-source/nextjs-portfolio-blog-research/docs/:splat 200
