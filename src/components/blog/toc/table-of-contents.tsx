@@ -187,7 +187,9 @@ export function TableOfContents({
       typeof ResizeObserver !== "undefined" && article
         ? new ResizeObserver(updateActive)
         : null;
-    resizeObserver?.observe(article);
+    if (article) {
+      resizeObserver?.observe(article);
+    }
 
     return () => {
       window.removeEventListener("scroll", updateActive);
