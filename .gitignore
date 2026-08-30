@@ -18,6 +18,8 @@
 
 # misc
 .DS_Store
+Thumbs.db
+Desktop.ini
 *.pem
 
 # debug
@@ -26,6 +28,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env
 .env*.local
 .dev.vars
 
@@ -38,3 +41,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# one-off local scratch
+scripts/tmp_*.md
