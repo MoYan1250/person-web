@@ -6,9 +6,24 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  images: { unoptimized: true },
+  turbopack: {},
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "next/og": false,
+    };
+    return config;
+  },
+  outputFileTracingExcludes: {
+    "*": [
+      "node_modules/sharp/**",
+      "node_modules/@img/**",
+      "node_modules/@vercel/og/**",
+      "node_modules/next/dist/compiled/@vercel/og/**",
+    ],
+  },
   serverExternalPackages: [
-    "@google-analytics/data",
-    "google-auth-library",
     "shiki",
     "@shikijs/core",
     "@shikijs/engine-oniguruma",
@@ -26,6 +41,8 @@ const nextConfig: NextConfig = {
     "remark-rehype",
     "unified",
     "gray-matter",
+    "vfile",
+    "acorn",
   ],
   async redirects() {
     return [

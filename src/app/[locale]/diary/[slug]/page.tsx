@@ -9,6 +9,10 @@ import { getPost } from "@/lib/blog";
 import { getBlogIndex } from "@/lib/blog-index";
 import { formatDate } from "@/lib/utils";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return [
     ...getBlogIndex("en").map((post) => ({ locale: "en", slug: post.slug })),

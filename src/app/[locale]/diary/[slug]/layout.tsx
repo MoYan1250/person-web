@@ -16,6 +16,10 @@ import { generateBlogPostingJsonLd } from "@/lib/jsonld";
 import { constructMetadata } from "@/lib/metadata";
 import { jsonldScript } from "@/lib/utils";
 
+export const dynamic = "force-static";
+export const revalidate = false;
+export const dynamicParams = false;
+
 export async function generateMetadata(props: {
   params: Promise<{
     locale: string;
