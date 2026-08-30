@@ -296,7 +296,7 @@ function TimelineEntry({
 
 function EntryLink({ link }: { link: TimelineLink }) {
   const className =
-    "text-primary ml-1 inline-flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-70";
+    "text-primary ml-1 text-xs font-semibold transition-opacity hover:opacity-70";
 
   if (link.href.startsWith("http") || link.href.startsWith("mailto:")) {
     return (
@@ -306,14 +306,14 @@ function EntryLink({ link }: { link: TimelineLink }) {
         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
         className={className}
       >
-        {link.label} ↗
+        {link.label}
       </a>
     );
   }
 
   return (
     <Link href={link.href} className={className}>
-      {link.label} ↗
+      {link.label}
     </Link>
   );
 }

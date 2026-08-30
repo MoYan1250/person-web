@@ -332,13 +332,13 @@
       {
         "name": "朋友的名字",
         "url": "https://example.com",
-        "description": "把這張卡片換成真實友站：一句話介紹他們的網站。",
+        "description": "佔位符",
         "avatar": ""
       },
       {
         "name": "另一位朋友",
         "url": "https://example.org",
-        "description": "再放一個，列表看起來會比較像格子。",
+        "description": "佔位符",
         "avatar": ""
       }
     ]

@@ -87,9 +87,9 @@ export function FriendsGrid({
                     href={friend.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary mt-4 inline-flex items-center gap-1 text-sm font-semibold transition-opacity hover:opacity-70"
+                    className="text-primary mt-4 text-sm font-semibold transition-opacity hover:opacity-70"
                   >
-                    {visitLabel} ↗
+                    {visitLabel}
                   </a>
                 </article>
               </li>

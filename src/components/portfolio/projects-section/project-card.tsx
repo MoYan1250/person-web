@@ -65,7 +65,7 @@ export function ProjectCard({
   return (
     <Card
       className={cn(
-        "flex h-full flex-col overflow-hidden border transition-all duration-300 ease-out hover:shadow-lg",
+        "flex h-auto flex-col overflow-hidden border transition-all duration-300 ease-out hover:shadow-lg sm:h-full",
         isTapped && "shadow-lg",
       )}
       onTouchStart={handleTouchStart}
@@ -73,7 +73,7 @@ export function ProjectCard({
     >
       <Link
         href={href || "#"}
-        className={cn("group block cursor-pointer", className)}
+        className={cn("group block shrink-0 cursor-pointer", className)}
         aria-label={`View project: ${title}`}
       >
         {video && (
@@ -144,7 +144,7 @@ export function ProjectCard({
           </div>
         )}
       </Link>
-      <CardHeader className="px-2">
+      <CardHeader className="shrink-0 px-3 pt-3 sm:px-2">
         <div className="space-y-1">
           <CardTitle className="mt-1 text-base [&_img]:my-0 [&_img]:inline-block [&_img]:h-[1em] [&_img]:w-auto [&_img]:align-baseline">
             <CustomReactMarkdown>{title}</CustomReactMarkdown>
@@ -163,7 +163,7 @@ export function ProjectCard({
           )}
         </div>
       </CardHeader>
-      <CardContent className="mt-auto flex flex-col px-2">
+      <CardContent className="mt-auto flex shrink-0 flex-col px-3 sm:px-2">
         {tags && tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1">
             {tags?.map((tag) => (
@@ -178,7 +178,7 @@ export function ProjectCard({
           </div>
         )}
       </CardContent>
-      <CardFooter className="px-2 pb-2">
+      <CardFooter className="shrink-0 px-3 pb-3 sm:px-2 sm:pb-2">
         {links && links.length > 0 && (
           <div className="flex flex-row flex-wrap items-start gap-1">
             {links?.map((link, idx) => (

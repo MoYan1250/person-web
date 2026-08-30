@@ -332,13 +332,13 @@
       {
         "name": "A friend's name",
         "url": "https://example.com",
-        "description": "Replace this card with a real friend site and a one-line intro.",
+        "description": "Placeholder",
         "avatar": ""
       },
       {
         "name": "Another friend",
         "url": "https://example.org",
-        "description": "Add another so the grid has more than one tile.",
+        "description": "Placeholder",
         "avatar": ""
       }
     ]
