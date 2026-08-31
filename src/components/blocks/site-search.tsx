@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { LanguageToggle } from "@/components/blocks/navbar/language-toggle";
 import { ModeToggle } from "@/components/blocks/navbar/mode-toggle";
+import { PressSurface } from "@/components/ui/press-surface";
 import {
   Dialog,
   DialogContent,
@@ -75,24 +76,26 @@ export function SiteSearch({ items }: { items: SearchItem[] }) {
     <>
       <div
         data-no-drag
-        className="pointer-events-none fixed top-3 right-3 z-50 flex items-center gap-1.5 md:top-[11px] md:right-4"
+        className="pointer-events-none fixed top-3 right-3 z-50 flex items-center gap-1.5 max-md:top-[calc(0.75rem+env(safe-area-inset-top,0px))] md:top-[11px] md:right-4"
       >
         <div className="pointer-events-auto flex h-11 items-center rounded-2xl border border-border bg-background/80 shadow-sm backdrop-blur-md md:hidden">
           <ModeToggle />
           <LanguageToggle />
         </div>
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          className="border-border bg-background/80 pointer-events-auto inline-flex h-11 items-center gap-2.5 rounded-2xl border px-4 text-sm font-medium shadow-sm backdrop-blur-md transition-colors hover:bg-accent md:h-[46px]"
-          aria-label={t("button")}
-        >
-          <MagnifyingGlassIcon className="size-4" />
-          <span className="hidden md:inline">{t("button")}</span>
-          <kbd className="bg-muted text-muted-foreground hidden rounded-md px-1.5 py-0.5 font-mono text-[11px] md:inline">
-            {modKey} K
-          </kbd>
-        </button>
+        <PressSurface asChild>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="border-border bg-background/80 pointer-events-auto inline-flex h-11 items-center gap-2.5 rounded-2xl border px-4 text-sm font-medium shadow-sm backdrop-blur-md transition-colors hover:bg-accent md:h-[46px]"
+            aria-label={t("button")}
+          >
+            <MagnifyingGlassIcon className="size-4" />
+            <span className="hidden md:inline">{t("button")}</span>
+            <kbd className="bg-muted text-muted-foreground hidden rounded-md px-1.5 py-0.5 font-mono text-[11px] md:inline">
+              {modKey} K
+            </kbd>
+          </button>
+        </PressSurface>
       </div>
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
@@ -152,24 +155,26 @@ export function SiteSearch({ items }: { items: SearchItem[] }) {
                     const index = results.indexOf(item);
                     return (
                       <li key={item.id}>
-                        <button
-                          type="button"
-                          onMouseEnter={() => setActive(index)}
-                          onClick={() => go(item)}
-                          className={cn(
-                            "flex w-full flex-col rounded-lg px-3 py-2 text-left transition-colors",
-                            index === active
-                              ? "bg-accent text-accent-foreground"
-                              : "hover:bg-accent/50",
-                          )}
-                        >
-                          <span className="text-sm font-medium">{item.title}</span>
-                          {item.description ? (
-                            <span className="text-muted-foreground line-clamp-1 text-xs">
-                              {item.description}
-                            </span>
-                          ) : null}
-                        </button>
+                        <PressSurface asChild>
+                          <button
+                            type="button"
+                            onMouseEnter={() => setActive(index)}
+                            onClick={() => go(item)}
+                            className={cn(
+                              "flex w-full flex-col rounded-lg px-3 py-2 text-left transition-colors",
+                              index === active
+                                ? "bg-accent text-accent-foreground"
+                                : "hover:bg-accent/50",
+                            )}
+                          >
+                            <span className="text-sm font-medium">{item.title}</span>
+                            {item.description ? (
+                              <span className="text-muted-foreground line-clamp-1 text-xs">
+                                {item.description}
+                              </span>
+                            ) : null}
+                          </button>
+                        </PressSurface>
                       </li>
                     );
                   })}

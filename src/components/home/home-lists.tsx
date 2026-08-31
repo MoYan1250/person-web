@@ -1,7 +1,6 @@
-import { Link } from "@/i18n/routing";
-
 import { padCount } from "@/components/home/home-section";
 import { Icons } from "@/components/icons";
+import { PressLink } from "@/components/ui/pressable-links";
 
 type RouteCard = {
   href: string;
@@ -18,7 +17,7 @@ export function HomeRouteIndex({
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       {cards.map((card) => (
-        <Link
+        <PressLink
           key={card.href}
           href={card.href}
           className="border-border bg-card hover:border-primary/50 group rounded-xl border p-4 transition-colors"
@@ -29,7 +28,7 @@ export function HomeRouteIndex({
           </div>
           <h3 className="text-lg font-semibold tracking-tight">{card.title}</h3>
           <p className="text-muted-foreground mt-1 text-sm">{card.description}</p>
-        </Link>
+        </PressLink>
       ))}
     </div>
   );
@@ -46,7 +45,7 @@ export function HomeNoteList({
     <ol className="divide-border divide-y">
       {posts.map((post, index) => (
         <li key={post.slug}>
-          <Link
+          <PressLink
             href={`/diary/${post.slug}`}
             locale={locale}
             className="hover:text-primary flex items-baseline gap-3 py-3 text-sm transition-colors"
@@ -58,7 +57,7 @@ export function HomeNoteList({
               {post.date.slice(0, 10)}
             </span>
             <span className="font-medium">{post.title}</span>
-          </Link>
+          </PressLink>
         </li>
       ))}
     </ol>
@@ -183,7 +182,7 @@ export function HomeFeaturedPost({
   readMore: string;
 }) {
   return (
-    <Link
+    <PressLink
       href={`/diary/${slug}`}
       locale={locale}
       className="border-border bg-card hover:border-primary/50 group block rounded-xl border p-5 transition-colors"
@@ -202,6 +201,6 @@ export function HomeFeaturedPost({
       <span className="text-primary mt-4 inline-flex items-center gap-1 font-mono text-xs">
         {readMore} <Icons.chevronright className="size-3.5" />
       </span>
-    </Link>
+    </PressLink>
   );
 }

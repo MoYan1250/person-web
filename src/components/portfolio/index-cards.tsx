@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { Link } from "@/i18n/routing";
+import { PressLink } from "@/components/ui/pressable-links";
 
 type IndexCard = {
   href: string;
@@ -14,7 +14,7 @@ export function IndexCards({ cards }: { cards: IndexCard[] }) {
       {cards.map((card) => {
         const Icon = Icons[card.icon] || Icons.home;
         return (
-          <Link
+          <PressLink
             key={card.href}
             href={card.href}
             className="border-border bg-card hover:bg-accent/40 focus-visible:ring-ring group rounded-xl border p-4 shadow-sm transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none"
@@ -24,7 +24,7 @@ export function IndexCards({ cards }: { cards: IndexCard[] }) {
               <h3 className="text-sm font-semibold">{card.title}</h3>
             </div>
             <p className="text-muted-foreground text-sm">{card.description}</p>
-          </Link>
+          </PressLink>
         );
       })}
     </div>

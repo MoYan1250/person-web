@@ -2,6 +2,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
+import { PressSurface } from "@/components/ui/press-surface";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -47,13 +48,26 @@ function Button({
     asChild?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
+  const classes = cn(buttonVariants({ variant, size, className }));
+
+  if (asChild) {
+    return (
+      <Comp
+        data-slot="button"
+        className={classes}
+        {...props}
+      />
+    );
+  }
 
   return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
+    <PressSurface asChild>
+      <Comp
+        data-slot="button"
+        className={classes}
+        {...props}
+      />
+    </PressSurface>
   );
 }
 

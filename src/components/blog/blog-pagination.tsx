@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
 import { Icons } from "@/components/icons";
-import { Link } from "@/i18n/routing";
+import { PressLink } from "@/components/ui/pressable-links";
 import { cn } from "@/lib/utils";
 
 interface BlogPaginationProps {
@@ -37,7 +37,7 @@ export async function BlogPagination({
       aria-label="Blog pagination"
     >
       {hasPrev ? (
-        <Link
+        <PressLink
           href={getPageHref(currentPage - 1)}
           locale={locale}
           aria-label={t("blog.pagination.previousLabel")}
@@ -45,7 +45,7 @@ export async function BlogPagination({
         >
           <Icons.chevronleft className="h-4 w-4" aria-hidden="true" />
           <span>{t("blog.pagination.previous")}</span>
-        </Link>
+        </PressLink>
       ) : (
         <span className={cn(disabledClass)} aria-disabled="true">
           <Icons.chevronleft className="h-4 w-4" aria-hidden="true" />
@@ -64,7 +64,7 @@ export async function BlogPagination({
       </span>
 
       {hasNext ? (
-        <Link
+        <PressLink
           href={getPageHref(currentPage + 1)}
           locale={locale}
           aria-label={t("blog.pagination.nextLabel")}
@@ -72,7 +72,7 @@ export async function BlogPagination({
         >
           <span>{t("blog.pagination.next")}</span>
           <Icons.chevronright className="h-4 w-4" aria-hidden="true" />
-        </Link>
+        </PressLink>
       ) : (
         <span className={cn(disabledClass)} aria-disabled="true">
           <span>{t("blog.pagination.next")}</span>

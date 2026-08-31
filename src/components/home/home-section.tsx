@@ -1,6 +1,5 @@
-import { Link } from "@/i18n/routing";
-
 import { Icons } from "@/components/icons";
+import { PressLink } from "@/components/ui/pressable-links";
 
 export function HomeSectionHeader({
   code,
@@ -21,13 +20,13 @@ export function HomeSectionHeader({
       <div className="mt-1 flex items-end justify-between gap-4">
         <h2 className="text-2xl font-semibold tracking-tight">{title}</h2>
         {href && allLabel ? (
-          <Link
+          <PressLink
             href={href}
             className="text-muted-foreground hover:text-primary inline-flex shrink-0 items-center gap-1 font-mono text-xs tracking-wide"
           >
             {allLabel}
             <Icons.arrowupright className="size-3" aria-hidden="true" />
-          </Link>
+          </PressLink>
         ) : null}
       </div>
     </div>
@@ -46,7 +45,7 @@ export function HomeStats({
   return (
     <div className="border-border grid grid-cols-2 gap-px overflow-hidden rounded-xl border bg-border sm:grid-cols-4">
       {items.map((item) => (
-        <Link
+        <PressLink
           key={item.label}
           href={item.href}
           className="bg-card hover:bg-accent/50 px-4 py-4 transition-colors"
@@ -57,7 +56,7 @@ export function HomeStats({
           <p className="mt-2 font-mono text-3xl font-semibold tracking-tight">
             {padCount(item.value)}
           </p>
-        </Link>
+        </PressLink>
       ))}
     </div>
   );

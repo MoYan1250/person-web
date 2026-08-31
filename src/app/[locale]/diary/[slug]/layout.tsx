@@ -91,7 +91,7 @@ export default async function BlogLayout(props: {
       <ArticleSidebarProvider>
         <main
           id="blog"
-          className="pt-16 pb-12 sm:pt-24 sm:pb-14 md:pt-32 md:pb-16 lg:pt-36 xl:pt-40"
+          className="mobile-page-pad pt-[calc(4.75rem+env(safe-area-inset-top,0px))] pb-12 sm:pt-24 sm:pb-14 md:pt-32 md:pb-16 lg:pt-36 xl:pt-40"
         >
           <ArticleColumn>{props.children}</ArticleColumn>
         </main>
@@ -107,7 +107,7 @@ export default async function BlogLayout(props: {
       <ArticleSidebarProvider>
         <main
           id="blog"
-          className="pt-16 pb-12 sm:pt-24 sm:pb-14 md:pt-32 md:pb-16 lg:pt-36 xl:pt-40"
+          className="mobile-page-pad pt-[calc(4.75rem+env(safe-area-inset-top,0px))] pb-12 sm:pt-24 sm:pb-14 md:pt-32 md:pb-16 lg:pt-36 xl:pt-40"
         >
           {jsonldScript(blogPostingJsonLd)}
 

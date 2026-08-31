@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
 import { CustomReactMarkdown } from "@/components/react-markdown";
 import { Badge } from "@/components/ui/badge";
+import { PressSurface } from "@/components/ui/press-surface";
 import {
   Card,
   CardContent,
@@ -46,36 +46,19 @@ export function ProjectCard({
   authors,
   className,
 }: Props) {
-  const [isTapped, setIsTapped] = useState(false);
-
-  const handleTouchStart = () => {
-    if (window.innerWidth < 640) {
-      // sm breakpoint
-      setIsTapped(true);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (window.innerWidth < 640) {
-      // Keep the effect for a bit longer
-      setTimeout(() => setIsTapped(false), 200);
-    }
-  };
-
   return (
     <Card
       className={cn(
         "flex h-auto flex-col overflow-hidden border transition-all duration-300 ease-out hover:shadow-lg sm:h-full",
-        isTapped && "shadow-lg",
+        className,
       )}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
     >
-      <Link
-        href={href || "#"}
-        className={cn("group block shrink-0 cursor-pointer", className)}
-        aria-label={`View project: ${title}`}
-      >
+      <PressSurface asChild>
+        <Link
+          href={href || "#"}
+          className="group block shrink-0 cursor-pointer"
+          aria-label={`View project: ${title}`}
+        >
         {video && (
           <div className="bg-muted relative h-40 w-full overflow-hidden rounded-md sm:h-44 md:h-48">
             {/* blurred background video to fill empty space */}
@@ -100,10 +83,7 @@ export function ProjectCard({
               loop
               muted
               playsInline
-              className={cn(
-                "pointer-events-none absolute inset-0 h-full w-full object-contain object-center transition-transform duration-500 ease-out will-change-transform select-none group-hover:scale-[1.02]",
-                isTapped && "scale-[1.02]",
-              )}
+              className="pointer-events-none absolute inset-0 h-full w-full object-contain object-center transition-transform duration-500 ease-out will-change-transform select-none group-hover:scale-[1.02]"
             >
               <track
                 kind="captions"
@@ -136,14 +116,12 @@ export function ProjectCard({
               alt={title}
               fill
               sizes="(max-width: 768px) 100vw, 500px"
-              className={cn(
-                "pointer-events-none object-contain object-center transition-transform duration-500 ease-out will-change-transform select-none group-hover:scale-[1.02]",
-                isTapped && "scale-[1.02]",
-              )}
+              className="pointer-events-none object-contain object-center transition-transform duration-500 ease-out will-change-transform select-none group-hover:scale-[1.02]"
             />
           </div>
         )}
       </Link>
+      </PressSurface>
       <CardHeader className="shrink-0 px-3 pt-3 sm:px-2">
         <div className="space-y-1">
           <CardTitle className="mt-1 text-base [&_img]:my-0 [&_img]:inline-block [&_img]:h-[1em] [&_img]:w-auto [&_img]:align-baseline">

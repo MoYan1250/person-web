@@ -38,16 +38,16 @@ export function MobileTOC({ content, documentTitle }: MobileTOCProps) {
 
   return createPortal(
     <>
-      {/* Floating TOC Button - Only visible on mobile and tablet */}
-      <div className="fixed right-6 bottom-6 z-50 lg:hidden">
+      {/* Floating TOC button — mobile/tablet, bottom-left pocket beside the dock */}
+      <div className="fixed left-4 z-50 lg:hidden bottom-[calc(0.625rem+env(safe-area-inset-bottom,0px))]">
         <Button
           onClick={() => setIsOpen(!isOpen)}
           size="sm"
-          className="bg-background/90 border-border/50 hover:bg-background/95 text-foreground h-12 w-12 rounded-full border shadow-xl shadow-black/10 backdrop-blur-xl dark:shadow-black/30"
+          className="bg-background/90 border-border/50 hover:bg-background/95 text-foreground h-14 w-14 rounded-full border shadow-xl shadow-black/10 backdrop-blur-xl dark:shadow-black/30"
           aria-label={t("blog.toc.toggle")}
         >
           <svg
-            className="h-5 w-5"
+            className="h-6 w-6"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

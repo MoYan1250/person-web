@@ -15,7 +15,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 const NAV_ICONS: Record<
@@ -48,7 +48,7 @@ function NavItemLink({
         className={className}
         aria-label={item.label}
       >
-        <Icon className="size-4" />
+        <Icon className="size-5 md:size-4" />
       </Link>
     </PressSurface>
   );
@@ -56,7 +56,9 @@ function NavItemLink({
 
 export default function Navbar() {
   const t = useTranslations();
+  const pathname = usePathname();
   const [isDesktop, setIsDesktop] = useState(false);
+  const reserveArticleTocSlot = /\/diary\/[^/]+$/.test(pathname);
   const items = t.raw("navbar.items") as Array<{
     href: string;
     icon: string;
@@ -78,16 +80,17 @@ export default function Navbar() {
 
   const linkClassName = cn(
     buttonVariants({ variant: "ghost", size: "icon" }),
-    "size-9 md:size-12",
+    "size-11 md:size-12",
   );
 
   return (
     <div
       data-no-drag
       className={cn(
-        "pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-2",
+        "pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-3",
         "pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))]",
-        "md:top-3 md:bottom-auto md:px-0 md:pb-0",
+        reserveArticleTocSlot && "max-md:pl-[4.75rem] max-md:justify-stretch",
+        "md:top-3 md:bottom-auto md:px-0 md:pb-0 md:pl-0",
       )}
     >
       <div
@@ -97,8 +100,13 @@ export default function Navbar() {
         aria-hidden
       />
       <Dock
-        iconSize={isDesktop ? 40 : 30}
-        className="bg-background pointer-events-auto relative z-50 mx-auto flex w-max max-w-[calc(100vw-1rem)] shrink-0 transform-gpu items-center px-1 max-md:!mt-0 max-md:!gap-0.5 max-md:!p-1.5 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]"
+        iconSize={isDesktop ? 40 : 38}
+        className={cn(
+          "bg-background pointer-events-auto relative z-50 mx-auto flex w-max max-w-[calc(100vw-1rem)] shrink-0 transform-gpu items-center px-1 max-md:!mt-0 max-md:h-[4.25rem] max-md:!gap-1.5 max-md:!px-2.5 max-md:!py-2 [box-shadow:0_0_0_1px_rgba(140,66,209,.08),0_2px_4px_rgba(140,66,209,.08),0_12px_24px_rgba(140,66,209,.08)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#8c52ff33_inset] dark:[border:1px_solid_#7355ae80]",
+          reserveArticleTocSlot
+            ? "max-md:mx-0 max-md:w-full max-md:max-w-none max-md:justify-between"
+            : "max-md:w-[calc(100vw-0.75rem)] max-md:max-w-none max-md:justify-between",
+        )}
       >
         {items.map((item) => (
           <DockIcon key={item.href}>

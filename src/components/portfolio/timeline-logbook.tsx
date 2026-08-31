@@ -4,8 +4,8 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 
 import { BlurFade } from "@/components/ui/blur-fade";
+import { PressAnchor, PressLink } from "@/components/ui/pressable-links";
 import { PressSurface } from "@/components/ui/press-surface";
-import { Link } from "@/i18n/routing";
 import {
   TIMELINE_TYPES,
   getTimelineTypes,
@@ -311,20 +311,20 @@ function EntryLink({ link }: { link: TimelineLink }) {
 
   if (link.href.startsWith("http") || link.href.startsWith("mailto:")) {
     return (
-      <a
+      <PressAnchor
         href={link.href}
         target={link.href.startsWith("http") ? "_blank" : undefined}
         rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
         className={className}
       >
         {link.label}
-      </a>
+      </PressAnchor>
     );
   }
 
   return (
-    <Link href={link.href} className={className}>
+    <PressLink href={link.href} className={className}>
       {link.label}
-    </Link>
+    </PressLink>
   );
 }

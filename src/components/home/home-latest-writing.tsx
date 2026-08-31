@@ -1,4 +1,5 @@
 import { Icons } from "@/components/icons";
+import { PressLink } from "@/components/ui/pressable-links";
 import { Link, LOCALE_TO_HREFLANG, type Locale } from "@/i18n/routing";
 
 export function HomeLatestWriting({
@@ -34,14 +35,14 @@ export function HomeLatestWriting({
           <p className="text-muted-foreground font-serif text-sm leading-7 font-bold sm:text-base sm:leading-8">
             {emptyLabel}
           </p>
-          <Link
+          <PressLink
             href="/diary"
             locale={locale}
             className="text-primary mt-8 inline-flex items-center gap-1 text-sm font-semibold"
           >
             {allLabel}
             <Icons.chevronright className="h-4 w-4" />
-          </Link>
+          </PressLink>
         </div>
       </div>
     );
@@ -67,7 +68,7 @@ export function HomeLatestWriting({
         </div>
       </div>
 
-      <Link
+      <PressLink
         href={`/diary/${slug}`}
         locale={locale}
         className="hover:bg-accent/20 group block min-h-[18rem] min-w-0 p-5 transition-colors sm:min-h-[22rem] sm:p-7"
@@ -84,7 +85,7 @@ export function HomeLatestWriting({
           {readMoreLabel}
           <Icons.chevronright className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </span>
-      </Link>
+      </PressLink>
     </article>
   );
 }
