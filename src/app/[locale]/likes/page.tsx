@@ -8,6 +8,7 @@ import {
 } from "@/components/blocks/page-motion";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { GameCard } from "@/components/likes/game-card";
+import { PressAnchor } from "@/components/ui/pressable-links";
 import { LIKED_GAME_COVERS } from "@/data/liked-game-covers";
 import { routing } from "@/i18n/routing";
 import { type LikedGame, type LikedMusic } from "@/lib/content";
@@ -104,14 +105,14 @@ export default async function LikesPage(props: {
                 key={`${track.title}-${track.artist}`}
                 index={games.length + index}
               >
-                <a
+                <PressAnchor
                   href={track.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="border-border glass-panel hover:bg-accent/40 block rounded-xl border p-5 transition-colors"
                 >
                   {inner}
-                </a>
+                </PressAnchor>
               </StaggerItem>
             ) : (
               <StaggerItem

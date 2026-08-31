@@ -25,7 +25,7 @@ export function HomeRouteIndex({
         >
           <div className="text-muted-foreground group-hover:text-primary mb-3 flex items-center justify-between font-mono text-[11px] tracking-widest">
             <span>{card.code}</span>
-            <span>↗</span>
+            <Icons.arrowupright className="size-3.5" aria-hidden="true" />
           </div>
           <h3 className="text-lg font-semibold tracking-tight">{card.title}</h3>
           <p className="text-muted-foreground mt-1 text-sm">{card.description}</p>

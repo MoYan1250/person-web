@@ -1,5 +1,6 @@
 import {
   ArrowRightIcon,
+  ArrowUpRightIcon,
   BookIcon,
   BookOpenIcon,
   CalendarDaysIcon,
@@ -49,6 +50,7 @@ export const Icons = {
   notebook: (props: IconProps) => <NotebookIcon {...props} />,
   paper: (props: IconProps) => <FileTextIcon {...props} />,
   rightarrow: (props: IconProps) => <ArrowRightIcon {...props} />,
+  arrowupright: (props: IconProps) => <ArrowUpRightIcon {...props} />,
   warning: (props: IconProps) => <FileWarningIcon {...props} />,
   spin: (props: IconProps) => <Loader2Icon {...props} />,
   trend: (props: IconProps) => <TrendingUpIcon {...props} />,

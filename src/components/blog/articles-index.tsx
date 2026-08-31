@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { BlogCard } from "@/components/blog/blog-card";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { PressSurface } from "@/components/ui/press-surface";
 import {
   ARTICLE_CATEGORIES,
   type ArticleCategory,
@@ -117,19 +118,21 @@ function FilterChip({
   count: number;
 }) {
   return (
-    <button
-      type="button"
-      aria-pressed={pressed}
-      onClick={onClick}
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
-        pressed
-          ? "border-primary/30 bg-primary/15 text-primary"
-          : "border-border bg-muted/40 text-muted-foreground hover:border-primary/25 hover:text-foreground",
-      )}
-    >
-      {label}
-      <span className="font-mono text-[10px] opacity-60">{count}</span>
-    </button>
+    <PressSurface asChild>
+      <button
+        type="button"
+        aria-pressed={pressed}
+        onClick={onClick}
+        className={cn(
+          "inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
+          pressed
+            ? "border-primary/30 bg-primary/15 text-primary"
+            : "border-border bg-muted/40 text-muted-foreground hover:border-primary/25 hover:text-foreground",
+        )}
+      >
+        {label}
+        <span className="font-mono text-[10px] opacity-60">{count}</span>
+      </button>
+    </PressSurface>
   );
 }

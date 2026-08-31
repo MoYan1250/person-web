@@ -12,7 +12,7 @@ export type PaperTag =
   | "deception"
   | "hierarchy"
   | "pomdp"
-  | "crypto";
+  | "blockchain";
 
 export const PAPER_TAGS: PaperTag[] = [
   "marl",
@@ -25,7 +25,7 @@ export const PAPER_TAGS: PaperTag[] = [
   "deception",
   "hierarchy",
   "pomdp",
-  "crypto",
+  "blockchain",
 ];
 
 export type PaperVenueTier =
@@ -53,6 +53,47 @@ export const VENUE_TIER_LABELS: Record<PaperVenueTier, string> = {
   workshop: "Workshop",
   outside: "Unranked",
 };
+
+export type PaperSortMode = "impact" | "yearDesc" | "yearAsc";
+
+const VENUE_TIER_RANK: Record<PaperVenueTier, number> = {
+  transcendent: 0,
+  top: 1,
+  flagship: 2,
+  solid: 3,
+  workshop: 4,
+  outside: 5,
+};
+
+function paperYear(paper: TaggedPaper): number {
+  const year = Number.parseInt(paper.year ?? "", 10);
+  return Number.isFinite(year) ? year : 0;
+}
+
+export function sortPapers(
+  papers: TaggedPaper[],
+  mode: PaperSortMode,
+): TaggedPaper[] {
+  return [...papers].sort((a, b) => {
+    const yearA = paperYear(a);
+    const yearB = paperYear(b);
+    const impactA = VENUE_TIER_RANK[a.venueTier];
+    const impactB = VENUE_TIER_RANK[b.venueTier];
+
+    if (mode === "yearDesc") {
+      if (yearB !== yearA) return yearB - yearA;
+      if (impactA !== impactB) return impactA - impactB;
+    } else if (mode === "yearAsc") {
+      if (yearA !== yearB) return yearA - yearB;
+      if (impactA !== impactB) return impactA - impactB;
+    } else {
+      if (impactA !== impactB) return impactA - impactB;
+      if (yearB !== yearA) return yearB - yearA;
+    }
+
+    return a.title.localeCompare(b.title);
+  });
+}
 
 export type TaggedPaper = PaperRecord & {
   tags: PaperTag[];
@@ -166,7 +207,7 @@ const TAG_RULES: { tag: PaperTag; tests: RegExp[] }[] = [
     ],
   },
   {
-    tag: "crypto",
+    tag: "blockchain",
     tests: [
       /bitcoin/,
       /ethereum/,

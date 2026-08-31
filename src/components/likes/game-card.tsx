@@ -1,13 +1,16 @@
+"use client";
+
 import Image from "next/image";
 
+import { PressSurface } from "@/components/ui/press-surface";
 import type { LikedGame } from "@/lib/content";
 import { cn } from "@/lib/utils";
 
 export function GameCard({ game }: { game: LikedGame }) {
   return (
-    <article
+    <PressSurface
       className={cn(
-        "group border-border relative min-h-[11.5rem] overflow-hidden rounded-xl border",
+        "group border-border relative block min-h-[11.5rem] overflow-hidden rounded-xl border",
         "sm:min-h-[12.5rem]",
       )}
     >
@@ -55,6 +58,6 @@ export function GameCard({ game }: { game: LikedGame }) {
           </p>
         ) : null}
       </div>
-    </article>
+    </PressSurface>
   );
 }

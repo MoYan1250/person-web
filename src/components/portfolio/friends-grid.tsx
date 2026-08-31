@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { PressAnchor } from "@/components/ui/pressable-links";
 import {
   friendDomain,
   friendInitials,
@@ -61,7 +62,12 @@ export function FriendsGrid({
             return (
               <li key={`${friend.name}-${friend.url}`}>
                 <BlurFade inView staggerIndex={index}>
-                  <article className="border-border glass-panel hover:border-primary/40 flex h-full flex-col rounded-xl border p-5 transition-colors">
+                  <PressAnchor
+                    href={friend.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-border glass-panel hover:border-primary/40 flex h-full flex-col rounded-xl border p-5 transition-colors"
+                  >
                   <div className="flex items-center gap-3">
                     <Avatar className="size-12 border">
                       {friend.avatar ? (
@@ -87,15 +93,10 @@ export function FriendsGrid({
                   <p className="text-muted-foreground mt-4 flex-1 text-sm leading-relaxed">
                     {friend.description}
                   </p>
-                  <a
-                    href={friend.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary mt-4 text-sm font-semibold transition-opacity hover:opacity-70"
-                  >
+                  <p className="text-primary mt-4 text-sm font-semibold">
                     {visitLabel}
-                  </a>
-                </article>
+                  </p>
+                  </PressAnchor>
                 </BlurFade>
               </li>
             );

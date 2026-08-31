@@ -1,5 +1,7 @@
 import { Link } from "@/i18n/routing";
 
+import { Icons } from "@/components/icons";
+
 export function HomeSectionHeader({
   code,
   title,
@@ -21,9 +23,10 @@ export function HomeSectionHeader({
         {href && allLabel ? (
           <Link
             href={href}
-            className="text-muted-foreground hover:text-primary shrink-0 font-mono text-xs tracking-wide"
+            className="text-muted-foreground hover:text-primary inline-flex shrink-0 items-center gap-1 font-mono text-xs tracking-wide"
           >
-            {allLabel} ↗
+            {allLabel}
+            <Icons.arrowupright className="size-3" aria-hidden="true" />
           </Link>
         ) : null}
       </div>

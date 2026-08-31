@@ -1,4 +1,5 @@
-import { Link } from "@/i18n/routing";
+import { PressLink } from "@/components/ui/pressable-links";
+import { Icons } from "@/components/icons";
 
 export function HomeHero({
   kicker,
@@ -32,20 +33,20 @@ export function HomeHero({
         {headline}
       </p>
       <div className="mt-8 flex flex-col gap-3">
-        <Link
+        <PressLink
           href={aboutHref}
-          className="bg-primary text-primary-foreground inline-flex w-full items-center justify-between rounded-xl px-5 py-3.5 text-sm font-semibold transition-transform hover:opacity-90 active:scale-[0.99]"
+          className="bg-primary text-primary-foreground inline-flex w-full items-center justify-between rounded-xl px-5 py-3.5 text-sm font-semibold hover:opacity-90"
         >
           {aboutLabel}
-          <span aria-hidden="true">→</span>
-        </Link>
-        <Link
+          <Icons.rightarrow className="size-4 shrink-0" aria-hidden="true" />
+        </PressLink>
+        <PressLink
           href={diaryHref}
-          className="border-border hover:bg-accent/50 inline-flex w-full items-center justify-between rounded-xl border px-5 py-3.5 text-sm font-semibold transition-colors active:scale-[0.99]"
+          className="border-border hover:bg-accent/50 inline-flex w-full items-center justify-between rounded-xl border px-5 py-3.5 text-sm font-semibold"
         >
           {diaryLabel}
-          <span aria-hidden="true">→</span>
-        </Link>
+          <Icons.rightarrow className="size-4 shrink-0" aria-hidden="true" />
+        </PressLink>
       </div>
     </section>
   );

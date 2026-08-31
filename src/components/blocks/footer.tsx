@@ -1,5 +1,4 @@
-const TEMPLATE_URL =
-  "https://github.com/zhengzangw/nextjs-portfolio-blog-research";
+const NEXTJS_URL = "https://nextjs.org/";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -11,12 +10,12 @@ export default function Footer() {
         <p className="mt-1">
           {`Powered by `}
           <a
-            href={TEMPLATE_URL}
+            href={NEXTJS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-primary underline-offset-4 hover:underline"
           >
-            zhengzangw/nextjs-portfolio-blog-research
+            Next.js
           </a>
         </p>
       </div>

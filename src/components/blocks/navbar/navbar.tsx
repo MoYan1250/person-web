@@ -8,6 +8,7 @@ import { ModeToggle } from "@/components/blocks/navbar/mode-toggle";
 import { Icons } from "@/components/icons";
 import { buttonVariants } from "@/components/ui/button";
 import { Dock, DockIcon } from "@/components/ui/dock";
+import { PressSurface } from "@/components/ui/press-surface";
 import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
@@ -41,13 +42,15 @@ function NavItemLink({
   const Icon = NAV_ICONS[item.icon] || Icons.home;
 
   return (
-    <Link
-      href={item.href}
-      className={className}
-      aria-label={item.label}
-    >
-      <Icon className="size-4" />
-    </Link>
+    <PressSurface asChild>
+      <Link
+        href={item.href}
+        className={className}
+        aria-label={item.label}
+      >
+        <Icon className="size-4" />
+      </Link>
+    </PressSurface>
   );
 }
 
@@ -75,7 +78,7 @@ export default function Navbar() {
 
   const linkClassName = cn(
     buttonVariants({ variant: "ghost", size: "icon" }),
-    "size-9 touch-manipulation transition-transform active:scale-95 md:size-12 md:active:scale-100",
+    "size-9 md:size-12",
   );
 
   return (

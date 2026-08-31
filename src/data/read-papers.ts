@@ -881,4 +881,13 @@ export const READ_PAPERS: PaperRecord[] = [
     year: "2023",
     href: "https://arxiv.org/abs/2310.10701",
   },
+  {
+    id: "zeng2026lpm",
+    short: "LPM 1.0",
+    title: "LPM 1.0: Video-based Character Performance Model",
+    authors: "Zeng et al.",
+    year: "2026",
+    venue: "arXiv preprint",
+    href: "https://arxiv.org/pdf/2604.07823",
+  },
 ];

@@ -186,6 +186,10 @@
         "papersNote": "Some are missing, and not every one was read closely.",
         "emptyPapers": "No papers in this tag.",
         "filter": "Filter",
+        "sort": "Sort",
+        "sortImpact": "Impact",
+        "sortYearNew": "Newest first",
+        "sortYearOld": "Oldest first",
         "all": "All",
         "tags": {
             "marl": "Multi-agent",
@@ -198,7 +202,7 @@
             "deception": "Deception",
             "hierarchy": "Hierarchy",
             "pomdp": "POMDP",
-            "crypto": "Crypto"
+            "blockchain": "Blockchain"
         },
         "venue": "Venue rank is inferred automatically. White papers, theses, and preprint-only items are Unranked; Nature, Science, and a few founding works are Extraordinary.",
         "paperNote": "Study notes",

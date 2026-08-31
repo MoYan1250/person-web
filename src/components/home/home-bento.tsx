@@ -3,6 +3,8 @@
 import Image from "next/image";
 
 import { BlurFade } from "@/components/ui/blur-fade";
+import { PressSurface } from "@/components/ui/press-surface";
+import { Icons } from "@/components/icons";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
@@ -39,13 +41,14 @@ function HomeBentoRow({ card }: { card: HomeBentoCard }) {
   const featured = Boolean(card.image);
 
   return (
-    <Link
-      href={card.href}
-      className={cn(
-        "border-border bg-card hover:bg-accent/40 group relative flex w-full overflow-hidden rounded-xl border transition-colors",
-        featured ? "min-h-[9.5rem]" : "min-h-[7.25rem]",
-      )}
-    >
+    <PressSurface asChild>
+      <Link
+        href={card.href}
+        className={cn(
+          "border-border bg-card hover:bg-accent/40 group relative flex w-full overflow-hidden rounded-xl border transition-colors",
+          featured ? "min-h-[9.5rem]" : "min-h-[7.25rem]",
+        )}
+      >
       {card.image ? (
         <Image
           src={card.image}
@@ -76,8 +79,8 @@ function HomeBentoRow({ card }: { card: HomeBentoCard }) {
             </p>
           ) : null}
         </div>
-        <span className="border-border bg-background/50 text-muted-foreground group-hover:text-primary group-hover:border-primary/40 flex size-11 shrink-0 items-center justify-center rounded-full border text-lg transition-all duration-500 group-hover:rotate-0 rotate-45">
-          ↗
+        <span className="border-border bg-background/50 text-muted-foreground group-hover:text-primary group-hover:border-primary/40 flex size-11 shrink-0 items-center justify-center rounded-full border transition-all duration-500 group-hover:rotate-0 rotate-45">
+          <Icons.arrowupright className="size-4" aria-hidden="true" />
         </span>
       </div>
       <span
@@ -86,6 +89,7 @@ function HomeBentoRow({ card }: { card: HomeBentoCard }) {
       >
         {card.ghost}
       </span>
-    </Link>
+      </Link>
+    </PressSurface>
   );
 }

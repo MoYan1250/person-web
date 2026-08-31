@@ -4,6 +4,7 @@ import { useMemo, useState, type ReactNode } from "react";
 
 import { Icons } from "@/components/icons";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { PressSurface } from "@/components/ui/press-surface";
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +14,8 @@ import { Link } from "@/i18n/routing";
 import {
   PAPER_TAGS,
   PAPER_VENUE_TIERS,
+  sortPapers,
+  type PaperSortMode,
   type PaperTag,
   type PaperVenueTier,
   type TaggedPaper,
@@ -30,6 +33,10 @@ export function PapersGrid({
   venueLabels: Record<PaperVenueTier, string>;
   copy: {
     filter: string;
+    sort: string;
+    sortImpact: string;
+    sortYearNew: string;
+    sortYearOld: string;
     all: string;
     empty: string;
     venue: string;
@@ -38,6 +45,7 @@ export function PapersGrid({
 }) {
   const [selectedTags, setSelectedTags] = useState<PaperTag[]>([]);
   const [selectedVenues, setSelectedVenues] = useState<PaperVenueTier[]>([]);
+  const [sortMode, setSortMode] = useState<PaperSortMode>("impact");
 
   const tagCounts = useMemo(() => {
     const next: Record<PaperTag | "all", number> = {
@@ -52,7 +60,7 @@ export function PapersGrid({
       deception: 0,
       hierarchy: 0,
       pomdp: 0,
-      crypto: 0,
+      blockchain: 0,
     };
     for (const paper of papers) {
       for (const tag of paper.tags) {
@@ -82,15 +90,18 @@ export function PapersGrid({
     (tier) => venueCounts[tier] > 0,
   );
 
-  const visible = papers.filter((paper) => {
-    const tagOk =
-      selectedTags.length === 0 ||
-      selectedTags.some((tag) => paper.tags.includes(tag));
-    const venueOk =
-      selectedVenues.length === 0 ||
-      selectedVenues.includes(paper.venueTier);
-    return tagOk && venueOk;
-  });
+  const visible = useMemo(() => {
+    const filtered = papers.filter((paper) => {
+      const tagOk =
+        selectedTags.length === 0 ||
+        selectedTags.some((tag) => paper.tags.includes(tag));
+      const venueOk =
+        selectedVenues.length === 0 ||
+        selectedVenues.includes(paper.venueTier);
+      return tagOk && venueOk;
+    });
+    return sortPapers(filtered, sortMode);
+  }, [papers, selectedTags, selectedVenues, sortMode]);
 
   function toggleTag(tag: PaperTag) {
     setSelectedTags((current) =>
@@ -159,6 +170,28 @@ export function PapersGrid({
             ))}
           </div>
         </div>
+        <div>
+          <p className="text-muted-foreground mb-3 font-mono text-[10px] font-bold tracking-[0.18em] uppercase">
+            {copy.sort}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <FilterChip
+              pressed={sortMode === "impact"}
+              onClick={() => setSortMode("impact")}
+              label={copy.sortImpact}
+            />
+            <FilterChip
+              pressed={sortMode === "yearDesc"}
+              onClick={() => setSortMode("yearDesc")}
+              label={copy.sortYearNew}
+            />
+            <FilterChip
+              pressed={sortMode === "yearAsc"}
+              onClick={() => setSortMode("yearAsc")}
+              label={copy.sortYearOld}
+            />
+          </div>
+        </div>
         </div>
       </BlurFade>
 
@@ -220,19 +253,23 @@ function PaperTile({
   );
 
   const tile = paper.href ? (
-    <a
-      href={paper.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={paper.title}
-      className={className}
-    >
-      {inner}
-    </a>
+    <PressSurface asChild>
+      <a
+        href={paper.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={paper.title}
+        className={className}
+      >
+        {inner}
+      </a>
+    </PressSurface>
   ) : (
-    <article aria-label={paper.title} className={className}>
-      {inner}
-    </article>
+    <PressSurface asChild>
+      <article aria-label={paper.title} className={className}>
+        {inner}
+      </article>
+    </PressSurface>
   );
 
   return (
@@ -252,14 +289,16 @@ function PaperTile({
         </TooltipContent>
       </Tooltip>
       {paper.noteSlug ? (
-        <Link
-          href={`/diary/${paper.noteSlug}`}
-          aria-label={noteLabel}
-          title={noteLabel}
-          className="border-border bg-card text-muted-foreground hover:border-primary hover:text-primary absolute top-1.5 right-1.5 z-10 inline-flex size-7 items-center justify-center rounded-none border"
-        >
-          <Icons.academic className="size-3.5" />
-        </Link>
+        <PressSurface asChild>
+          <Link
+            href={`/diary/${paper.noteSlug}`}
+            aria-label={noteLabel}
+            title={noteLabel}
+            className="border-border bg-card text-muted-foreground hover:border-primary hover:text-primary absolute top-1.5 right-1.5 z-10 inline-flex size-7 items-center justify-center rounded-none border"
+          >
+            <Icons.academic className="size-3.5" />
+          </Link>
+        </PressSurface>
       ) : null}
     </div>
   );
@@ -274,22 +313,26 @@ function FilterChip({
   pressed: boolean;
   onClick: () => void;
   label: ReactNode;
-  count: number;
+  count?: number;
 }) {
   return (
-    <button
-      type="button"
-      aria-pressed={pressed}
-      onClick={onClick}
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-none border px-3 py-1.5 text-xs font-medium transition-colors",
-        pressed
-          ? "border-primary/30 bg-primary/15 text-primary"
-          : "border-border bg-muted/40 text-muted-foreground hover:border-primary/25 hover:text-foreground",
-      )}
-    >
-      {label}
-      <span className="font-mono text-[10px] opacity-60">{count}</span>
-    </button>
+    <PressSurface asChild>
+      <button
+        type="button"
+        aria-pressed={pressed}
+        onClick={onClick}
+        className={cn(
+          "inline-flex items-center gap-1.5 rounded-none border px-3 py-1.5 text-xs font-medium transition-colors",
+          pressed
+            ? "border-primary/30 bg-primary/15 text-primary"
+            : "border-border bg-muted/40 text-muted-foreground hover:border-primary/25 hover:text-foreground",
+        )}
+      >
+        {label}
+        {count !== undefined ? (
+          <span className="font-mono text-[10px] opacity-60">{count}</span>
+        ) : null}
+      </button>
+    </PressSurface>
   );
 }

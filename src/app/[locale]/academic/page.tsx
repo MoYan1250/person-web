@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import { PapersGrid } from "@/components/academic/papers-grid";
+import { ResearchCard } from "@/components/academic/research-card";
 import {
   PageMotionHeader,
   PageMotionSection,
@@ -103,6 +104,10 @@ export default async function AcademicPage(props: {
           venueLabels={VENUE_TIER_LABELS}
           copy={{
             filter: t("academicPage.filter"),
+            sort: t("academicPage.sort"),
+            sortImpact: t("academicPage.sortImpact"),
+            sortYearNew: t("academicPage.sortYearNew"),
+            sortYearOld: t("academicPage.sortYearOld"),
             all: t("academicPage.all"),
             empty: t("academicPage.emptyPapers"),
             venue: t("academicPage.venue"),
@@ -112,53 +117,6 @@ export default async function AcademicPage(props: {
         </section>
       </PageMotionSection>
     </main>
-  );
-}
-
-function ResearchCard({ item }: { item: ResearchWork }) {
-  const body = (
-    <>
-      <div className="flex flex-wrap items-center gap-2">
-        <h3 className="text-lg font-semibold tracking-tight">{item.title}</h3>
-        {item.status ? (
-          <span className="border-primary/20 bg-primary/10 text-primary rounded-full border px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase">
-            {item.status}
-          </span>
-        ) : null}
-      </div>
-      <p className="text-muted-foreground mt-2 text-sm leading-6">
-        {item.description}
-      </p>
-      {item.tags?.length ? (
-        <div className="mt-3 flex flex-wrap gap-2">
-          {item.tags.map((tag) => (
-            <span
-              key={tag}
-              className="border-border bg-muted/40 text-muted-foreground rounded-md border px-2 py-1 text-[11px]"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      ) : null}
-    </>
-  );
-
-  if (item.href) {
-    return (
-      <a
-        href={item.href}
-        target={item.href.startsWith("http") ? "_blank" : undefined}
-        rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-        className="border-border glass-panel hover:bg-accent/40 block rounded-xl border p-5 transition-colors"
-      >
-        {body}
-      </a>
-    );
-  }
-
-  return (
-    <article className="border-border glass-panel rounded-xl border p-5">{body}</article>
   );
 }
 

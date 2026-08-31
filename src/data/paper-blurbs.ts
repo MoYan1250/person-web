@@ -412,6 +412,10 @@ export const PAPER_BLURBS: Record<string, PaperBlurb> = {
     zh: "讓 LLM 帶著心智理論做多智能體合作：推論他人意圖，再決定自己的行動與發言。",
     en: "Theory of mind for LLM agents in multi-agent collaboration: infer others’ intent, then choose actions and speech.",
   },
+  zeng2026lpm: {
+    zh: "從影片學習角色表演：全雙工視聽對話、身份一致與即時串流生成，並提出 LPM-Bench 評估基準。",
+    en: "Video-based character performance: full-duplex audiovisual conversation, identity-stable real-time streaming, with the LPM-Bench evaluation suite.",
+  },
 };
 
 export function getPaperBlurb(id: string, locale: string): string | undefined {

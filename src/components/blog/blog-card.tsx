@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from "next-intl";
 
 import { Icons } from "@/components/icons";
+import { PressSurface } from "@/components/ui/press-surface";
 import { Link, LOCALE_TO_HREFLANG } from "@/i18n/routing";
 
 interface BlogCardProps {
@@ -27,11 +28,12 @@ export function BlogCard({
   const displayLocale = locale || currentLocale;
 
   return (
-    <Link
-      href={`/diary/${slug}`}
-      locale={displayLocale}
-      className="group glass-panel focus-visible:ring-ring block h-full rounded-xl border p-4 shadow-sm transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none sm:p-5"
-    >
+    <PressSurface asChild>
+      <Link
+        href={`/diary/${slug}`}
+        locale={displayLocale}
+        className="group glass-panel focus-visible:ring-ring block h-full rounded-xl border p-4 shadow-sm transition-[transform,box-shadow,background-color] duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none sm:p-5"
+      >
       <div className="flex h-full flex-col">
         <div className="mb-3 flex items-center justify-between gap-3">
           <h2 className="line-clamp-2 text-base font-medium tracking-tight md:text-lg">
@@ -69,6 +71,7 @@ export function BlogCard({
           </span>
         </div>
       </div>
-    </Link>
+      </Link>
+    </PressSurface>
   );
 }
