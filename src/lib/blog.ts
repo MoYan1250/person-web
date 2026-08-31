@@ -80,7 +80,7 @@ export async function markdownToHTML(markdown: string) {
     .use(rehypeKatex, { strict: "ignore" })
     .use(rehypePrettyCode, {
       theme: {
-        light: "github-light",
+        light: "material-theme-lighter",
         dark: "github-dark-dimmed",
       },
       keepBackground: false,

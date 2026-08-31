@@ -229,14 +229,38 @@
 
   .glass-panel .prose pre,
   .glass-panel .prose code:not(pre code) {
-    background: hsl(var(--muted) / 0.72) !important;
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
+  }
+
+  html:not(.dark) .glass-panel .prose pre {
+    background: #f6f8fa !important;
+    border: 1px solid #d0d7de;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  html:not(.dark) .glass-panel .prose code:not(pre code) {
+    background: #eef1f4 !important;
+    border: 1px solid #d0d7de;
+    color: hsl(var(--foreground));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .dark .glass-panel .prose pre,
+  .dark .glass-panel .prose code:not(pre code) {
+    background: hsl(var(--muted) / 0.72) !important;
   }
 
   .glass-panel .prose pre code,
   .glass-panel .prose pre code span {
     background: transparent !important;
+  }
+
+  .dark .glass-panel .prose pre {
+    border: 1px solid hsl(var(--border) / 0.35);
   }
 
   ::selection {
@@ -276,22 +300,55 @@ code[data-theme*=" "] span {
   background-color: var(--shiki-light-bg);
 }
 
+html:not(.dark) code[data-theme*=" "],
+html:not(.dark) code[data-theme*=" "] span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
+}
+
 .dark code[data-theme*=" "],
 .dark code[data-theme*=" "] span {
   color: var(--shiki-dark);
   background-color: var(--shiki-dark-bg);
 }
 
+.prose :where(pre) :where(code) {
+  background-color: transparent;
+  color: inherit;
+  font-weight: 400;
+}
+
+.prose :where(pre) :where(code)[data-theme*=" "],
 .prose :where(pre) :where(code)[data-theme*=" "] span {
   color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+
+html:not(.dark) .prose :where(pre) :where(code)[data-theme*=" "] span {
+  color: var(--shiki-light) !important;
+  background-color: transparent !important;
+  opacity: 1;
 }
 
 .dark .prose :where(pre) :where(code)[data-theme*=" "] span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+}
+
+.prose :where(pre) :where(code) :where(span[style*="--shiki-light"]) {
+  color: var(--shiki-light);
+}
+
+.dark .prose :where(pre) :where(code) :where(span[style*="--shiki-dark"]) {
   color: var(--shiki-dark);
 }
 
 code[data-line-numbers] {
   counter-reset: line;
+}
+
+html:not(.dark) code[data-line-numbers] > [data-line]::before {
+  color: #57606a;
 }
 
 code[data-line-numbers] > [data-line]::before {
@@ -314,6 +371,10 @@ code > [data-line]::before {
   margin-right: 2rem;
   text-align: right;
   color: gray;
+}
+
+html:not(.dark) code > [data-line]::before {
+  color: #57606a;
 }
 
 code[data-line-numbers-max-digits="2"] > [data-line]::before {

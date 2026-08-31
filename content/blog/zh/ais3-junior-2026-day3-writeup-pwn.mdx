@@ -85,7 +85,7 @@ main 那邊沒啥東西，去用指令查找看看
 
 main 函式
 
-```
+```asm
 0000000000401170 <main>:
   401170: endbr64
   401174: push   rbp
@@ -120,7 +120,7 @@ main 函式
 
 看到 C 那邊有
 
-```
+```c
 sVar3 = strlen((char)local_58);      // 輸入字串的長度
 iVar1 = (int)sVar3;
 ...
@@ -158,7 +158,7 @@ strncmp 第三個參數是 iVar1，也就是代表輸入的字串長度，不是
 
 code 整個邏輯大概長這樣
 
-```
+```c
 scanf 讀輸入 → 去掉換行符
 if (輸入 == "很長的假密碼")
     puts("帳號已鎖定");
@@ -192,7 +192,7 @@ code 其中的 total = n * 10 是用 32 位元有號整數運算的
 
 還原一下邏輯
 
-```
+```c
 scanf("%d", &n);
 if (n <= 0) fail("Need a positive number.");
 
@@ -239,7 +239,7 @@ s 是一個 40 bytes 的結構，裡面包含了 `s.buf` 輸入緩衝區、`s.un
 
 印出提示輸入東西，gets 沒有長度限制，輸入多少就往 `s.buf` 往後塞多少
 
-```
+```c
 puts("stage1>");
 gets(s.buf);
 ```
@@ -252,7 +252,7 @@ gets(s.buf);
 過了第一部分才會走到這裡，同樣是印提示、同樣呼叫 gets 再讀一次
 這裡的重點是，它又是從 `s.buf` 這個位置開始寫，跟第一次讀的起點是同一個地方
 
-```
+```c
 puts("stage2>");
 gets(s.buf);
 ```
@@ -264,7 +264,7 @@ gets(s.buf);
 
 兩關都對才印 flag，任何條件沒達成就會印失敗訊息
 
-```
+```c
 puts("AIS3{fake_flag_hw4}");
 } else {
     puts("not admin");
@@ -340,7 +340,7 @@ strncmp 第三個參數用的是 strlen(token)，輸入是看長度而非密碼
 似乎直接看 main 就行了
 簡化後長這樣
 
-```
+```c
 int price = 1,000,000,000; // 價格
 int n;                     // 座位數量
 

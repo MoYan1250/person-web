@@ -1,5 +1,5 @@
 ---
-title: "THJCC 2026 summer Writeup"
+title: "THJCC CTF 2026 summer Writeup"
 date: "2026-08-17"
 summary: "自AIS3 junior 結束後打的第一場 CTF ( 2026.8.15~8.16 )，這次打到了 學生賽區 14/71 | 總賽區 65/679，那可比winter的時候進步太多了"
 category: writeup
@@ -60,7 +60,7 @@ category: writeup
 題目要求要官方三字縮寫，其 IAU 官方三字母縮寫為 Ori
 
 查詢標準星圖資料，可知獵戶座的大略中心位置約為
-```
+```text
 赤經 RA ≈ 5h　赤緯 Dec ≈ +5°
 ```
 得到flag
@@ -154,7 +154,7 @@ SeeYouAgain1978
 
 寫了一小段 python 把全部按鍵跑過一遍轉成文字，出來的結果剛好前後有大括號，看起來就是完整的 flag，
 
-```
+```python
 import subprocess
 out = subprocess.run(["tshark","-r","usb_capture.pcap","-T","fields","-e","usb.capdata"],capture_output=True,text=True).stdout.strip().split("\n")
 
@@ -235,8 +235,7 @@ FLAG: `THJCC{n0nc3_b14s_1s_d4ng3r0us}`
 
 ![image](https://hackmd.io/_uploads/H1f4hgRIfx.png)
 
-```
-
+```python
 import socket
 import re
 
@@ -309,7 +308,7 @@ if __name__ == "__main__":
 
 ![image](https://hackmd.io/_uploads/SyrQUb0UMx.png)
 
-```
+```python
 # ECDSA Nonce Reuse
 # 從兩個重用 nonce 的簽章恢復私鑰，並對目標訊息簽章取得 flag
 
@@ -448,7 +447,7 @@ ECDSA 簽名的私鑰是 $d$，題目最後要我們輸入 d 才會給 flag
 
 這題的 k 不是用安全的 nonce 產生的，而是用下面這段程式算出來的
 
-```
+```python
 class DualGenerator:
     def __init__(self, seed):
         self.state = seed
@@ -492,7 +491,7 @@ seed 跟 d 加起來是 256 加 256 等於 512 個位元的未知數，每多用
 
 最後使用 LLL，把未知的 seed、未知的 d、還有每一組簽名裡取完餘數後那個特別小的餘數都丟進去，就可以找到了
     
-```
+```python
 import socket
 import re
 import sys
@@ -736,7 +735,7 @@ print(flag)
 ```
 
 Flag
-```
+```text
 THJCC{n0t_c0pr1m3_but_st1ll_br0k3n_4nyw4y}
 ```
     
@@ -744,7 +743,7 @@ THJCC{n0t_c0pr1m3_but_st1ll_br0k3n_4nyw4y}
     
 ![image](https://hackmd.io/_uploads/HkOscl1wfe.png)
 
-```
+```python
 import re
 import sys
 import galois
@@ -904,7 +903,7 @@ if __name__ == "__main__":
 
 ![image](https://hackmd.io/_uploads/rk9eolJwfe.png)
 
-```
+```python
 import socket
 
 def ceil_div(a, b):
@@ -1051,7 +1050,7 @@ if __name__ == "__main__":
     main()
 ```
 
-```
+```text
 THJCC{bl31chenb4ch3r_st1ll_3ats_pkcs1_v1_5}
 ```
     
@@ -1071,7 +1070,7 @@ gen_table.py 是產表的程式，nyan.tbl 是產好的 rainbow table，shadow.t
 
 拿猜的 K 去重建 nyan.tbl 裡某一條 chain，看終點對不對得起來，對得起來就是猜對了
 
-```
+```python
 import hashlib, hmac
 
 RESIDENTS = ['yaniko','yakuko','hameko','kaoruko','aruko']
@@ -1104,7 +1103,7 @@ print(pt)
 
 最後照 gen_table.py 的寫法，把五個明文依房客順序用 | 接起來算 SHA256 當金鑰，解開 flag.enc
 
-```
+```text
 THJCC{46Z-WQv_vFc}
 ```
 
@@ -1127,7 +1126,7 @@ THJCC{46Z-WQv_vFc}
 
 拿洩漏的位址加上算出來的差值，就是目標函式的真實位址，接著手動組一包 IMPORT 要用的資料，長度故意設成 336 觸發溢位，把要覆寫的那幾個 byte 填成算出來的位址，再補上一個公開演算法算出來的 checksum，丟給 IMPORT，等時間到，程式就會執行到那個函式，把 flag 複製到結果裡，再 SHOW 一次就看得到 flag
 
-```
+```python
 import socket, struct, sys, time
 
 HOST = sys.argv[1] if len(sys.argv) > 1 else "chal.thjcc.org"
@@ -1272,7 +1271,7 @@ if __name__ == "__main__":
     
 我那時候把拿到的 flag 交上去卻一直顯示答案錯誤，愣是沒看出來問題，後來把程式輸出改成印每個 byte 對應的十六進位數字，~~我那時候漏看了兩個底線~~，補上去重新提交就過關了
 
-```   
+```text
 THJCC{D0_y0u_KN0W_7h15_15_@_PWN_ch@ll3nge_WH17CH_m4d3_BY_@1???}
 ```
 
@@ -1291,7 +1290,7 @@ VM程式是線性執行的，對每個input byte分別做XOR、ADD、ROL 再比�
 因為每個byte互相獨立，所以直接對每個byte暴力枚舉0~255，寫個python用rol8函數檢查等式，瞬間就跑完了
         
 
-```
+```python
 def rol8(v, n):
     n &= 7
     return ((v << n) | (v >> (8-n))) & 0xff
@@ -1314,7 +1313,7 @@ for idx, ops, target in equations:
 解出來的16 bytes 是 vm_is_not_magic!
 執行 `./challenge "vm_is_not_magic!` 就會印出 
         
-```
+```text
 THJCC{vm_bytecode_is_a_contract}
 ```
 
@@ -1334,7 +1333,7 @@ cl從0開始每次通過後加3，要求 sil 等於 KEY[i]，KEY 表在0x200150 
 解出20個字元 `xor_me_if_you_can_26`
 執行 `./xorlock "xor_me_if_you_can_26` 得到flag是
         
-```
+```text
 THJCC{xor_basics_are_not_magic}
 ```
 
@@ -1360,7 +1359,7 @@ THJCC{xor_basics_are_not_magic}
 
 用一組假的合法格式字串跑到字元判斷剛結束的地方，再把要寫入的 buffer 換成符號變數往下跑，加上字元一定要是合法十六進位字元的限制，跑到比對迴圈起點，把每個 byte 等於目標常數的條件丟給 solver 解，就解出一組字元，回格式丟進去跑，程式直接印出 flag
 
-```
+```text
 THJCC{license_pipeline_rebuilt}
 ```
     
@@ -1382,7 +1381,7 @@ THJCC{license_pipeline_rebuilt}
 
 因為每個運算都可以反過來算，旋轉的反運算是反方向旋轉，加的反運算是減，XOR 反運算還是 XOR 自己，所以直接寫個小程式把運算順序反過來跑一次，從答案往回推，直接就把 41 個字元全部推出來了
 
-```
+```text
 THJCC{1_w0nd3r_h0w_l0n6_41_50lv35_17_>w<}
 ```
     
@@ -1413,7 +1412,7 @@ hash過了以後，程式接下來要用一把金鑰去解密內建的一段密�
 把這段解密邏輯自己用程式重新算一次，解出來的字串前後對照起來完全正常，是一句可以讀的英文加上大括號
 
 flag
-```
+```text
 THJCC{blackfrost_config_recovered}
 ```
 
@@ -1443,7 +1442,7 @@ THJCC{blackfrost_config_recovered}
 
 好奇跑去開了那個 pastebin，裡面是 base64，解開之後只是教徒在描繪茶神的紀錄，沒有藏第二層 flag，純屬是彩蛋
 
-```
+```text
 THJCC{h77p5://p4s73b1n.com/R58uv133}
 ```
     
