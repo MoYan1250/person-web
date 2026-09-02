@@ -145,7 +145,7 @@ export function DesktopArticleSidebar({
               "overflow-hidden whitespace-nowrap transition-[opacity,transform,max-width] motion-reduce:transition-none",
               SIDEBAR_TRANSITION,
               collapsed
-                ? "max-w-none [writing-mode:vertical-rl] rotate-180 opacity-100"
+                ? "max-w-none [writing-mode:vertical-rl] [text-orientation:upright] opacity-100"
                 : "max-w-full min-w-0 flex-1 translate-x-0 opacity-100",
             )}
           >

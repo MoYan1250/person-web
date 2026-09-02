@@ -28,7 +28,7 @@
 | --- | --- |
 | GitHub | `social.GitHub.url` |
 | Instagram | `social.instagram.url` |
-| Discord | `social.discord.copyText`（例如 `@yourhandle`）。點卡片會複製這個字串，不會開分頁。 |
+| Discord | `social.discord.url`（例如 `https://discord.gg/your-invite`）。點卡片會直接開啟邀請連結。 |
 | Email | `social.email.url`（例如 `mailto:you@example.com`）。會出現在 About 的聯絡區。 |
 
 把 `content: true` 的項目會出現在首頁個人卡。About 的聯絡區另外會顯示 Email。

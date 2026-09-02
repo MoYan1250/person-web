@@ -42,9 +42,8 @@ export const DATA = {
       },
       Discord: {
         name: "Discord",
-        url: "#",
+        url: "https://discord.com/users/765915749331632139",
         icon: Icons.discord,
-        copyText: "@moyan1250",
         footer: true,
       },
       email: {

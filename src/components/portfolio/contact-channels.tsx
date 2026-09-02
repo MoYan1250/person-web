@@ -17,7 +17,23 @@ function displayValue(social: Social): string {
     return social.url.replace(/^mailto:/i, "");
   }
   try {
-    const path = new URL(social.url).pathname.replace(/\/+$/, "");
+    const parsed = new URL(social.url);
+    if (parsed.hostname.includes("discord.")) {
+      const userMatch = parsed.pathname.match(/^\/users\/(\d+)/);
+      if (userMatch) {
+        return "@moyan1250";
+      }
+      const code = parsed.pathname
+        .replace(/^\/invite\/?/i, "")
+        .replace(/^\/+/, "")
+        .replace(/\/+$/, "");
+      if (code) {
+        return parsed.hostname === "discord.gg"
+          ? `discord.gg/${code}`
+          : `discord.com/invite/${code}`;
+      }
+    }
+    const path = parsed.pathname.replace(/\/+$/, "");
     const handle = path.split("/").filter(Boolean).pop();
     return handle ? `@${handle}` : social.url;
   } catch {

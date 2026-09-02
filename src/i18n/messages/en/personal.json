@@ -10,9 +10,9 @@
   "headline": "An ordinary high schooler into CS & academia",
   "welcome": "Welcome!",
   "ogImageUrl": "example.com",
-  "bioMarkdown": "Not great at programming — no competitive programming, and on the security side I really only know some cryptography theory. The rest I'm not that familiar with.\n\nAlmost everything I've picked up is self-taught. I came from a humanities track and switched over from zero; I used to do graphic design and video editing. I've been in tech for less than a year, and I've only really touched security for about a month (not counting the earlier phase where I only knew crypto theory). My CTF results are pretty bad, and I haven't done many contests.\n\nI'm interested in both academia and engineering, so I've taken quite a bit of math ahead of time — though I'm not great at math either — and I'm working on a few small research projects now.\n\nMy goal is special admission to CS or an undecided major program: get into a school first, then aim for a better one.",
+  "bioMarkdown": "Not great at programming — no competitive programming, and on the security side I really only know some cryptography theory. The rest I'm not that familiar with.\n\nAlmost everything I've picked up is self-taught. I came from a humanities track and switched over from zero; I used to do graphic design and video editing. I've been in tech for less than a year, and I've only really touched security for about a month (not counting the earlier phase where I only knew crypto theory). My CTF results are pretty bad, and I haven't done many contests.\n\nI'm interested in both academia and engineering, so I've taken quite a bit of math ahead of time — though I'm not great at math either — and I'm working on a few small research projects now.",
   "location": {
-    "name": "An ordinary high schooler into CS & academia",
+    "name": "St. Peter Senior High School / Hsinchu",
     "mapUrl": "https://www.google.com/maps/place/Hsinchu"
   },
   "blogTagline": "Diary entries, study notes, and reflections.",
