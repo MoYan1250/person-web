@@ -416,6 +416,22 @@ export const PAPER_BLURBS: Record<string, PaperBlurb> = {
     zh: "從影片學習角色表演：全雙工視聽對話、身份一致與即時串流生成，並提出 LPM-Bench 評估基準。",
     en: "Video-based character performance: full-duplex audiovisual conversation, identity-stable real-time streaming, with the LPM-Bench evaluation suite.",
   },
+  sutton1999options: {
+    zh: "把動作擴成 option：一段時間的閉環政策，讓 RL 能在 MDP 與 semi-MDP 之間做時間抽象。",
+    en: "Introduces options: closed-loop policies over a stretch of time, so RL can plan and learn at multiple timescales between MDPs and semi-MDPs.",
+  },
+  khetarpal2020affordances: {
+    zh: "把 affordance 寫進 MDP：一個狀態只開得起部分動作，用來加速規劃，也讓轉移模型更好學。",
+    en: "A theory of affordances in MDPs: only some actions are feasible in a state, which speeds planning and simplifies learning the transition model.",
+  },
+  cherif2025coga: {
+    zh: "用視覺語言模型產生程式，判定 GUI 裡當下可執行的動作，把巨大動作空間收成意圖導向的 affordance。",
+    en: "CoGA: VLMs emit code that masks a huge GUI action space down to intent-based affordances, improving sample efficiency on MiniWoB++.",
+  },
+  yuan2024ptgm: {
+    zh: "先預訓練目標條件政策與目標先驗，再把目標聚成離散高層動作，讓後續 RL 更省樣本。",
+    en: "PTGM pre-trains a goal-conditioned policy and a goal prior, then clusters goals into a discrete high-level action space for more sample-efficient RL.",
+  },
 };
 
 export function getPaperBlurb(id: string, locale: string): string | undefined {
