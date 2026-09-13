@@ -336,6 +336,12 @@
         "avatar": "/friends/colashavedice.png"
       },
       {
+        "name": "Hawks",
+        "url": "https://hawks.tw/",
+        "description": "A security legend. Enough said.",
+        "avatar": "/friends/hawks.png"
+      },
+      {
         "name": "Another friend",
         "url": "https://example.org",
         "description": "Placeholder",
@@ -408,8 +414,14 @@
       {
         "title": "DISCERN",
         "status": "Draft",
-        "description": "Current research draft.",
-        "tags": ["Research"]
+        "description": "A screening protocol that tests the discriminant validity of team-shooter behavioral metrics via within-series pairing, a priori direction registration, and five self-checks. Applied to 11 metrics from 1,558 professional CS:GO demos, only 3 passed (one still mechanically confounded), 2 reversed direction, and perceptual asymmetry could not be measured because visibility fields were unreliable—showing that metrics must be screened before building human-like agents, and that a controlled environment is a practical necessity.",
+        "tags": ["CS:GO", "Validity", "Agents"]
+      },
+      {
+        "title": "Symbolic-Space",
+        "status": "Draft",
+        "description": "Proposes validating coverage, collapse, and predicate sharpness before adopting a tactical-command vocabulary, measured on 28 verbs and 7,936 legal messages from 270 professional CS:GO matches.\nThe action space can express 87.7–89.2% of kills; symbolization retains about 1,305–1,533 valid utility uses and 31–32 reachable objectives, and overturns seven unchecked specification claims.",
+        "tags": ["CS:GO", "Symbol grounding", "Action space"]
       }
     ],
     "papers": []

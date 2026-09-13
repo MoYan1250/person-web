@@ -16,7 +16,7 @@ export function ResearchCard({ item }: { item: ResearchWork }) {
           </span>
         ) : null}
       </div>
-      <p className="text-muted-foreground mt-2 text-sm leading-6">
+      <p className="text-muted-foreground mt-2 text-sm leading-6 whitespace-pre-line">
         {item.description}
       </p>
       {item.tags?.length ? (

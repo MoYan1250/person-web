@@ -336,6 +336,12 @@
         "avatar": "/friends/colashavedice.png"
       },
       {
+        "name": "Hawks",
+        "url": "https://hawks.tw/",
+        "description": "資安大佬，無須多言。",
+        "avatar": "/friends/hawks.png"
+      },
+      {
         "name": "另一位朋友",
         "url": "https://example.org",
         "description": "佔位符",
@@ -408,8 +414,14 @@
       {
         "title": "DISCERN",
         "status": "草稿",
-        "description": "目前的研究草稿。",
-        "tags": ["Research"]
+        "description": "一套以系列內配對、事前方向登錄與五項自檢來檢驗團隊射擊遊戲行為指標判別效度的篩選協議。將其套用於 1,558 份《CS:GO》職業 demo 的 11 個指標後，僅 3 個通過（其中 1 個仍有機械混淆）、2 個方向反轉，且知覺不對稱因可見性欄位不可靠而無法測量，顯示在建構擬人代理前必須先篩選指標，並使受控環境成為實務必要條件。",
+        "tags": ["CS:GO", "Validity", "Agents"]
+      },
+      {
+        "title": "Symbolic-Space",
+        "status": "草稿",
+        "description": "提出在使用戰術指令詞彙前，先驗證覆蓋度、坍縮與謂詞銳度，並以《CS:GO》270 場職業比賽測量 28 動詞、7,936 條合法訊息。\n結果顯示動作空間可表達 87.7–89.2% 擊殺，符號化保留約 1,305–1,533 個有效道具用法與 31–32 個可達目標，並推翻七項未檢查的規格陳述。",
+        "tags": ["CS:GO", "Symbol grounding", "Action space"]
       }
     ],
     "papers": []
