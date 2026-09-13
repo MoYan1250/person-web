@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { PageLogbookHeader } from "@/components/blocks/page-logbook-header";
 import { AboutKeywordsLine } from "@/components/portfolio/about-keywords-line";
 import { ContactChannels } from "@/components/portfolio/contact-channels";
+import { TechSkills } from "@/components/portfolio/tech-skills";
 import { CustomReactMarkdown } from "@/components/react-markdown";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { routing } from "@/i18n/routing";
@@ -56,6 +57,7 @@ export default async function AboutPage(props: {
         <PageLogbookHeader
           kicker={t("aboutPage.kicker")}
           title={t("sections.about")}
+          description={t("aboutPage.description")}
           statLabel={t("aboutPage.stat")}
           statValue={skills.length}
         />
@@ -83,6 +85,15 @@ export default async function AboutPage(props: {
               </div>
             </div>
           ) : null}
+        </div>
+      </BlurFade>
+
+      <BlurFade delay={0.08}>
+        <div className="glass-panel rounded-2xl p-8 sm:p-10 md:p-12">
+          <TechSkills
+            title={t("sections.techSkills")}
+            description={t("aboutPage.techSkillsNote")}
+          />
         </div>
       </BlurFade>
 

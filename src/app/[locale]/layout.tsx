@@ -18,10 +18,7 @@ import { SiteSearch } from "@/components/blocks/site-search";
 import { SmoothScroll } from "@/components/blocks/smooth-scroll";
 import { PointerLight } from "@/components/home/pointer-light";
 import JsonLdScripts from "@/components/jsonld-scripts";
-import {
-  BaiduSiteVerification,
-  GoogleTagManager,
-} from "@/components/third-party";
+import { GoogleTagManager } from "@/components/third-party";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DEFAULT_LOCALE, LOCALE_TO_HREFLANG, routing } from "@/i18n/routing";
 import { constructMetadata } from "@/lib/metadata";
@@ -91,7 +88,6 @@ export default async function LocaleLayout({
   return (
     <html lang={LOCALE_TO_HREFLANG[locale as Locale] || locale || DEFAULT_LOCALE} suppressHydrationWarning>
       <head>
-        <BaiduSiteVerification />
         <JsonLdScripts locale={locale} />
       </head>
 

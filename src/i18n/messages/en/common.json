@@ -6,6 +6,7 @@
         "research": "Research",
         "viewFullPublications": "View the full list of my publications on",
         "skills": "Keywords",
+        "techSkills": "Skills",
         "education": "Education",
         "workExperience": "Experience",
         "awards": "Awards & Honors",
@@ -124,8 +125,9 @@
     "aboutPage": {
         "kicker": "01 / PROFILE",
         "grid": "PERSONAL INDEX",
-        "description": "Who I am, what I care about, and how to reach me.",
-        "stat": "Keywords"
+        "description": "Some basic info about me, plus skills and the like.",
+        "stat": "Keywords",
+        "techSkillsNote": "Just a bit of familiarity — I wouldn't claim to be good at any of these."
     },
     "projectsPage": {
         "kicker": "04 / ARCHIVE",

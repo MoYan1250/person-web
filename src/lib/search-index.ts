@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { getBlogIndex } from "@/lib/blog-index";
 import { getPaperBlurb } from "@/data/paper-blurbs";
 import { READ_PAPERS } from "@/data/read-papers";
+import { TECH_SKILLS } from "@/data/tech-skills";
 import {
   getArrayField,
   getCollectionItems,
@@ -117,6 +118,17 @@ export async function buildSearchIndex(locale: string): Promise<SearchItem[]> {
       title: skill,
       description: t("sections.skills"),
       href: "/about",
+    });
+  }
+
+  for (const skill of TECH_SKILLS) {
+    items.push({
+      id: `tech-skill:${skill.id}`,
+      kind: "skill",
+      title: skill.label,
+      description: t("sections.techSkills"),
+      href: "/about#tech-skills",
+      tags: [...skill.aliases],
     });
   }
 

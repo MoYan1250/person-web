@@ -6,6 +6,7 @@
         "research": "研究",
         "viewFullPublications": "查看完整出版物列表，請前往",
         "skills": "關鍵詞",
+        "techSkills": "技能",
         "education": "學歷",
         "workExperience": "經歷",
         "awards": "獎項與榮譽",
@@ -124,8 +125,9 @@
     "aboutPage": {
         "kicker": "01 / PROFILE",
         "grid": "PERSONAL INDEX",
-        "description": "我是誰，在意什麼，怎麼聯絡。",
-        "stat": "Keywords"
+        "description": "我的一些基本資料及技能之類的。",
+        "stat": "Keywords",
+        "techSkillsNote": "略懂而已，不敢說強。"
     },
     "projectsPage": {
         "kicker": "04 / ARCHIVE",

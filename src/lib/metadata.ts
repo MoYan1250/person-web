@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
-import { siteConfig } from "@/data/site";
+import { isPreviewDeployment, siteConfig } from "@/data/site";
 import {
   DEFAULT_LOCALE,
   getLocaleUrl,
@@ -35,6 +35,13 @@ export async function constructMetadata({
   availableLocales,
   noIndex = false,
 }: MetadataProps): Promise<Metadata> {
+  const shouldNoIndex = noIndex || isPreviewDeployment;
+  const googleVerification =
+    process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+  const bingVerification =
+    process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION?.trim();
+  const baiduVerification =
+    process.env.NEXT_PUBLIC_BAIDU_SITE_VERIFICATION?.trim();
   const resolvedLocale = (locale || DEFAULT_LOCALE) as Locale;
   const t = await getTranslations({ locale: resolvedLocale });
 
@@ -93,12 +100,25 @@ export async function constructMetadata({
       images: [siteConfig.avatarUrl],
     },
     robots: {
-      index: !noIndex,
-      follow: !noIndex,
+      index: !shouldNoIndex,
+      follow: !shouldNoIndex,
       googleBot: {
-        index: !noIndex,
-        follow: !noIndex,
+        index: !shouldNoIndex,
+        follow: !shouldNoIndex,
       },
+    },
+    verification: {
+      ...(googleVerification ? { google: googleVerification } : {}),
+      ...(bingVerification || baiduVerification
+        ? {
+            other: {
+              ...(bingVerification ? { "msvalidate.01": bingVerification } : {}),
+              ...(baiduVerification
+                ? { "baidu-site-verification": baiduVerification }
+                : {}),
+            },
+          }
+        : {}),
     },
     // Next.js metadata route `src/app/manifest.ts` is served at `/manifest.webmanifest`
     manifest: "/manifest.webmanifest",

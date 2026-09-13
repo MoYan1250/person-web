@@ -1,5 +1,5 @@
 # Default locale (static export has no middleware)
-/ /zh 302
+/ /zh 301
 
 # Old unprefixed URLs from localePrefix: as-needed
 /about /zh/about 301

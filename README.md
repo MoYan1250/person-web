@@ -53,10 +53,29 @@ npm run dev
 4. 環境變數可先空著，先部署一次
 5. Save and Deploy，等建置成功，複製公開網址（`*.pages.dev`）
 6. 回到專案 **Settings → Environment variables**，加上：
-   - `NEXT_PUBLIC_SITE_URL` = 剛才的 `https://....pages.dev`（不要結尾斜線）
-   - 可選：`NEXT_PUBLIC_GTM_ID`
+   - `NEXT_PUBLIC_SITE_URL` = `https://moyan-5hx.pages.dev`（不要結尾斜線；之後若綁自己的網域，改成那個網域）
+   - 可選：`NEXT_PUBLIC_GTM_ID`、`NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
 7. 再觸發一次部署（Retry deployment 或空 commit push），sitemap 與 canonical 才會用對的網址
 8. 若先前有 Workers 專案連著同一個 repo，關掉或刪掉它的自動部署，避免兩套搶
+
+### 讓 Google 收錄（還沒買網域也可以）
+
+程式會在 Cloudflare Pages 建置時用這個專案的 `*.pages.dev` 當正式網址，不要填成別的站（例如另一個 `moyan.pages.dev` 起始頁）。
+
+1. Cloudflare Pages → **Settings → Environment variables**，Production 的 `NEXT_PUBLIC_SITE_URL` 設成 `https://moyan-5hx.pages.dev`，存檔後 **Retry deployment**
+2. **Security** 不要開 Bot Fight / Super Bot Fight，也不要開 Under Attack Mode，否則 Googlebot 會被擋
+3. 部署完成後打開確認：
+   - https://moyan-5hx.pages.dev/robots.txt 裡的 Sitemap 是 `https://moyan-5hx.pages.dev/sitemap.xml`
+   - https://moyan-5hx.pages.dev/sitemap.xml 裡的連結可以點
+4. 用 Google 帳號開 [Search Console](https://search.google.com/search-console)，選 **網址前置詞**，填 `https://moyan-5hx.pages.dev`
+5. 選 **HTML 標記**，複製 `content="...."` 裡的字串
+6. 把該字串設成環境變數 `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`，再部署一次
+7. 回到 Search Console 按驗證，通過後在 **Sitemaps** 送 `https://moyan-5hx.pages.dev/sitemap.xml`
+8. 用「網址檢查」抽查 `/zh`，再「要求編入索引」
+
+Bing 可選： [Bing Webmaster](https://www.bing.com/webmasters) 驗證後把代碼設成 `NEXT_PUBLIC_BING_SITE_VERIFICATION`。
+
+預覽部署（非 `main`）會標 `noindex`，避免 Google 收錄預覽網址。
 
 ### 之後怎麼更新
 
