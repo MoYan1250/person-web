@@ -17,7 +17,6 @@ export default function Footer() {
           >
             hawks.tw
           </a>
-          {` and other sites`}
         </p>
       </div>
     </footer>
