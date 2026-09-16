@@ -413,8 +413,9 @@
     "research": [
       {
         "title": "DISCERN",
-        "status": "Draft",
-        "description": "A screening protocol that tests the discriminant validity of team-shooter behavioral metrics via within-series pairing, a priori direction registration, and five self-checks. Applied to 11 metrics from 1,558 professional CS:GO demos, only 3 passed (one still mechanically confounded), 2 reversed direction, and perceptual asymmetry could not be measured because visibility fields were unreliable—showing that metrics must be screened before building human-like agents, and that a controlled environment is a practical necessity.",
+        "status": "Preprint",
+        "href": "https://doi.org/10.5281/zenodo.22799015",
+        "description": "Lyu, S.-J. (2026). When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters (Version 0.1.0). Zenodo.\n\nA screening protocol that tests the discriminant validity of team-shooter behavioral metrics via within-series pairing, a priori direction registration, and five self-checks. Applied to 11 metrics from 1,558 professional CS:GO demos, only 3 passed (one still mechanically confounded), 2 reversed direction, and perceptual asymmetry could not be measured because visibility fields were unreliable—showing that metrics must be screened before building human-like agents, and that a controlled environment is a practical necessity.",
         "tags": ["CS:GO", "Validity", "Agents"]
       },
       {

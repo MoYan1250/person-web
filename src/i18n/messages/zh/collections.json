@@ -413,8 +413,9 @@
     "research": [
       {
         "title": "DISCERN",
-        "status": "草稿",
-        "description": "一套以系列內配對、事前方向登錄與五項自檢來檢驗團隊射擊遊戲行為指標判別效度的篩選協議。將其套用於 1,558 份《CS:GO》職業 demo 的 11 個指標後，僅 3 個通過（其中 1 個仍有機械混淆）、2 個方向反轉，且知覺不對稱因可見性欄位不可靠而無法測量，顯示在建構擬人代理前必須先篩選指標，並使受控環境成為實務必要條件。",
+        "status": "預印本",
+        "href": "https://doi.org/10.5281/zenodo.22799015",
+        "description": "Lyu, S.-J. (2026). When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters (Version 0.1.0). Zenodo.\n\n一套以系列內配對、事前方向登錄與五項自檢來檢驗團隊射擊遊戲行為指標判別效度的篩選協議。將其套用於 1,558 份《CS:GO》職業 demo 的 11 個指標後，僅 3 個通過（其中 1 個仍有機械混淆）、2 個方向反轉，且知覺不對稱因可見性欄位不可靠而無法測量，顯示在建構擬人代理前必須先篩選指標，並使受控環境成為實務必要條件。",
         "tags": ["CS:GO", "Validity", "Agents"]
       },
       {
