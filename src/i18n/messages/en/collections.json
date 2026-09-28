@@ -342,6 +342,12 @@
         "avatar": "/friends/hawks.png"
       },
       {
+        "name": "Vessel",
+        "url": "https://sleepomen.github.io/",
+        "description": "文組小廢物",
+        "avatar": "https://sleepomen.github.io/images/pochi.webp"
+      },
+      {
         "name": "Another friend",
         "url": "https://example.org",
         "description": "Placeholder",
