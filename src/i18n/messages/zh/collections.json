@@ -149,7 +149,7 @@
       {
         "date": "2026-07",
         "title": "第二次考 APCS",
-        "description": "刷了幾題後考了觀念 4、實作 3。",
+        "description": "刷了幾題後考到了觀念 4。",
         "type": "record",
         "image": "/timeline/2026-07-apcs.png",
         "tags": ["APCS"]
@@ -323,8 +323,7 @@
     "title": "一些小競賽與經歷（我東西很少.w.）",
     "items": [
       "2026 THJCC summer CTF 學生賽區 Rk.14/71，總賽區 Rk.65/679",
-      "AIS3 Junior 2026 結業",
-      "APCS 觀念4 實作3"
+      "AIS3 Junior 2026 結業"
     ]
   },
   "friends": {

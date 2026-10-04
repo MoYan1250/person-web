@@ -149,7 +149,7 @@
       {
         "date": "2026-07",
         "title": "Second APCS exam",
-        "description": "Practiced a few problems, then scored 4 on concepts and 3 on implementation.",
+        "description": "Practiced a few problems, then scored 4 on concepts.",
         "type": "record",
         "image": "/timeline/2026-07-apcs.png",
         "tags": ["APCS"]
@@ -323,8 +323,7 @@
     "title": "A few contests and things I've done (I don't have much .w.)",
     "items": [
       "2026 THJCC summer CTF — student division Rk.14/71, overall Rk.65/679",
-      "AIS3 Junior 2026 — completed",
-      "APCS: Concepts 4, Implementation 3"
+      "AIS3 Junior 2026 — completed"
     ]
   },
   "friends": {
