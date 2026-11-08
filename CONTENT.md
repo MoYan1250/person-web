@@ -1,6 +1,6 @@
 # 要改哪裡
 
-網站目前是佔位內容。把下面標出來的檔案換成你的真實資料即可，不必改版型。
+改站上的文字與清單時，照下面的檔案改，不必動版型。
 
 中文在 `zh.json`，英文在 `en.json`。兩個都要改，語系切換才會一致。
 
@@ -125,12 +125,11 @@ category: diary
 
 同一個檔名（不含副檔名）最好中英都有，語系切換才對得上。列表在 `/diary`，可用標籤篩選。
 
-## 收藏與學術
+## 學術
 
-| 頁面 | 檔案裡的 key |
-| --- | --- |
-| 遊戲、音樂 | `collections.json` → `likes.games`、`likes.music` |
-| 研究、讀過的 paper | `collections.json` → `academic.research`、`academic.papers` |
+研究清單在 `collections.json` → `academic.research`。讀過的 paper 在 `academic.papers`。中英兩邊都要改。
+
+收藏頁已從站上移除。若要加回來，步驟在 [backup/likes/README.md](backup/likes/README.md)。
 
 ## 介面文案（導覽、按鈕）
 
@@ -145,4 +144,4 @@ category: diary
 - 預設語系是 `zh`（繁中）
 - `/zh` 是中文，`/en` 是英文；開 `/` 會轉到 `/zh`
 
-網站網址由環境變數 `NEXT_PUBLIC_SITE_URL` 決定（見 [README](./README.md) 的上線說明）。本機沒設時預設是 `http://localhost:3000`。Cloudflare Pages 建置時會改用這個專案的 `https://moyan-5hx.pages.dev`（之後若綁自己的網域，把變數改成那個網址）。搜尋引擎驗證代碼可設 `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` / `NEXT_PUBLIC_BING_SITE_VERIFICATION`。
+網站網址由環境變數 `NEXT_PUBLIC_SITE_URL` 決定，說明見 [DEPLOY.md](./DEPLOY.md)。本機沒設時預設是 `http://localhost:3000`。
