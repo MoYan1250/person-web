@@ -35,7 +35,7 @@
         },
         "contact": "Contact",
         "getInTouch": "Get in Touch",
-        "contactDescription": "Want to chat? Reach me by email, Discord, or Instagram.",
+        "contactDescription": "For contact, email, Discord, and Instagram are all available.",
         "viaEmail": "via email",
         "askQuestions": "Ask questions",
         "exploreCollaboration": "Explore collaboration opportunities",
@@ -125,9 +125,9 @@
     "aboutPage": {
         "kicker": "01 / PROFILE",
         "grid": "PERSONAL INDEX",
-        "description": "Some basic info about me, plus skills and the like.",
+        "description": "Background, experience, and the technologies I have worked with.",
         "stat": "Keywords",
-        "techSkillsNote": "Just a bit of familiarity — I wouldn't claim to be good at any of these."
+        "techSkillsNote": "Technologies I have worked with so far. I would not claim strength in any of them."
     },
     "projectsPage": {
         "kicker": "04 / ARCHIVE",
@@ -230,11 +230,6 @@
                 "href": "/about",
                 "icon": "user",
                 "label": "About"
-            },
-            {
-                "href": "/likes",
-                "icon": "heart",
-                "label": "Likes"
             },
             {
                 "href": "/academic",

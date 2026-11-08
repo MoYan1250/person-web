@@ -10,7 +10,7 @@
   "headline": "An ordinary high schooler into CS & academia",
   "welcome": "Welcome!",
   "ogImageUrl": "example.com",
-  "bioMarkdown": "Not great at programming — no competitive programming, and on the security side I really only know some cryptography theory. The rest I'm not that familiar with.\n\nAlmost everything I've picked up is self-taught. I came from a humanities track and switched over from zero; I used to do graphic design and video editing. I've been in tech for less than a year, and I've only really touched security for about a month (not counting the earlier phase where I only knew crypto theory). My CTF results are pretty bad, and I haven't done many contests.\n\nI'm interested in both academia and engineering, so I've taken quite a bit of math ahead of time — though I'm not great at math either — and I'm working on a few small research projects now.",
+  "bioMarkdown": "I currently attend St. Peter Senior High School in Hsinchu. I started on a humanities track, previously working in graphic design and video editing, and later taught myself into computing. I have been in the field for less than a year.\n\nProgramming and security are both still early. In security I mainly know some cryptography theory; I am not yet familiar with the rest of the practice, and competitive programming is not my focus. I have recently taken part in AIS3 Junior and THJCC. I have not entered many contests, and the results so far are modest.\n\nI am interested in both research and engineering, so I have studied some mathematics ahead of the curriculum and am working on a few small research projects. My mathematics is still developing as well.",
   "location": {
     "name": "St. Peter Senior High School / Hsinchu",
     "mapUrl": "https://www.google.com/maps/place/Hsinchu"
@@ -28,7 +28,7 @@
   "ticker": [
     "HSINCHU / UTC+8",
     "STATUS: ONLINE",
-    "ABOUT / WRITING / LIKES / ACADEMIC",
+    "ABOUT / WRITING / ACADEMIC",
     "NO ALGORITHM HERE"
   ]
 }

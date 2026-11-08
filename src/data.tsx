@@ -11,7 +11,6 @@ export const DATA = {
   },
   navbar: [
     { href: "/about", icon: Icons.user, label: "About" },
-    { href: "/likes", icon: Icons.heart, label: "Likes" },
     { href: "/academic", icon: Icons.academic, label: "Academic" },
     { href: "/projects", icon: Icons.folder, label: "Projects" },
     { href: "/timeline", icon: Icons.calendar, label: "Timeline" },

@@ -1,0 +1,60 @@
+{
+  "games": [
+    {
+      "title": "荒野亂鬥",
+      "hours": "1500 hr",
+      "status": "幾乎退了",
+      "note": "玩很久，現在幾乎不碰了。"
+    },
+    {
+      "title": "Apex Legends",
+      "hours": "1200 hr",
+      "status": "退遊",
+      "note": "還是不會身法。"
+    },
+    {
+      "title": "Warframe",
+      "hours": "1000 hr",
+      "status": "停很久",
+      "note": "上次玩大概是兩年前。"
+    },
+    {
+      "title": "崩壞：星穹鐵道",
+      "hours": "1000 hr",
+      "status": "還在碰",
+      "note": "數值漲的飛快，兩年漲了一百倍，但福利還可以，劇情也都不錯"
+    },
+    {
+      "title": "歐陸風雲 4",
+      "hours": "1000 hr",
+      "status": "偶爾還會開來玩",
+      "note": "主要碰模組了，原版已經有點玩膩了。"
+    },
+    {
+      "title": "明日方舟",
+      "hours": "500 hr",
+      "status": "休閒",
+      "note": "策略為主，隨興玩。"
+    },
+    {
+      "title": "Counter-Strike 2",
+      "hours": "150 hr",
+      "status": "最近常碰",
+      "note": "最近常玩，不過主要是看比賽。"
+    }
+  ],
+  "music": [
+    {
+      "title": "Hardstyle",
+      "artist": "之後補曲目",
+      "genre": "Hardstyle",
+      "note": "常聽的類型。把喜歡的專輯或曲目補在這裡。"
+    },
+    {
+      "title": "Drum & Bass",
+      "artist": "之後補曲目",
+      "genre": "DnB",
+      "note": "常聽的類型。把喜歡的專輯或曲目補在這裡。"
+    }
+  ]
+}

@@ -8,8 +8,6 @@ import {
   getArrayField,
   getCollectionItems,
   type FriendItem,
-  type LikedGame,
-  type LikedMusic,
   type ProjectItem,
   type ReadPaper,
   type ResearchWork,
@@ -24,7 +22,6 @@ const PAGE_CARD: Record<string, string> = {
   "/timeline": "timeline",
   "/diary": "diary",
   "/friends": "friends",
-  "/likes": "likes",
   "/academic": "academic",
 };
 
@@ -50,22 +47,13 @@ export async function buildSearchIndex(locale: string): Promise<SearchItem[]> {
     });
   }
 
-  items.push(
-    {
-      id: "page:/likes",
-      kind: "page",
-      title: t("sections.likes"),
-      href: "/likes",
-      description: t("likesPage.description"),
-    },
-    {
-      id: "page:/academic",
-      kind: "page",
-      title: t("sections.academic"),
-      href: "/academic",
-      description: t("academicPage.description"),
-    },
-  );
+  items.push({
+    id: "page:/academic",
+    kind: "page",
+    title: t("sections.academic"),
+    href: "/academic",
+    description: t("academicPage.description"),
+  });
 
   for (const post of getBlogIndex(locale)) {
     items.push({
@@ -129,31 +117,6 @@ export async function buildSearchIndex(locale: string): Promise<SearchItem[]> {
       description: t("sections.techSkills"),
       href: "/about#tech-skills",
       tags: [...skill.aliases],
-    });
-  }
-
-  const likes = t.raw("likes") as {
-    games?: LikedGame[];
-    music?: LikedMusic[];
-  };
-  for (const game of likes?.games ?? []) {
-    items.push({
-      id: `likes:game:${game.title}`,
-      kind: "likes",
-      title: game.title,
-      description: game.note || game.status,
-      href: "/likes",
-      tags: [game.hours, game.status].filter(Boolean) as string[],
-    });
-  }
-  for (const track of likes?.music ?? []) {
-    items.push({
-      id: `likes:music:${track.title}`,
-      kind: "likes",
-      title: track.title,
-      description: track.note || track.artist,
-      href: "/likes",
-      tags: [track.genre, track.artist].filter(Boolean) as string[],
     });
   }
 

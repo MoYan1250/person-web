@@ -1,0 +1,60 @@
+{
+  "games": [
+    {
+      "title": "Brawl Stars",
+      "hours": "1500 hr",
+      "status": "Pretty much quit",
+      "note": "Played a lot. Barely touch it now."
+    },
+    {
+      "title": "Apex Legends",
+      "hours": "1200 hr",
+      "status": "Quit",
+      "note": "Still can't movement tech."
+    },
+    {
+      "title": "Warframe",
+      "hours": "1000 hr",
+      "status": "Long pause",
+      "note": "Last played about two years ago."
+    },
+    {
+      "title": "Honkai: Star Rail",
+      "hours": "1000 hr",
+      "status": "Still around",
+      "note": "The numbers inflate insanely fast — a hundredfold in two years — but the rewards are still decent, and the stories have been good."
+    },
+    {
+      "title": "Europa Universalis IV",
+      "hours": "1000 hr",
+      "status": "Still boots it up now and then",
+      "note": "Mostly mods now. Vanilla's gotten a bit stale."
+    },
+    {
+      "title": "Arknights",
+      "hours": "500 hr",
+      "status": "Casual",
+      "note": "Mostly the strategy side."
+    },
+    {
+      "title": "Counter-Strike 2",
+      "hours": "150 hr",
+      "status": "Playing a lot lately",
+      "note": "Playing it a lot lately, though I mostly watch matches."
+    }
+  ],
+  "music": [
+    {
+      "title": "Hardstyle",
+      "artist": "Tracks to add",
+      "genre": "Hardstyle",
+      "note": "A genre I listen to a lot. Drop albums or tracks here later."
+    },
+    {
+      "title": "Drum & Bass",
+      "artist": "Tracks to add",
+      "genre": "DnB",
+      "note": "A genre I listen to a lot. Drop albums or tracks here later."
+    }
+  ]
+}

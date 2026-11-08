@@ -3,7 +3,6 @@ export const SEARCH_KINDS = [
   "diary",
   "project",
   "timeline",
-  "likes",
   "academic",
   "friend",
   "skill",

@@ -53,7 +53,6 @@ export default async function Page(props: {
   const routeCards = [
     "about",
     "diary",
-    "likes",
     "academic",
     "timeline",
     "friends",
@@ -141,14 +140,6 @@ export default async function Page(props: {
                     title: t("index.cards.diary.title"),
                     description: t("index.cards.diary.description"),
                     ghost: zh ? "文" : "W",
-                  },
-                  {
-                    area: "likes",
-                    href: "/likes",
-                    kicker: "LIKES",
-                    title: t("index.cards.likes.title"),
-                    description: t("index.cards.likes.description"),
-                    ghost: zh ? "藏" : "L",
                   },
                   {
                     area: "academic",

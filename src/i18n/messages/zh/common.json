@@ -35,7 +35,7 @@
         },
         "contact": "聯絡",
         "getInTouch": "保持聯絡",
-        "contactDescription": "想聊聊的話，可以找我的 Email、Discord 或 Instagram。",
+        "contactDescription": "若需聯絡，歡迎透過 Email、Discord 或 Instagram。",
         "viaEmail": "透過郵件",
         "askQuestions": "提問",
         "exploreCollaboration": "聊聊合作",
@@ -125,9 +125,9 @@
     "aboutPage": {
         "kicker": "01 / PROFILE",
         "grid": "PERSONAL INDEX",
-        "description": "我的一些基本資料及技能之類的。",
+        "description": "個人背景、學習經歷，以及目前接觸過的技術。",
         "stat": "Keywords",
-        "techSkillsNote": "略懂而已，不敢說強。"
+        "techSkillsNote": "以下為目前接觸過的技術，熟悉程度有限。"
     },
     "projectsPage": {
         "kicker": "04 / ARCHIVE",
@@ -230,11 +230,6 @@
                 "href": "/about",
                 "icon": "user",
                 "label": "關於"
-            },
-            {
-                "href": "/likes",
-                "icon": "heart",
-                "label": "收藏"
             },
             {
                 "href": "/academic",

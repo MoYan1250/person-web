@@ -320,7 +320,7 @@
     "Multiagent Systems"
   ],
   "aboutExperiences": {
-    "title": "一些小競賽與經歷（我東西很少.w.）",
+    "title": "競賽與經歷",
     "items": [
       "2026 THJCC summer CTF 學生賽區 Rk.14/71，總賽區 Rk.65/679",
       "AIS3 Junior 2026 結業"
@@ -348,80 +348,47 @@
       }
     ]
   },
-  "likes": {
-    "games": [
-      {
-        "title": "荒野亂鬥",
-        "hours": "1500 hr",
-        "status": "幾乎退了",
-        "note": "玩很久，現在幾乎不碰了。"
-      },
-      {
-        "title": "Apex Legends",
-        "hours": "1200 hr",
-        "status": "退遊",
-        "note": "還是不會身法。"
-      },
-      {
-        "title": "Warframe",
-        "hours": "1000 hr",
-        "status": "停很久",
-        "note": "上次玩大概是兩年前。"
-      },
-      {
-        "title": "崩壞：星穹鐵道",
-        "hours": "1000 hr",
-        "status": "還在碰",
-        "note": "數值漲的飛快，兩年漲了一百倍，但福利還可以，劇情也都不錯"
-      },
-      {
-        "title": "歐陸風雲 4",
-        "hours": "1000 hr",
-        "status": "偶爾還會開來玩",
-        "note": "主要碰模組了，原版已經有點玩膩了。"
-      },
-      {
-        "title": "明日方舟",
-        "hours": "500 hr",
-        "status": "休閒",
-        "note": "策略為主，隨興玩。"
-      },
-      {
-        "title": "Counter-Strike 2",
-        "hours": "150 hr",
-        "status": "最近常碰",
-        "note": "最近常玩，不過主要是看比賽。"
-      }
-    ],
-    "music": [
-      {
-        "title": "Hardstyle",
-        "artist": "之後補曲目",
-        "genre": "Hardstyle",
-        "note": "常聽的類型。把喜歡的專輯或曲目補在這裡。"
-      },
-      {
-        "title": "Drum & Bass",
-        "artist": "之後補曲目",
-        "genre": "DnB",
-        "note": "常聽的類型。把喜歡的專輯或曲目補在這裡。"
-      }
-    ]
-  },
   "academic": {
     "research": [
       {
-        "title": "DISCERN",
+        "title": "What a Grenade Is For",
         "status": "預印本",
-        "href": "https://doi.org/10.5281/zenodo.22799015",
-        "description": "Lyu, S.-J. (2026). When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters (Version 0.1.0). Zenodo.\n\n一套以系列內配對、事前方向登錄與五項自檢來檢驗團隊射擊遊戲行為指標判別效度的篩選協議。將其套用於 1,558 份《CS:GO》職業 demo 的 11 個指標後，僅 3 個通過（其中 1 個仍有機械混淆）、2 個方向反轉，且知覺不對稱因可見性欄位不可靠而無法測量，顯示在建構擬人代理前必須先篩選指標，並使受控環境成為實務必要條件。",
-        "tags": ["CS:GO", "Validity", "Agents"]
+        "href": "https://doi.org/10.5281/zenodo.23323426",
+        "description": "S.-J. Lyu, \"What a Grenade Is For: An Annotation Schema and a Pre-registered Human-LLM Test for Utility Lineups in Professional Counter-Strike,\" Zenodo, Oct. 13, 2026, doi: 10.5281/zenodo.23323426.\n\n為職業《Counter-Strike》的道具拋擲定義標註架構（起點區域、落點區域、手榴彈種類），並以 ESTA 的 122 場 de_dust2、69,827 次拋擲建立 lineup 資料。依事前登記的標準，幾何與頻率可用，泛用性未達可用門檻，難度只作為描述。拋擲意圖與是否為慣例仍留給人工標註；大型語言模型能否取代人工，已事前登記，目前尚無人工標籤。",
+        "tags": ["CS:GO", "Annotation", "LLM"]
+      },
+      {
+        "title": "Before you use it",
+        "status": "預印本",
+        "href": "https://doi.org/10.5281/zenodo.23277101",
+        "description": "S.-J. Lyu, \"Before you use it: Validating a tactical command vocabulary for multi-agent shooters,\" Zenodo, Oct. 10, 2026, doi: 10.5281/zenodo.23277101.\n\n在把戰術指令詞彙用於多智能體之前，先以 270 場職業比賽檢驗覆蓋度、符號化後仍保留的結構，以及合規謂詞的銳度。詞彙含 28 個動詞、7,936 則合法訊息。動作空間可表達 87.7–89.2% 的職業擊殺；符號化保留約 1,305–1,533 個有效道具用法與 31–32 個可達目標。過程中有七項寫進規格、卻從未核對的陳述被推翻。",
+        "tags": ["CS:GO", "Symbol grounding", "Action space"]
       },
       {
         "title": "Symbolic-Space",
         "status": "草稿",
-        "description": "提出在使用戰術指令詞彙前，先驗證覆蓋度、坍縮與謂詞銳度，並以《CS:GO》270 場職業比賽測量 28 動詞、7,936 條合法訊息。\n結果顯示動作空間可表達 87.7–89.2% 擊殺，符號化保留約 1,305–1,533 個有效道具用法與 31–32 個可達目標，並推翻七項未檢查的規格陳述。",
+        "description": "S.-J. Lyu, \"Symbolic-Space,\" unpublished manuscript, 2026.\n\n在採用戰術指令詞彙之前，先檢驗覆蓋度、坍縮與謂詞銳度，並以 270 場《CS:GO》職業比賽測量 28 個動詞、7,936 則合法訊息。動作空間可表達 87.7–89.2% 的擊殺；符號化保留約 1,305–1,533 個有效道具用法與 31–32 個可達目標，並推翻七項未經核對的規格陳述。",
         "tags": ["CS:GO", "Symbol grounding", "Action space"]
+      },
+      {
+        "title": "Written Down, Never Checked",
+        "status": "預印本",
+        "href": "https://doi.org/10.5281/zenodo.23277882",
+        "description": "S.-J. Lyu, \"Written Down, Never Checked: Auditing a Reinforcement-Learning Environment, Its Research Pipeline, and the Audit Itself,\" Zenodo, Oct. 4, 2026, doi: 10.5281/zenodo.23277882.\n\n把自建的戰術射擊強化學習環境 E0，連同規格、程式、量測、配套論文與公開存放，當成稽核對象，而不是控制變數。目錄收錄 92 則曾被寫下、未經查證、後來被推翻的陳述。在 45° 視野門檻下，2.87% 的單一候選開火事件會選到與連續座標規則不同的目標。",
+        "tags": ["RL", "Audit", "CS:GO"]
+      },
+      {
+        "title": "When Metrics Lie",
+        "status": "草稿",
+        "href": "https://doi.org/10.5281/zenodo.22799015",
+        "description": "S.-J. Lyu, \"When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters,\" unpublished manuscript, Oct. 2026.\n\nDISCERN 用系列內配對、事前方向預測與五項自檢，篩選團隊射擊遊戲的行為指標。2026 年 10 月 v3 草稿套用在 1,558 份職業 demo 的 11 個指標上，保留 4 個；換人頭率的方向與構念相反，且與公開統計站的同名指標共享分母。在確實存在視線的擊殺中，資料集的可見性欄位只在 39.5% 的情況觸發。較早的公開版本見 Zenodo doi: 10.5281/zenodo.22799015。",
+        "tags": ["CS:GO", "Validity", "Agents"]
+      },
+      {
+        "title": "Grounded Command Channels",
+        "status": "草稿",
+        "description": "S.-J. Lyu, \"Grounded Command Channels: Situation-Compiled Grammars for LLM Commanders of Agent Teams,\" unpublished manuscript, Oct. 2026.\n\n讓大型語言模型指揮遊戲代理時，於每個決策點編譯一份文法，使輸出恰好是當下可執行的指令，並套用已先以職業比賽驗證的戰術詞彙。在三種開放模型與 2,000 個職業情境中，只有這種文法沒有發出不可執行的指令；檢查後重試仍有 74.4–84.6% 可執行，尾延遲約為兩倍。即時《Counter-Strike 2》裡，指令抵達時仍最可執行，但透過自建執行器指揮時，勝率不如放著內建機器人。",
+        "tags": ["LLM", "CS2", "Constrained decoding"]
       }
     ],
     "papers": []

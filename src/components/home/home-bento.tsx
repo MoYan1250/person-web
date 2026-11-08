@@ -15,7 +15,6 @@ export type HomeBentoCard = {
     | "timeline"
     | "friends"
     | "projects"
-    | "likes"
     | "academic";
   href: string;
   kicker: string;
