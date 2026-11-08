@@ -313,11 +313,12 @@
     ]
   },
   "skills": [
-    "Cryptography",
     "Reinforcement learning",
+    "Multiagent Systems",
+    "LLM",
+    "Cryptography",
     "blockchain",
-    "Unity",
-    "Multiagent Systems"
+    "Unity"
   ],
   "aboutExperiences": {
     "title": "Contests and experience",
@@ -351,41 +352,41 @@
   "academic": {
     "research": [
       {
-        "title": "What a Grenade Is For",
+        "title": "[1] When Metrics Lie",
         "status": "Preprint",
-        "href": "https://doi.org/10.5281/zenodo.23323426",
-        "description": "S.-J. Lyu, \"What a Grenade Is For: An Annotation Schema and a Pre-registered Human-LLM Test for Utility Lineups in Professional Counter-Strike,\" Zenodo, Oct. 13, 2026, doi: 10.5281/zenodo.23323426.\n\nDefines an annotation schema for professional Counter-Strike utility throws—origin zone, landing zone, and grenade type—and builds a lineup table from 69,827 throws in 122 de_dust2 matches in the ESTA dataset. Against criteria registered in advance, geometry and frequency are usable, generality fails its usability test, and difficulty is reported only as a description. Intent and conventionality are left to human annotators; a test of whether large language models can replace them is pre-registered, and no human labels exist yet.",
-        "tags": ["CS:GO", "Annotation", "LLM"]
+        "href": "https://doi.org/10.5281/zenodo.22799015",
+        "description": "S.-J. Lyu, \"When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters,\" Zenodo, 2026, doi: 10.5281/zenodo.22799015.\n\nDISCERN tests the discriminant validity of team-shooter behavioral metrics with within-series pairing, a priori direction registration, and five self-checks. Applied to 11 metrics from 1,558 professional CS:GO demos, only 3 passed (one still mechanically confounded), 2 reversed direction, and perceptual asymmetry could not be measured because the visibility fields were unreliable.",
+        "tags": ["CS:GO", "Validity", "Agents"]
       },
       {
-        "title": "Before you use it",
+        "title": "[2] Before you use it",
         "status": "Preprint",
         "href": "https://doi.org/10.5281/zenodo.23277101",
         "description": "S.-J. Lyu, \"Before you use it: Validating a tactical command vocabulary for multi-agent shooters,\" Zenodo, Oct. 10, 2026, doi: 10.5281/zenodo.23277101.\n\nBefore a tactical command vocabulary is used for multi-agent work, coverage, surviving structure, and predicate sharpness are measured on 270 professional matches. The vocabulary has 28 verbs and 7,936 legal messages. The action space expresses 87.7–89.2% of professional kills; symbolization retains about 1,305–1,533 effective utility uses and 31–32 reachable objectives. Seven statements written into specifications and never checked were falsified along the way.",
         "tags": ["CS:GO", "Symbol grounding", "Action space"]
       },
       {
-        "title": "Symbolic-Space",
-        "status": "Draft",
-        "description": "S.-J. Lyu, \"Symbolic-Space,\" unpublished manuscript, 2026.\n\nValidates coverage, collapse, and predicate sharpness before a tactical-command vocabulary is adopted, measured on 28 verbs and 7,936 legal messages from 270 professional CS:GO matches. The action space expresses 87.7–89.2% of kills; symbolization retains about 1,305–1,533 effective utility uses and 31–32 reachable objectives, and overturns seven unchecked specification claims.",
-        "tags": ["CS:GO", "Symbol grounding", "Action space"]
+        "title": "[3] What a Grenade Is For",
+        "status": "Preprint",
+        "href": "https://doi.org/10.5281/zenodo.23323426",
+        "description": "S.-J. Lyu, \"What a Grenade Is For: An Annotation Schema and a Pre-registered Human-LLM Test for Utility Lineups in Professional Counter-Strike,\" Zenodo, Oct. 13, 2026, doi: 10.5281/zenodo.23323426.\n\nDefines an annotation schema for professional Counter-Strike utility throws—origin zone, landing zone, and grenade type—and builds a lineup table from 69,827 throws in 122 de_dust2 matches in the ESTA dataset. Against criteria registered in advance, geometry and frequency are usable, generality fails its usability test, and difficulty is reported only as a description. Intent and conventionality are left to human annotators; a test of whether large language models can replace them is pre-registered, and no human labels exist yet.",
+        "tags": ["CS:GO", "Annotation", "LLM"]
       },
       {
-        "title": "Written Down, Never Checked",
+        "title": "[4] Written Down, Never Checked",
         "status": "Preprint",
         "href": "https://doi.org/10.5281/zenodo.23277882",
         "description": "S.-J. Lyu, \"Written Down, Never Checked: Auditing a Reinforcement-Learning Environment, Its Research Pipeline, and the Audit Itself,\" Zenodo, Oct. 4, 2026, doi: 10.5281/zenodo.23277882.\n\nAudits E0, a custom tactical-shooter reinforcement-learning environment, together with its specification, code, measurements, companion paper, and public deposit, treating the environment as an object of audit rather than a controlled variable. The catalog holds 92 claims that had been written down, never verified, and later overturned. At a 45° field-of-view gate, 2.87% of single-candidate firing events select a different target than the continuous-coordinate rule.",
         "tags": ["RL", "Audit", "CS:GO"]
       },
       {
-        "title": "When Metrics Lie",
+        "title": "[5] When Metrics Lie (v3)",
         "status": "Draft",
-        "href": "https://doi.org/10.5281/zenodo.22799015",
-        "description": "S.-J. Lyu, \"When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters,\" unpublished manuscript, Oct. 2026.\n\nDISCERN screens behavioral metrics for team shooters with within-series pairing, a priori directional predictions, and five self-checks. The October 2026 v3 draft, applied to 11 metrics over 1,558 professional demos, retains 4. Trade kill rate is significant in the direction opposite its construct and shares its denominator with the identically named metric on a public statistics site. Where a line of sight certainly existed, the dataset's visibility field fires in only 39.5% of kills. An earlier public deposit is Zenodo doi: 10.5281/zenodo.22799015.",
+        "description": "S.-J. Lyu, \"When Metrics Lie: A Protocol for Uncovering Flawed Human-Likeness in Team Shooters,\" unpublished manuscript, Oct. 2026.\n\nOctober 2026 v3 draft. Applied to 11 metrics over 1,558 professional demos, DISCERN retains 4: traded death rate and drop rate still separate tiers after team recurrence is accounted for; hit rate is mechanically tied to the ranking criterion; one directional visibility metric separates tiers at series level only under date-based labels. Six metrics show no separation detectable at this design. Trade kill rate is significant in the direction opposite its construct and shares its denominator with the identically named public metric. Where a line of sight certainly existed, the visibility field fires in only 39.5% of kills.",
         "tags": ["CS:GO", "Validity", "Agents"]
       },
       {
-        "title": "Grounded Command Channels",
+        "title": "[6] Grounded Command Channels",
         "status": "Draft",
         "description": "S.-J. Lyu, \"Grounded Command Channels: Situation-Compiled Grammars for LLM Commanders of Agent Teams,\" unpublished manuscript, Oct. 2026.\n\nCompiles, at each decision point, a grammar whose language is exactly the set of commands executable in the current state, and decodes a large language model commander under it, using a tactical vocabulary already validated on professional play. Across three open models and 2,000 professional situations, only this grammar issued no non-executable order; checking and retrying left 74.4–84.6% executable, at about twice the tail latency. In real-time Counter-Strike 2 the orders were still the most executable on arrival, but commanding through the custom executor lost to the built-in bots left alone.",
         "tags": ["LLM", "CS2", "Constrained decoding"]
