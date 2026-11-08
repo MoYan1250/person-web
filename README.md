@@ -1,6 +1,6 @@
 # 魔閻 / Shang-Jing Lyu
 
-Personal site and research index. Current work is around reinforcement learning, multi-agent systems, and large language models.
+Personal site and research index. Current research topics are reinforcement learning, multi-agent systems, and large language models.
 
 **網站：** [https://moyan-5hx.pages.dev](https://moyan-5hx.pages.dev)
 

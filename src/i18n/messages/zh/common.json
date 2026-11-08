@@ -125,7 +125,7 @@
     "aboutPage": {
         "kicker": "01 / PROFILE",
         "grid": "PERSONAL INDEX",
-        "description": "個人背景、學習經歷，以及目前圍繞 RL、MAS 與 LLM 的工作。",
+        "description": "個人背景、學習經歷，以及目前圍繞 RL、MAS 與 LLM 的研究主題。",
         "stat": "Keywords",
         "techSkillsNote": "以下為目前接觸過的技術，熟悉程度有限。"
     },
