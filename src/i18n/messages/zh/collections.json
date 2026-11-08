@@ -6,46 +6,73 @@
     "items": [
       {
         "title": "個人網站",
-        "href": "/",
+        "href": "https://github.com/MoYan1250/person-web",
         "dates": "2026.8",
         "active": true,
-        "description": "這個網站：中英雙語的個人索引，收錄作品、時間軸與日記。",
+        "description": "中英雙語的個人網站，收錄研究、作品、時間軸與文章。研究主題圍繞強化學習、多智能體系統與大型語言模型。",
         "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/person-web",
+            "icon": "github"
+          }
+        ],
         "image": "/projects/personal-site.png",
         "video": ""
       },
       {
         "title": "Hinkal 雙花：本地簡化復現",
+        "href": "https://github.com/MoYan1250/hinkal-legacy-note-repro",
         "dates": "2026.8",
         "active": true,
-        "description": "以太坊上的隱私池協議 Hinkal，在 2026 年 7 月發生雙花攻擊。這是該事件的簡化復現：智能合約有上鏈，只把規模縮小、改在本地跑。",
-        "technologies": ["ZK", "Smart contracts", "Solidity", "Ethereum"],
+        "description": "2026 年 7 月 Hinkal 隱私池雙花的本地教學復現。以 Circom、Groth16 與 Solidity 在本機 Anvil 上跑完花費路徑，用來說明鏈上驗證通過，並不代表同一筆存款只能花一次。",
+        "technologies": ["Circom", "Solidity", "ZK"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/hinkal-legacy-note-repro",
+            "icon": "github"
+          }
+        ],
         "image": "/projects/hinkal.png",
         "video": ""
       },
       {
         "title": "戰術寰宇",
+        "href": "https://github.com/MoYan1250/TacticaUniversalis",
         "dates": "2026.7",
         "active": true,
-        "description": "P 社風格的 CS2 歷史、戰術模擬與戰隊經理遊戲。用爬蟲抓上百位選手的數據並量化。",
-        "technologies": ["CS2"],
+        "description": "以 2021 賽季為背景的 CSGO 電競俱樂部模擬，使用 Unity 6，目前仍在開發。生涯以週推進，比賽日可進入 Dust II 的戰術對局。",
+        "technologies": ["Unity", "CSGO"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/TacticaUniversalis",
+            "icon": "github"
+          }
+        ],
         "image": "/timeline/tactica-universalis.png",
         "video": ""
       },
       {
         "title": "Discord 蜜罐機器人",
+        "href": "https://github.com/MoYan1250/mellifera-sentinel",
         "dates": "2025.12",
         "active": true,
-        "description": "自己搭的 Discord 蜜罐機器人，會自動偵測並封禁濫發訊息的帳號。",
-        "technologies": ["Discord"],
+        "description": "Discord 誘餌頻道機器人。只盯一個指定頻道，一般成員在裡面發言就封鎖，並留下管理員紀錄；不會掃描伺服器的其他頻道。",
+        "technologies": ["Discord", "Node.js"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/mellifera-sentinel",
+            "icon": "github"
+          }
+        ],
         "image": "/projects/discord-honeypot.png",
         "video": ""
       }

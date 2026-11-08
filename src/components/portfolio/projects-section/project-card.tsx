@@ -46,6 +46,11 @@ export function ProjectCard({
   authors,
   className,
 }: Props) {
+  const external = Boolean(href?.startsWith("http"));
+  const linkProps = external
+    ? { target: "_blank" as const, rel: "noopener noreferrer" }
+    : {};
+
   return (
     <Card
       className={cn(
@@ -58,6 +63,7 @@ export function ProjectCard({
           href={href || "#"}
           className="group block shrink-0 cursor-pointer"
           aria-label={`View project: ${title}`}
+          {...linkProps}
         >
         {video && (
           <div className="bg-muted relative h-40 w-full overflow-hidden rounded-md sm:h-44 md:h-48">
@@ -125,7 +131,13 @@ export function ProjectCard({
       <CardHeader className="shrink-0 px-3 pt-3 sm:px-2">
         <div className="space-y-1">
           <CardTitle className="mt-1 text-base [&_img]:my-0 [&_img]:inline-block [&_img]:h-[1em] [&_img]:w-auto [&_img]:align-baseline">
-            <CustomReactMarkdown>{title}</CustomReactMarkdown>
+            {href ? (
+              <Link href={href} className="hover:text-primary" {...linkProps}>
+                <CustomReactMarkdown>{title}</CustomReactMarkdown>
+              </Link>
+            ) : (
+              <CustomReactMarkdown>{title}</CustomReactMarkdown>
+            )}
           </CardTitle>
           <time className="font-sans text-xs">{dates}</time>
           <div className="hidden font-sans text-xs underline print:visible">

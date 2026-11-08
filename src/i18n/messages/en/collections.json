@@ -6,46 +6,73 @@
     "items": [
       {
         "title": "Personal Website",
-        "href": "/",
+        "href": "https://github.com/MoYan1250/person-web",
         "dates": "2026.8",
         "active": true,
-        "description": "This site: a bilingual personal index with projects, a timeline, and a diary.",
+        "description": "A bilingual personal site for research, projects, a timeline, and writing. The research topics are reinforcement learning, multi-agent systems, and large language models.",
         "technologies": ["Next.js", "TypeScript", "Tailwind CSS"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/person-web",
+            "icon": "github"
+          }
+        ],
         "image": "/projects/personal-site.png",
         "video": ""
       },
       {
         "title": "Hinkal Double-Spend: Local Simplified Reproduction",
+        "href": "https://github.com/MoYan1250/hinkal-legacy-note-repro",
         "dates": "2026.8",
         "active": true,
-        "description": "In July 2026, Hinkal — a shielded-pool protocol on Ethereum — was hit by a double-spend. This reproduction still deploys smart contracts on-chain; only the scale was reduced and it was run locally.",
-        "technologies": ["ZK", "Smart contracts", "Solidity", "Ethereum"],
+        "description": "A local, educational reproduction of the July 2026 Hinkal privacy-pool double-spend. Circom, Groth16, and Solidity run the spend path on local Anvil, to show that a valid on-chain proof does not mean a deposit can be spent only once.",
+        "technologies": ["Circom", "Solidity", "ZK"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/hinkal-legacy-note-repro",
+            "icon": "github"
+          }
+        ],
         "image": "/projects/hinkal.png",
         "video": ""
       },
       {
         "title": "Tactica Universalis",
+        "href": "https://github.com/MoYan1250/TacticaUniversalis",
         "dates": "2026.7",
         "active": true,
-        "description": "A Paradox-style game of CS2 history, tactics simulation, and team management. I crawled and quantified data for hundreds of players.",
-        "technologies": ["CS2"],
+        "description": "A CSGO esports club simulation set in the 2021 season, built in Unity 6 and still in progress. A career advances week by week, and match day can enter a tactical round on Dust II.",
+        "technologies": ["Unity", "CSGO"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/TacticaUniversalis",
+            "icon": "github"
+          }
+        ],
         "image": "/timeline/tactica-universalis.png",
         "video": ""
       },
       {
         "title": "Discord Honeypot Bot",
+        "href": "https://github.com/MoYan1250/mellifera-sentinel",
         "dates": "2025.12",
         "active": true,
-        "description": "A Discord honeypot I built myself: it automatically detects and bans accounts that spam messages.",
-        "technologies": ["Discord"],
+        "description": "A Discord honeypot that watches one trap channel. If an ordinary member speaks there, the bot bans them and writes a staff log. It does not scan the rest of the server.",
+        "technologies": ["Discord", "Node.js"],
         "authors": "",
-        "links": [],
+        "links": [
+          {
+            "type": "GitHub",
+            "href": "https://github.com/MoYan1250/mellifera-sentinel",
+            "icon": "github"
+          }
+        ],
         "image": "/projects/discord-honeypot.png",
         "video": ""
       }
