@@ -925,4 +925,13 @@ export const READ_PAPERS: PaperRecord[] = [
     venue: "International Conference on Learning Representations (ICLR)",
     href: "https://openreview.net/forum?id=o2IEmeLL9r",
   },
+  {
+    id: "clark2026intelligibility",
+    short: "AI Intelligibility",
+    title: "Why is AI-generated language so hard to understand?",
+    authors: "Clark et al.",
+    year: "2026",
+    venue: "arXiv preprint",
+    href: "https://arxiv.org/abs/2610.29162",
+  },
 ];

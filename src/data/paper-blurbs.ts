@@ -432,6 +432,10 @@ export const PAPER_BLURBS: Record<string, PaperBlurb> = {
     zh: "先預訓練目標條件政策與目標先驗，再把目標聚成離散高層動作，讓後續 RL 更省樣本。",
     en: "PTGM pre-trains a goal-conditioned policy and a goal prior, then clusters goals into a discrete high-level action space for more sample-efficient RL.",
   },
+  clark2026intelligibility: {
+    zh: "比較前沿模型與人類文本，發現 AI 更常使用加重理解負擔的句法特徵，並把偏移歸因於後訓練偏向資訊密度而非溝通。",
+    en: "Compares frontier model text with human writing and finds more features that make language harder to process, linking the shift to post-training that favors information density over communication.",
+  },
 };
 
 export function getPaperBlurb(id: string, locale: string): string | undefined {

@@ -204,6 +204,7 @@ const TAG_RULES: { tag: PaperTag; tests: RegExp[] }[] = [
       /werewolf/,
       /\bgato\b/,
       /generalist agent/,
+      /ai-generated/,
     ],
   },
   {
