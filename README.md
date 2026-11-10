@@ -6,7 +6,7 @@ Personal site and research index. Current research topics are reinforcement lear
 
 繁中為預設語系。開首頁會進 `/zh`；英文在 `/en`。
 
-## 站上有什麼
+## 站點路徑分布
 
 | 路徑 | 內容 |
 | --- | --- |
